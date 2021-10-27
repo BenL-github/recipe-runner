@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Container from '@mui/material/Container';
 import Navigation from './components/Navigation';
 import Tables from './components/Tables'
+import Home from './components/Home';
 
 // DATA (will be retrieved via DB)
 const recipe_columns = [
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route path='/recipes'>
             <Tables columns={recipe_columns} rows = {recipe_rows}/>
+          </Route>
+          <Route path='/'>
+            <Home/>
           </Route>
         </Switch>
       </Container>

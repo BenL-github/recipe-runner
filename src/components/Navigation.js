@@ -57,8 +57,8 @@ export default function Navigation(props) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         RecipeRunner Admin
                     </Typography>
-                    <Button color="inherit">Logout</Button>
                     <Button href="/" color="inherit">Home</Button>
+                    <Button color="inherit">Logout</Button>
                 </Toolbar>
             </AppBar>
         </Box>
