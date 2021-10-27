@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Container from '@mui/material/Container';
 import Navigation from './components/Navigation';
 import Tables from './components/Tables'
-import DataInput from './components/DataInput';
+import RecipeInput from './components/RecipeInput'
 
 function App() {
   // DATA (will be retrieved via DB)
@@ -23,15 +23,11 @@ function App() {
     { id: 4, recipeTitle: 'Chicken Dumpling', recipeServing: 2, recipeDescription: 'mmm it taste good' },
   ]);
 
-  // data to pass to DataInput text fields
-  const recipe_textfields = [
-    { id: 'outlined-basic', label: 'Recipe Title', variant: 'outlined' },
-    { id: 'outlined-basic', label: 'RecipeServing', variant: 'outlined' },
-    { id: 'outlined-basic', label: 'RecipeDescription', variant: 'outlined' },
-  ]
-
-  // behavior when user PUTs a new recipe
-  const onNewRecipe = () => {
+  // behavior when user adds a new recipe
+  const onNewRecipe = ({ title, serving, description }) => {
+    // will be a PUT to the database
+    const new_recipe = { id: Math.floor(Math.random() * 10000), recipeTitle: title, recipeServing: serving, recipeDescription: description }
+    set_recipe_rows([...recipe_rows, new_recipe])
 
   }
 
@@ -141,7 +137,7 @@ function App() {
         <Switch>
           <Route path='/recipes'>
             <Tables columns={recipe_columns} rows={recipe_rows} />
-            <DataInput textfields={recipe_textfields} buttonText={'Create New Recipe'} onNewRecipe={onNewRecipe} />
+            <RecipeInput buttonText={'Create New Recipe'} onNewRecipe={onNewRecipe} />
           </Route>
           <Route path='/ingredients'>
             <Tables columns={ingr_columns} rows={ingr_rows} />
