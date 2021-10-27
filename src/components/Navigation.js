@@ -58,6 +58,7 @@ export default function Navigation(props) {
                         RecipeRunner Admin
                     </Typography>
                     <Button color="inherit">Logout</Button>
+                    <Button href="/" color="inherit">Home</Button>
                 </Toolbar>
             </AppBar>
         </Box>
