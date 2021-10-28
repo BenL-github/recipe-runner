@@ -25,7 +25,7 @@ export default function MediaCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button href={href} size="large">Share</Button>
+        <Button href={href} size="large">Browse</Button>
       </CardActions>
     </Card>
   );
