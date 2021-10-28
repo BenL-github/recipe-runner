@@ -47,12 +47,12 @@ export default function Navigation(props) {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}><Link href="Recipes" underline='none'>Recipes</Link></MenuItem>
+                        <MenuItem onClick={handleClose}><Link href="recipes" underline='none'>Recipes</Link></MenuItem>
                         <MenuItem onClick={handleClose}><Link href="ingredients" underline='none'>Ingredients</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="#" underline='none'>Users</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="#" underline='none'>ShoppingCarts</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="#" underline='none'>SelectedRecipes</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="#" underline='none'>RecipeIngredients</Link></MenuItem>
+                        <MenuItem onClick={handleClose}><Link href="users" underline='none'>Users</Link></MenuItem>
+                        <MenuItem onClick={handleClose}><Link href="shoppingcarts" underline='none'>ShoppingCarts</Link></MenuItem>
+                        <MenuItem onClick={handleClose}><Link href="selectedrecipes" underline='none'>SelectedRecipes</Link></MenuItem>
+                        <MenuItem onClick={handleClose}><Link href="recipeingredients" underline='none'>RecipeIngredients</Link></MenuItem>
                     </Menu>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         RecipeRunner Admin
