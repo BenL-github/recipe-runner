@@ -8,6 +8,7 @@ import RecipeInput from './components/RecipeInput'
 import { Button } from '@mui/material';
 import { Grid } from '@mui/material';
 import { TextField } from '@mui/material';
+import { Typography } from '@mui/material';
 
 function App() {
   // DATA (will be retrieved via DB)
@@ -120,10 +121,12 @@ function App() {
         <Navigation />
         <Switch>
           <Route path='/recipes'>
+            <Typography variant='h2'>Recipes</Typography>
             <Tables columns={recipe_columns} rows={recipe_rows} />
             <RecipeInput buttonText={'Create New Recipe'} onNewRecipe={onNewRecipe} />
           </Route>
           <Route path='/ingredients'>
+          <Typography variant='h2'>Ingredients</Typography>
             <Tables columns={ingr_columns} rows={ingr_rows} />
             <div>
               <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -166,6 +169,7 @@ function App() {
             </div>
           </Route>
           <Route path='/users'>
+          <Typography variant='h2'>Users</Typography>
             <Tables columns={user_columns} rows={user_rows} />
             <div>
               <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -188,12 +192,25 @@ function App() {
             </div>
           </Route>
           <Route path='/shoppingcarts'>
+          <Typography variant='h2'>ShoppingCarts</Typography>
             <Tables columns={cart_columns} rows={cart_rows} />
+            <div style={{marginTop:10}}>
+              <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+                  <Grid item>
+                      <TextField id='outlined-basic' label='Ingredient ID' variant='outlined'/>
+                  </Grid>
+                  <Grid item sx={{ my: 'auto' }}>
+                      <Button variant="outlined"> Add </Button>
+                  </Grid>
+                </Grid>
+            </div>
           </Route>
           <Route path='/selectedrecipes'>
+          <Typography variant='h2'>SelectedRecipes</Typography>
             <Tables columns={selected_recipe_columns} rows={selected_recipe_rows} />
           </Route>
           <Route path='/recipeingredients'>
+          <Typography variant='h2'>RecipeIngredients</Typography>
             <Tables columns={recipe_ingr_columns} rows={recipe_ingr_rows} />
           </Route>
           <Route path='/'>
