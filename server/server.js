@@ -14,4 +14,4 @@ app.use((req, res, next) => {
 //     res.send("This is from express.js");
 //   });
 
-app.listen(port, () => console.log(`Listening on http://flip1.engr.oregonstate.edu:${port}`));
+app.listen(port, () => console.log(`Server started successfully.`));
