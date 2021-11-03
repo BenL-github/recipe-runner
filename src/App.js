@@ -121,12 +121,12 @@ function App() {
         <Navigation />
         <Switch>
           <Route path='/recipes'>
-            <Typography variant='h2'>Recipes</Typography>
+            <Typography variant='h2' align='center'>Recipes</Typography>
             <Tables columns={recipe_columns} rows={recipe_rows} />
             <RecipeInput buttonText={'Create New Recipe'} onNewRecipe={onNewRecipe} />
           </Route>
           <Route path='/ingredients'>
-          <Typography variant='h2'>Ingredients</Typography>
+          <Typography variant='h2' align='center'>Ingredients</Typography>
             <Tables columns={ingr_columns} rows={ingr_rows} />
             <div>
               <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -169,7 +169,7 @@ function App() {
             </div>
           </Route>
           <Route path='/users'>
-          <Typography variant='h2'>Users</Typography>
+          <Typography variant='h2' align='center'>Users</Typography>
             <Tables columns={user_columns} rows={user_rows} />
             <div>
               <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -192,7 +192,7 @@ function App() {
             </div>
           </Route>
           <Route path='/shoppingcarts'>
-          <Typography variant='h2'>ShoppingCarts</Typography>
+          <Typography variant='h2' align='center'>ShoppingCarts</Typography>
             <Tables columns={cart_columns} rows={cart_rows} />
             <div style={{marginTop:10}}>
               <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -206,11 +206,11 @@ function App() {
             </div>
           </Route>
           <Route path='/selectedrecipes'>
-          <Typography variant='h2'>SelectedRecipes</Typography>
+          <Typography variant='h2' align='center'>SelectedRecipes</Typography>
             <Tables columns={selected_recipe_columns} rows={selected_recipe_rows} />
           </Route>
           <Route path='/recipeingredients'>
-          <Typography variant='h2'>RecipeIngredients</Typography>
+          <Typography variant='h2' align='center'>RecipeIngredients</Typography>
             <Tables columns={recipe_ingr_columns} rows={recipe_ingr_rows} />
           </Route>
           <Route path='/'>
