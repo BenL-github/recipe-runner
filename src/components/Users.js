@@ -23,6 +23,16 @@ function Users() {
         { id: 4, cartID: 4, lName: 'Lannister', fName: 'Cersei', email: 'example@ex.com', zipCode: '00000' },
     ]
 
+    const [fname, setFname] = useState("")
+    const [lname, setLname] = useState("")
+    const [email, setEmail] = useState("")
+    const [zipcode, setZipcode] = useState("")
+
+    // handles behavior to add a new user
+    const onAdd = () => {
+        
+    }
+
     return (
         <>
             <Typography variant='h2'>Users</Typography>
@@ -30,19 +40,27 @@ function Users() {
             <div>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
-                        <TextField id='outlined-basic' label='fName' variant='outlined' />
+                        <TextField id='outlined-basic' label='fName' variant='outlined' 
+                            onChange={(e) => setFname(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='lName' variant='outlined' />
+                        <TextField id='outlined-basic' label='lName' variant='outlined' 
+                            onChange={(e) => setLname(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='email' variant='outlined' />
+                        <TextField id='outlined-basic' label='email' variant='outlined' 
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='zipCode' variant='outlined' />
+                        <TextField id='outlined-basic' label='zipCode' variant='outlined' 
+                            onChange={(e) => setZipcode(e.target.value)}
+                        />
                     </Grid>
                     <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined"> Add </Button>
+                        <Button variant="outlined" onClick={onAdd}> Add </Button>
                     </Grid>
                 </Grid>
             </div>
