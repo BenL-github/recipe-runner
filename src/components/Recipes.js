@@ -40,7 +40,6 @@ function Recipes() {
         // query database for matching SELECT
         // const someFuncHere
         let rows = []
-        console.log(keyword)
         recipe_rows.map((row) => {
             let title = row.recipeTitle.toLowerCase()
             if (title.includes(keyword)) {
