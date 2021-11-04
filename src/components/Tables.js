@@ -30,8 +30,8 @@ const Tables = ({ columns, rows }) => {
                     const selectedIDs = new Set(ids);
                     const selectedRows = rows.filter((row) =>
                         selectedIDs.has(row.id),
+                        setIsRowSelected(true)
                     );
-                    setIsRowSelected(true)
                     setSelectedRow(selectedRows);
                 }}
             />
