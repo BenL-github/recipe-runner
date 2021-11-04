@@ -34,11 +34,6 @@ function Ingredients() {
         
     }
 
-    // handles delete behavior
-    const onDelete = () => {
-        
-    }
-
     return (
         <>
             <Typography variant='h2'>Ingredients</Typography>
@@ -83,20 +78,6 @@ function Ingredients() {
                     </Grid>
                     <Grid item sx={{ my: 'auto' }}>
                         <Button variant="outlined" onClick={onModify}> Modify </Button>
-                    </Grid>
-                </Grid>
-            </div>
-
-            {/* Delete Existing Ingredient */}
-            <div style={{ marginTop: 10 }}>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' 
-                            onChange={(e) => setIngredientID(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onDelete}> Delete </Button>
                     </Grid>
                 </Grid>
             </div>
