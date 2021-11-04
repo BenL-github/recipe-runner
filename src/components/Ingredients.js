@@ -20,46 +20,83 @@ function Ingredients() {
         { id: 4, ingredientName: 'Chinese Dumpling Wrappers', price: 3.25 },
     ];
 
+    const [ingredientName, setIngredientName] = useState("")
+    const [ingredientPrice, setIngredientPrice] = useState()
+    const [ingredientID, setIngredientID] = useState()
+
+    // handles add behavior
+    const onAdd = () => {
+
+    }
+
+    // handles modify behavior
+    const onModify = () => {
+        
+    }
+
+    // handles delete behavior
+    const onDelete = () => {
+        
+    }
+
     return (
         <>
             <Typography variant='h2'>Ingredients</Typography>
             <Tables columns={ingr_columns} rows={ingr_rows} />
+
+            {/* ADD a new ingredient */}
             <div>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined' />
+                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined' 
+                            onChange={(e) => setIngredientName(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='price' variant='outlined' />
+                        <TextField id='outlined-basic' label='price' variant='outlined' 
+                            onChange={(e) => setIngredientPrice(e.target.value)}
+                        />
                     </Grid>
                     <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined"> Add </Button>
+                        <Button variant="outlined" onClick={onAdd}> Add </Button>
                     </Grid>
                 </Grid>
             </div>
+
+            {/* UPDATE existing ingredient */}
             <div style={{ marginTop: 10 }}>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' />
+                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' 
+                            onChange={(e) => setIngredientID(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined' />
+                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined' 
+                            onChange={(e) => setIngredientName(e.target.value)}
+                        />
                     </Grid>
                     <Grid item>
-                        <TextField id='outlined-basic' label='price' variant='outlined' />
+                        <TextField id='outlined-basic' label='price' variant='outlined' 
+                            onChange={(e) => setIngredientPrice(e.target.value)}
+                        />
                     </Grid>
                     <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined"> Modify </Button>
+                        <Button variant="outlined" onClick={onModify}> Modify </Button>
                     </Grid>
                 </Grid>
             </div>
+
+            {/* Delete Existing Ingredient */}
             <div style={{ marginTop: 10 }}>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' />
+                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' 
+                            onChange={(e) => setIngredientID(e.target.value)}
+                        />
                     </Grid>
                     <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined"> Delete </Button>
+                        <Button variant="outlined" onClick={onDelete}> Delete </Button>
                     </Grid>
                 </Grid>
             </div>

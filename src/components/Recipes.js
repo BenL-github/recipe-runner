@@ -11,6 +11,7 @@ function Recipes() {
     const [isResults, setIsResults] = useState(false)
     const [isNoResults, setIsNoResults] = useState(false)
     const [searchRows, setSearchRows] = useState([])
+    const [recipeID, setRecipeID] = useState()
 
     const recipe_columns = [
         { field: 'id', headerName: 'recipeID', width: 150 },
@@ -57,6 +58,12 @@ function Recipes() {
         }
     }
 
+    // behavior when a user deletes a recipe
+    const onDelete = () => {
+        // send delete request to database
+
+    }
+
     return (
         <>
             <Typography variant='h2'>Recipes</Typography>
@@ -88,6 +95,17 @@ function Recipes() {
                 <Tables columns={recipe_columns} rows={searchRows} />
             </>}
 
+            {/* Delete a Recipe */}
+            <Typography variant="h3"> Delete a Recipe </Typography>
+            <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+                <Grid item>
+                    <TextField id='outlined-basic' label='Recipe ID#' variant='outlined'
+                        onChange={(e) => setRecipeID(e.target.value)} />
+                </Grid>
+                <Grid item sx={{ my: 'auto' }}>
+                    <Button variant="outlined" onClick={onSearch}> Delete </Button>
+                </Grid>
+            </Grid>
         </>
     )
 }
