@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { DataGrid, GridArrowUpwardIcon } from '@mui/x-data-grid';
 
-export default function DataTable(props) {
-    const {columns, rows} = props;
+const Tables = ({ columns, rows }) => {
   return (
-      <>
-    <div style={{ height: 400, width: '95%', marginRight:'auto', marginLeft: 'auto' }}>
+    <div style={{ height: 400, width: '95%', marginRight: 'auto', marginLeft: 'auto' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -16,10 +14,8 @@ export default function DataTable(props) {
         disableColumnReorder
         disableMultipleColumnsSorting
       />
-        
     </div>
-    
-        
-    </>
-  );
+  )
 }
+
+export default Tables
