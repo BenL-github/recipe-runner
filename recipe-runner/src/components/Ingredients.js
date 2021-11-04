@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tables from './Tables'
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
@@ -23,6 +23,7 @@ function Ingredients() {
     const [ingredientName, setIngredientName] = useState("")
     const [ingredientPrice, setIngredientPrice] = useState()
     const [ingredientID, setIngredientID] = useState()
+    // const [ingr_rows, setIngredients] = useState({})
 
     // handles add behavior
     const onAdd = () => {
@@ -33,6 +34,13 @@ function Ingredients() {
     const onModify = () => {
         
     }
+
+    // retrieve rows from api
+    useEffect(() => {
+        fetch('/api/ingredients')
+        .then(res => res.json())
+        .then(ingredients => console.log({ingredients}))
+    })
 
     return (
         <>
