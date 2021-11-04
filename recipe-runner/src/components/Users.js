@@ -72,6 +72,34 @@ function Users() {
                     </Grid>
                 </Grid>
             </div>
+            <Typography variant='h3'>Update a User</Typography>
+            <div>
+                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='userID' variant='outlined' />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='fName' variant='outlined' />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='lName' variant='outlined' />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='email' variant='outlined' />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='zipCode' variant='outlined' />
+                    </Grid>
+
+                    <Grid item>
+                        <TextField id='outlined-basic' label='cartID' variant='outlined' />
+                    </Grid>
+
+                    <Grid item sx={{ my: 'auto' }}>
+                        <Button variant="outlined"> Update </Button>
+                    </Grid>
+                </Grid>
+            </div>
         </>
     )
 }

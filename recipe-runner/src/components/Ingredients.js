@@ -61,6 +61,7 @@ function Ingredients() {
 
             {/* UPDATE existing ingredient */}
             <div style={{ marginTop: 10 }}>
+                <Typography variant='h3'>Update an Ingredient</Typography>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
                         <TextField id='outlined-basic' label='Ingredient ID' variant='outlined' 
