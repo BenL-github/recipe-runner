@@ -27,7 +27,7 @@ function Users() {
     const [lname, setLname] = useState("")
     const [email, setEmail] = useState("")
     const [zipcode, setZipcode] = useState("")
-
+    const [cart, setCart] = useState("")
     // handles behavior to add a new user
     const onAdd = () => {
         
@@ -59,6 +59,13 @@ function Users() {
                             onChange={(e) => setZipcode(e.target.value)}
                         />
                     </Grid>
+
+                    <Grid item>
+                        <TextField id='outlined-basic' label='cartID' variant='outlined' 
+                            onChange={(e) => setCart(e.target.value)}
+                        />
+                    </Grid>
+
                     <Grid item sx={{ my: 'auto' }}>
                         <Button variant="outlined" onClick={onAdd}> Add </Button>
                     </Grid>

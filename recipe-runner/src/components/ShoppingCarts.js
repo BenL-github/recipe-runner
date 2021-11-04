@@ -66,13 +66,15 @@ function ShoppingCarts() {
                 <Typography variant='h3'>Create a New Shopping Cart</Typography>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
+                        <TextField id='outlined-basic' label='Cart ID#' variant='outlined'
+                            onChange={(e) => setUsername(e.target.value)} />
+                    </Grid>
+                    
+                    <Grid item>
                         <TextField id='outlined-basic' label='User ID#' variant='outlined'
                             onChange={(e) => setUserID(e.target.value)} />
                     </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='User Name' variant='outlined'
-                            onChange={(e) => setUsername(e.target.value)} />
-                    </Grid>
+                    
                     <Grid item sx={{ my: 'auto' }}>
                         <Button variant="outlined" onClick={onNewCart}> Create New Cart </Button>
                     </Grid>
