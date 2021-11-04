@@ -45,7 +45,7 @@ function SelectedRecipes() {
             <Tables columns={selected_recipe_columns} rows={selected_recipe_rows} />
 
             {/* Insert new selected recipe (associate recipe with shopping cart) */}
-            <Typography variant='h3'>Create a New Shopping Cart</Typography>
+            <Typography variant='h3'>Add Recipes to a Shopping Cart</Typography>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
                         <TextField id='outlined-basic' label='CartID#' variant='outlined'

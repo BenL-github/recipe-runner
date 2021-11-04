@@ -23,10 +23,52 @@ function RecipeIngredients() {
         { id: 4, ingredientID: 4, ingredientQuantity: 2, uom: 'tbsp' },
     ]
 
+    const [recipeID, setRecipeID] = useState()
+    const [ingredientID, setIngredientID] = useState()
+    const [ingredientQuantity, setIngredientQuantity] = useState()
+    const [uom, setUOM] = useState()
+
+    // handle behavior when an ingredient is associated with a recipe
+    const onIngredientAdd = () => {
+        // query database to get valid recipe and ingredient IDs
+        // if valid, add to database and update display
+
+        // if invalid, alert error message
+    }
+
+    // verify that the recipe and ingredient exists
+    function validateRecipeIngredient() {
+
+    }
+
     return (
         <>
             <Typography variant='h2'>RecipeIngredients</Typography>
             <Tables columns={recipe_ingr_columns} rows={recipe_ingr_rows} />
+
+            {/* Associate ingredients with recipes */}
+            <Typography variant='h3'>Add Ingredients to a Recipe</Typography>
+                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Recipe ID#' variant='outlined'
+                            onChange={(e) => setRecipeID(e.target.value)} />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Ingredient ID#' variant='outlined'
+                            onChange={(e) => setIngredientID(e.target.value)} />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Ingredient Quantity' variant='outlined'
+                            onChange={(e) => setIngredientQuantity(e.target.value)} />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Unit of Measurement' variant='outlined'
+                            onChange={(e) => setUOM(e.target.value)} />
+                    </Grid>
+                    <Grid item sx={{ my: 'auto' }}>
+                        <Button variant="outlined" onClick={onIngredientAdd}> Add Ingredient to Recipe </Button>
+                    </Grid>
+                </Grid>
         </>
     )
 }
