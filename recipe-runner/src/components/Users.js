@@ -37,6 +37,7 @@ function Users() {
         <>
             <Typography variant='h2'>Users</Typography>
             <Tables columns={user_columns} rows={user_rows} />
+            <Typography variant='h3'>Add a User</Typography>
             <div>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>

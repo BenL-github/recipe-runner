@@ -41,6 +41,7 @@ function Ingredients() {
 
             {/* ADD a new ingredient */}
             <div>
+                <Typography variant='h3'>Add an Ingredient</Typography>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
                         <TextField id='outlined-basic' label='Ingredient Name' variant='outlined' 
