@@ -23,7 +23,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:34873/",
+  "proxy": "http://flip2.engr.oregonstate.edu:34876/",
   "eslintConfig": {
     "extends": [
       "react-app",
