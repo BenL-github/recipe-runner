@@ -68,7 +68,6 @@ module.exports.deleteRecipe = (recipe, callback) => {
     })
 }
 
-
 // INGREDIENTS
 module.exports.getIngredientsTable = (callback) => {
     // sql query for all rows from Ingredients table
@@ -87,13 +86,39 @@ module.exports.getIngredientsTable = (callback) => {
     })
 }
 
-// start of insertion code
+module.exports.addIngredient = (ingredient, callback) => {
+    let query = `INSERT INTO Ingredients (ingredientName, price)
+                 VALUES (${ingredient.name}, ${ingredient.price});`
 
-// module.exports.addIngredient = (ingredient, callback) => {
-//     let query = `INSERT INTO Ingredients (ingredientName, price) \
-//                 VALUES (${ingredient.name},${ingredient.price});`
-//     pool.query(query, )
-// }
+    pool.query(query, (err, result) => {
+        if (err) {
+            // query resulted in error
+            console.log(err);
+            callback(true);
+        } else {
+            // query success
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.updateIngredient = (ingredient, callback) => {
+    let query = `UPDATE Ingredients
+                 SET ingredientName=${ingredient.name}, price=${ingredient.price}
+                 WHERE ingredientID=${ingredient.id};`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            // query resulted in error
+            console.log(err);
+            callback(true);
+        } else {
+            // query success
+            callback(false, result)
+        }
+    })
+}
+
 
 // USERS
 module.exports.getUsersTable = (callback) => {
@@ -165,8 +190,15 @@ module.exports.getRecipesTable;
 module.exports.addRecipe
 module.exports.searchRecipe
 module.exports.deleteRecipe
+
 module.exports.getIngredientsTable;
+module.exports.addIngredient
+module.exports.updateIngredient
+
 module.exports.getUsersTable;
+
 module.exports.getShoppingCartsTable;
+
 module.exports.getSelectedRecipesTable;
+
 module.exports.getRecipeIngredientsTable;

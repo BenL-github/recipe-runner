@@ -12,4 +12,24 @@ router.get('/ingredients', (req, res) => {
     })
 })
 
+router.post('/ingredients', (req, res) => {
+    db.addIngredient((err, results) => {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    })
+})
+
+router.put('/ingredients', (req, res) => {
+    db.updateIngredient((err, results) => {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    })
+})
+
 module.exports = router;
