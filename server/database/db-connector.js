@@ -178,6 +178,20 @@ module.exports.getShoppingCartsTable = (callback) => {
     })
 }
 
+module.exports.addShoppingCart = (cart, callback) => {
+    let query = `INSERT INTO ShoppingCarts (cartID, customerID)
+                 VALUES (${cart.id}, ${cart.userID});`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
 // SELECTED RECIPES
 module.exports.getSelectedRecipesTable = (callback) => {
     let query = `SELECT cartID, fullName AS (fName, lName), recipeID, recipeTitle, selectedQuantity FROM SelectedRecipes
@@ -228,6 +242,7 @@ module.exports.addUser
 module.exports.updateUser
 
 module.exports.getShoppingCartsTable;
+module.exports.addShoppingCart
 
 module.exports.getSelectedRecipesTable;
 
