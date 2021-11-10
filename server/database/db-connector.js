@@ -119,10 +119,38 @@ module.exports.updateIngredient = (ingredient, callback) => {
     })
 }
 
-
 // USERS
 module.exports.getUsersTable = (callback) => {
     let query = "SELECT * FROM Users;"
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.addUser = (user, callback) => {
+    let query = `INSERT INTO Users (fName, lName, email, zipCode)
+                 VALUES (${user.fname}, ${user.lname}, ${user.email}, ${user.email}, ${user.zipCode});`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.updateUser = (user, callback) => {
+    let query = `UPDATE Users
+                 SET fName=${user.fname}, lName=${user.lname}, email=${user.email}, zipCode=${user.zipCode}
+                 WHERE customerID=${user.id};`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -196,6 +224,8 @@ module.exports.addIngredient
 module.exports.updateIngredient
 
 module.exports.getUsersTable;
+module.exports.addUser
+module.exports.updateUser
 
 module.exports.getShoppingCartsTable;
 
