@@ -20,6 +20,9 @@ In the server/database folder, create an `.env` file containing the login creden
 For example, the `.env` file should have the following environment variables: 
 
 MYSQL_HOST = 'classmysql.engr.oregonstate.edu'
+
 MYSQL_USER = 'cs340_[OSU_username]'
+
 MYSQL_PASS = '[last 4 digits of ONID]'
+
 MYSQL_DB = 'cs340_[OSU_username]'
