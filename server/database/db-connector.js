@@ -210,12 +210,40 @@ module.exports.getSelectedRecipesTable = (callback) => {
     })
 }
 
+module.exports.addSelectedRecipe = (selectedRecipe, callback) => {
+    let query = `INSERT INTO SelectedRecipes (selectedCart, selectedRecipe, selectedQuantity)
+                 VALUES (${selectedRecipe.cartID}, ${selectedRecipe.recipeID}, ${selectedRecipe.quantity});`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
     let query = `SELECT recipeID, recipeTitle, ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
                  JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
                  GROUP BY recipeID;`
+
+    pool.query(query, (err, results) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
+    let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
+                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, ${recipeIngredient.uOm}, ${recipeIngredient.quantity});'`
 
     pool.query(query, (err, results) => {
         if (err) {
@@ -245,5 +273,7 @@ module.exports.getShoppingCartsTable;
 module.exports.addShoppingCart
 
 module.exports.getSelectedRecipesTable;
+module.exports.addSelectedRecipe
 
 module.exports.getRecipeIngredientsTable;
+module.exports.addRecipeIngredient

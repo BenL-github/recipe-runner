@@ -12,4 +12,14 @@ router.get('/selectedrecipes', (req, res) => {
     })
 })
 
+router.post('selectedrecipes', (req, res) => {
+    db.addSelectedRecipe((err, results) => {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    })
+})
+
 module.exports = router;
