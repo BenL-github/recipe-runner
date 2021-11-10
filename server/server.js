@@ -3,6 +3,11 @@ const express = require('express');
 const app = express();
 const path = require("path");
 const ingredientsRoutes = require('./routes/ingredients');
+const recipesRoutes = require('./routes/recipes')
+const usersRoutes = require('./routes/users')
+const shoppingcartsRoutes = require('./routes/shoppingcarts')
+const selectedrecipesRoutes = require('./routes/selectedrecipes')
+const recipeingredientsRoutes = require('./routes/recipeingredients')
 app.use(express.static(path.join(__dirname, "..", "build")))
 app.use(express.static("public"));
 const port = process.env.PORT || 34876;
@@ -12,5 +17,10 @@ const port = process.env.PORT || 34876;
 //   });
 
 app.use('/', ingredientsRoutes)
+app.use('/', recipesRoutes)
+app.use('/', usersRoutes)
+app.use('/', shoppingcartsRoutes)
+app.use('/', selectedrecipesRoutes)
+app.use('/', recipeingredientsRoutes)
 
 app.listen(port, () => console.log(`Server started successfully.`));
