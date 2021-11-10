@@ -16,7 +16,7 @@ const pool = mysql.createPool({
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
-    let query = "SLECT * FROM Recipes;";
+    let query = "SELECT * FROM Recipes;";
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -27,6 +27,47 @@ module.exports.getRecipesTable = (callback) => {
         }
     })
 }
+
+module.exports.addRecipe = (recipe, callback) => {
+    let query = `INSERT INTO Recipes (recipeTitle, recipeDescription, recipeServing)
+                 VALUES (${recipe.title}, ${recipe.description}, ${recipe.serving});`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.searchRecipe = (recipe, callback) => {
+    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE %${recipe.title}%;`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.deleteRecipe = (recipe, callback) => {
+    let query = `DELETE FROM Recipes WHERE recipeID = ${recipe.id};`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
 
 // INGREDIENTS
 module.exports.getIngredientsTable = (callback) => {
@@ -73,7 +114,7 @@ module.exports.getShoppingCartsTable = (callback) => {
     let query = `SELECT cartID, cartOwner, fullName AS (fName, lName) FROM ShoppingCarts
                  JOIN Users ON Users.customerID = ShoppingCarts.cartOwner
                  GROUP BY cartID;`
-    
+
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -120,8 +161,11 @@ module.exports.getRecipeIngredientsTable = (callback) => {
 }
 
 // Export it for use in our application
-module.exports.getIngredientsTable;
 module.exports.getRecipesTable;
+module.exports.addRecipe
+module.exports.searchRecipe
+module.exports.deleteRecipe
+module.exports.getIngredientsTable;
 module.exports.getUsersTable;
 module.exports.getShoppingCartsTable;
 module.exports.getSelectedRecipesTable;
