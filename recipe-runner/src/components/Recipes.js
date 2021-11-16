@@ -64,7 +64,6 @@ function Recipes() {
 
     // behavior when user searches for a recipe
     const onSearch = () => {
-        // query database for matching SELECT
         axios({
             method: "GET",
             url: baseURL + `recipes/${keyword}`,
@@ -91,8 +90,19 @@ function Recipes() {
 
     // behavior when a user deletes a recipe
     const onDelete = () => {
-        // send delete request to database
-
+        axios({
+            method: "DELETE",
+            url: baseURL + 'recipes',
+            data: {
+                id: recipeID
+            }
+        })
+            .then((response) => {
+                setRecipeID()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     return (
@@ -154,7 +164,7 @@ function Recipes() {
                         onChange={(e) => setRecipeID(e.target.value)} />
                 </Grid>
                 <Grid item sx={{ my: 'auto' }}>
-                    <Button variant="outlined" onClick={onSearch}> Delete </Button>
+                    <Button variant="outlined" onClick={onDelete}> Delete </Button>
                 </Grid>
             </Grid>
         </>

@@ -33,7 +33,7 @@ router.get('/recipes/:keyword', (req, res) => {
 })
 
 router.delete('/recipes', (req, res) => {
-    db.deleteRecipe((err, results) => {
+    db.deleteRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {
