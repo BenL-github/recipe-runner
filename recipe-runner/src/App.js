@@ -14,7 +14,7 @@ import Users from './components/Users'
 import ShoppingCarts from './components/ShoppingCarts'
 import SelectedRecipes from './components/SelectedRecipes'
 import RecipeIngredients from './components/RecipeIngredients';
-
+import TestingForm from './components/test';
 function App() {
     return (
         <Router>
@@ -54,6 +54,10 @@ function App() {
                     {/* Recipe Ingredients */}
                     <Route path='/recipeingredients'>
                         <RecipeIngredients />
+                    </Route>
+
+                    <Route path='/testing'>
+                        <TestingForm />
                     </Route>
                 </Switch>
             </Container>
