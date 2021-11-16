@@ -111,7 +111,7 @@ module.exports.addIngredient = (ingredient, callback) => {
 
 module.exports.updateIngredient = (ingredient, callback) => {
     let query = `UPDATE Ingredients
-                 SET ingredientName=${ingredient.name}, price=${ingredient.price}
+                 SET ingredientName='${ingredient.name}', price=${ingredient.price}
                  WHERE ingredientID=${ingredient.id};`
 
     pool.query(query, (err, result) => {
