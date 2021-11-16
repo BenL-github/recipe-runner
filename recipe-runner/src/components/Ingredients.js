@@ -44,6 +44,13 @@ function Ingredients() {
                 price: ingredientPrice
             }
         })
+        .then((response) => {
+            setIngredientName("")
+            setIngredientPrice()
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
     }
 
     // handles modify behavior
