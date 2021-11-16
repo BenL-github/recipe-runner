@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const path = require("path");
 const ingredientsRoutes = require('./routes/ingredients');
@@ -10,6 +11,7 @@ const selectedrecipesRoutes = require('./routes/selectedrecipes')
 const recipeingredientsRoutes = require('./routes/recipeingredients')
 app.use(express.static(path.join(__dirname, "..", "build")))
 app.use(express.static("public"));
+app.use(cors())
 const port = process.env.PORT || 34876;
 
 // app.use((req, res, next) => {

@@ -5,14 +5,21 @@ const mysql = require('mysql');
 // user = cs340_onid
 // pass = db_pass
 // database = cs340_onid
+// const pool = mysql.createPool({
+//     connectionLimit: 10,
+//     host: process.env.MYSQL_HOST,
+//     user: process.env.MYSQL_USER,
+//     password: process.env.MYSQL_PASS,
+//     database: process.env.MYSQL_DB
+// });
+
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASS,
-    database: process.env.MYSQL_DB
-});
-
+    host: "classmysql.engr.oregonstate.edu",
+    user: "cs340_jant",
+    password: "2989",
+    database: "cs340_jant"
+})
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
