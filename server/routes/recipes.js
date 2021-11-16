@@ -13,7 +13,7 @@ router.get('/recipes', (req, res) => {
 })
 
 router.post('/recipes', (req, res) => {
-    db.addRecipe((err, results) => {
+    db.addRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {
@@ -22,8 +22,8 @@ router.post('/recipes', (req, res) => {
     })
 })
 
-router.search('/recipes', (req, res) => {
-    db.searchRecipe((err, results) => {
+router.get('/recipes/:keyword', (req, res) => {
+    db.searchRecipe(req.params.keyword, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {
@@ -33,7 +33,7 @@ router.search('/recipes', (req, res) => {
 })
 
 router.delete('/recipes', (req, res) => {
-    db.deleteRecipe((err, results) => {
+    db.deleteRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {

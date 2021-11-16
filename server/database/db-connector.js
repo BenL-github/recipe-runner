@@ -37,7 +37,7 @@ module.exports.getRecipesTable = (callback) => {
 
 module.exports.addRecipe = (recipe, callback) => {
     let query = `INSERT INTO Recipes (recipeTitle, recipeDescription, recipeServing)
-                 VALUES (${recipe.title}, ${recipe.description}, ${recipe.serving});`
+                 VALUES ('${recipe.title}', '${recipe.description}', ${recipe.serving});`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -49,8 +49,8 @@ module.exports.addRecipe = (recipe, callback) => {
     })
 }
 
-module.exports.searchRecipe = (recipe, callback) => {
-    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE %${recipe.title}%;`
+module.exports.searchRecipe = (keyword, callback) => {
+    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE '%${keyword}%';`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -111,7 +111,7 @@ module.exports.addIngredient = (ingredient, callback) => {
 
 module.exports.updateIngredient = (ingredient, callback) => {
     let query = `UPDATE Ingredients
-                 SET ingredientName=${ingredient.name}, price=${ingredient.price}
+                 SET ingredientName='${ingredient.name}', price=${ingredient.price}
                  WHERE ingredientID=${ingredient.id};`
 
     pool.query(query, (err, result) => {
@@ -233,12 +233,11 @@ module.exports.addSelectedRecipe = (selectedRecipe, callback) => {
 
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
-    let query = `SELECT recipeID, recipeTitle, ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
+    let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
-                 JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
-                 GROUP BY recipeID;`
+                 JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
 
-    pool.query(query, (err, results) => {
+    pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -250,9 +249,9 @@ module.exports.getRecipeIngredientsTable = (callback) => {
 
 module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
     let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
-                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, ${recipeIngredient.uOm}, ${recipeIngredient.quantity});'`
+                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, '${recipeIngredient.uOm}', ${recipeIngredient.quantity});`
 
-    pool.query(query, (err, results) => {
+    pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)

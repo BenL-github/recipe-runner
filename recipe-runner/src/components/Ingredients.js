@@ -35,7 +35,6 @@ function Ingredients() {
 
     // handles add behavior
     const onAdd = () => {
-        console.log(ingredientName, ingredientPrice)
         axios({
             method: "POST",
             url: baseURL + "ingredients",
@@ -44,22 +43,35 @@ function Ingredients() {
                 price: ingredientPrice
             }
         })
-        .then((response) => {
-            setIngredientName("")
-            setIngredientPrice()
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+            .then((response) => {
+                setIngredientName("")
+                setIngredientPrice()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     // handles modify behavior
     const onModify = () => {
-
+        axios({
+            method: "PUT",
+            url: baseURL + "ingredients",
+            data: {
+                name: ingredientName,
+                price: ingredientPrice,
+                id: ingredientID
+            }
+        })
+            .then((response) => {
+                setIngredientName("")
+                setIngredientPrice()
+                setIngredientID()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
-
-
-    
 
     return (
         <>

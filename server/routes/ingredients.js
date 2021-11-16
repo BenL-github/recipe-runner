@@ -24,7 +24,7 @@ router.post('/ingredients', (req, res) => {
 })
 
 router.put('/ingredients', (req, res) => {
-    db.updateIngredient((err, results) => {
+    db.updateIngredient(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {

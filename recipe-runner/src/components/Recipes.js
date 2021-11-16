@@ -1,75 +1,136 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tables from './Tables'
 import RecipeInput from './RecipeInput'
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import axios from 'axios';
+import RecipeIngredients from './RecipeIngredients';
 
 function Recipes() {
+    const baseURL = "http://localhost:34876/"
+
+    // RECIPES
     const [keyword, setKeyword] = useState("")
     const [isResults, setIsResults] = useState(false)
     const [isNoResults, setIsNoResults] = useState(false)
     const [searchRows, setSearchRows] = useState([])
     const [recipeID, setRecipeID] = useState()
+    const [recipeRows, setRecipeRows] = useState([])
+    const [recipeTitle, setRecipeTitle] = useState()
+    const [recipeServing, setRecipeServing] = useState()
+    const [recipeDescription, setRecipeDescription] = useState()
 
-    const recipe_columns = [
-        { field: 'id', headerName: 'recipeID', width: 150 },
+    const recipeColumns = [
+        { field: 'recipeID', headerName: 'recipeID', width: 150 },
         { field: 'recipeTitle', headerName: 'recipeTitle', width: 200 },
         { field: 'recipeServing', headerName: 'recipeServing', type: 'number', width: 150 },
         { field: 'recipeDescription', headerName: 'recipeDescription', width: 800 },
     ];
 
-    // using state here to update web page when user adds or deletes a recipe
-    const [recipe_rows, set_recipe_rows] = useState([
-        { id: 1, recipeTitle: 'Chicken Parmesan', recipeServing: 3, recipeDescription: 'mmm it taste good' },
-        { id: 2, recipeTitle: 'Chicken Noodle Soup', recipeServing: 8, recipeDescription: 'good soup' },
-        { id: 3, recipeTitle: 'Chicken Tikka Masala', recipeServing: 5, recipeDescription: 'mmm it taste good' },
-        { id: 4, recipeTitle: 'Chicken Dumpling', recipeServing: 2, recipeDescription: 'mmm it taste good' },
-    ]);
+    // get request to database on page load
+    useEffect(() => {
+        axios
+            .get(baseURL + "recipes")
+            .then((response) => {
+                setRecipeRows(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }, [])
 
     // behavior when user adds a new recipe
-    const onNewRecipe = ({ title, serving, description }) => {
-        // will be a PUT to the database
-        const new_recipe = { id: Math.floor(Math.random() * 10000), recipeTitle: title, recipeServing: serving, recipeDescription: description }
-        set_recipe_rows([...recipe_rows, new_recipe])
-
+    const onAdd = () => {
+        axios({
+            method: "POST",
+            url: baseURL + "recipes",
+            data: {
+                title: recipeTitle,
+                description: recipeDescription,
+                serving: recipeServing
+            }
+        })
+            .then((response) => {
+                setRecipeTitle()
+                setRecipeDescription()
+                setRecipeServing()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     // behavior when user searches for a recipe
     const onSearch = () => {
-        // query database for matching SELECT
-        // const someFuncHere
-        let rows = []
-        recipe_rows.map((row) => {
-            let title = row.recipeTitle.toLowerCase()
-            if (title.includes(keyword)) {
-                rows.push(row)
-                setIsResults(true)
-                setIsNoResults(false)
+        axios({
+            method: "GET",
+            url: baseURL + `recipes/${keyword}`,
+            data: {
+                title: keyword
             }
         })
-
-        setSearchRows(rows)
-
-        if (rows.length < 1) {
-            setIsNoResults(true)
-            setIsResults(false)
-        }
+            .then((response) => {
+                if (response.data.length > 0) {
+                    setSearchRows(response.data)
+                    setIsResults(true)
+                    setIsNoResults(false)
+                } else {
+                    setIsNoResults(true)
+                    setIsResults(false)
+                }
+            })
+            .catch(function (error) {
+                console.log(error)
+                setIsNoResults(true)
+                setIsResults(false)
+            })
     }
 
     // behavior when a user deletes a recipe
     const onDelete = () => {
-        // send delete request to database
-
+        axios({
+            method: "DELETE",
+            url: baseURL + 'recipes',
+            data: {
+                id: recipeID
+            }
+        })
+            .then((response) => {
+                setRecipeID()
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     return (
         <>
             <Typography variant='h2'>Recipes</Typography>
-            <Tables columns={recipe_columns} rows={recipe_rows} />
-            <Typography variant='h3'>Enter New Recipe</Typography>
-            <RecipeInput buttonText={'Create New Recipe'} onNewRecipe={onNewRecipe} />
+            <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeID"} />
+
+            {/* Add new recipe */}
+            <div>
+                <Typography variant='h3'>Add New Recipe</Typography>
+                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Recipe Title' variant='outlined'
+                            onChange={(e) => setRecipeTitle(e.target.value)} />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Recipe Serving' variant='outlined'
+                            onChange={(e) => setRecipeServing(e.target.value)} />
+                    </Grid>
+                    <Grid item>
+                        <TextField id='outlined-basic' label='Recipe Description' variant='outlined'
+                            onChange={(e) => setRecipeDescription(e.target.value)} />
+                    </Grid>
+                    <Grid item sx={{ my: 'auto' }}>
+                        <Button variant="outlined" onClick={onAdd}> Create New Recipe </Button>
+                    </Grid>
+                </Grid>
+            </div>
             <Typography variant='h3'>Search for a Recipe</Typography>
 
             {/* Search Field */}
@@ -92,7 +153,7 @@ function Recipes() {
             {/* Results Found! */}
             {isResults && <>
                 <Typography variant="h4">Search Results</Typography>
-                <Tables columns={recipe_columns} rows={searchRows} />
+                <Tables columns={recipeColumns} rows={searchRows} rowIDTitle={"recipeID"} />
             </>}
 
             {/* Delete a Recipe */}
@@ -103,7 +164,7 @@ function Recipes() {
                         onChange={(e) => setRecipeID(e.target.value)} />
                 </Grid>
                 <Grid item sx={{ my: 'auto' }}>
-                    <Button variant="outlined" onClick={onSearch}> Delete </Button>
+                    <Button variant="outlined" onClick={onDelete}> Delete </Button>
                 </Grid>
             </Grid>
         </>
