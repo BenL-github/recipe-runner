@@ -16,9 +16,9 @@ const mysql = require('mysql');
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: "classmysql.engr.oregonstate.edu",
-    user: "cs340_jant",
-    password: "2989",
-    database: "cs340_jant"
+    user: "cs340_libenn",
+    password: "0469",
+    database: "cs340_libenn"
 })
 
 // RECIPES
@@ -142,7 +142,7 @@ module.exports.getUsersTable = (callback) => {
 
 module.exports.addUser = (user, callback) => {
     let query = `INSERT INTO Users (fName, lName, email, zipCode)
-                 VALUES (${user.fname}, ${user.lname}, ${user.email}, ${user.email}, ${user.zipCode});`
+                 VALUES ('${user.fname}', '${user.lname}', '${user.email}', ${user.zipCode});`
 
     pool.query(query, (err, result) => {
         if (err) {

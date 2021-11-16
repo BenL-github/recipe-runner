@@ -1,42 +1,62 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tables from './Tables'
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import axios from 'axios';
 
 function Users() {
+    const baseURL = "http://localhost:34876/"
     // USERS
     const user_columns = [
-        { field: 'id', headerName: 'customerID', width: 150 },
-        { field: 'cartID', headerName: 'cartID', width: 150 },
+        { field: 'customerID', headerName: 'customerID', width: 150 },
         { field: 'fName', headerName: 'fName', width: 150 },
         { field: 'lName', headerName: 'lName', width: 150 },
         { field: 'email', headerName: 'email', width: 150 },
         { field: 'zipCode', headerName: 'zipCode', width: 150 },
     ]
 
-    const user_rows = [
-        { id: 1, cartID: 1, lName: 'Snow', fName: 'Jon', email: 'example@ex.com', zipCode: '00000' },
-        { id: 2, cartID: 2, lName: 'Targ', fName: 'Dany', email: 'example@ex.com', zipCode: '00000' },
-        { id: 3, cartID: 3, lName: 'Snow', fName: 'Rob', email: 'example@ex.com', zipCode: '00000' },
-        { id: 4, cartID: 4, lName: 'Lannister', fName: 'Cersei', email: 'example@ex.com', zipCode: '00000' },
-    ]
-
     const [fname, setFname] = useState("")
     const [lname, setLname] = useState("")
     const [email, setEmail] = useState("")
-    const [zipcode, setZipcode] = useState("")
-    const [cart, setCart] = useState("")
+    const [zipCode, setZipCode] = useState()
+    const [user_rows, setUserRows] = useState([])
+
+    // get request to database on page load
+    useEffect(() => {
+        axios
+            .get(baseURL + "users")
+            .then((response) => {
+                console.log(response.data)
+                setUserRows(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }, [])
+
     // handles behavior to add a new user
     const onAdd = () => {
-        
+        axios({
+            method: "POST",
+            url: baseURL + "users",
+            data: {
+                fname: fname,
+                lname: lname,
+                email: email,
+                zipCode: zipCode
+            }
+        })
+            .catch((error)=>{
+                console.log(error);
+            })
     }
 
     return (
         <>
             <Typography variant='h2'>Users</Typography>
-            <Tables columns={user_columns} rows={user_rows} />
+            <Tables columns={user_columns} rows={user_rows} rowIDTitle={"customerID"} />
             <Typography variant='h3'>Add a User</Typography>
             <div>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
@@ -57,16 +77,9 @@ function Users() {
                     </Grid>
                     <Grid item>
                         <TextField id='outlined-basic' label='zipCode' variant='outlined' 
-                            onChange={(e) => setZipcode(e.target.value)}
+                            onChange={(e) => setZipCode(e.target.value)}
                         />
                     </Grid>
-
-                    <Grid item>
-                        <TextField id='outlined-basic' label='cartID' variant='outlined' 
-                            onChange={(e) => setCart(e.target.value)}
-                        />
-                    </Grid>
-
                     <Grid item sx={{ my: 'auto' }}>
                         <Button variant="outlined" onClick={onAdd}> Add </Button>
                     </Grid>

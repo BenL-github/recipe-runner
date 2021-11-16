@@ -13,7 +13,7 @@ router.get('/users', (req, res) => {
 })
 
 router.post('/users', (req,res) => {
-    db.addUser((err, results) => {
+    db.addUser(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
         } else {
