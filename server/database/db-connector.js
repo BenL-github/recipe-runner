@@ -249,7 +249,7 @@ module.exports.getRecipeIngredientsTable = (callback) => {
 
 module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
     let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
-                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, ${recipeIngredient.uOm}, ${recipeIngredient.quantity});'`
+                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, '${recipeIngredient.uOm}', ${recipeIngredient.quantity});`
 
     pool.query(query, (err, result) => {
         if (err) {

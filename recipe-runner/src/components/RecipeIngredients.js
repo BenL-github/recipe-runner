@@ -22,7 +22,7 @@ function RecipeIngredients() {
     const [recipeID, setRecipeID] = useState()
     const [ingredientID, setIngredientID] = useState()
     const [ingredientQuantity, setIngredientQuantity] = useState()
-    const [uom, setUOM] = useState()
+    const [uOm, setUOM] = useState()
     const [recipeIngredientsRows, setRecipeIngredientsRows] = useState([])
 
     // add mui placeholder ids
@@ -30,7 +30,7 @@ function RecipeIngredients() {
         let i = 0
         data.map((object) => {
             object["muiID"] = i
-            i++ 
+            i++
         })
     }
 
@@ -50,21 +50,37 @@ function RecipeIngredients() {
 
     // handle behavior when an ingredient is associated with a recipe
     const onIngredientAdd = () => {
-        // query database to get valid recipe and ingredient IDs
-        // if valid, add to database and update display
-
-        // if invalid, alert error message
+        axios({
+            method: "POST",
+            url: baseURL + 'recipeingredients',
+            data: {
+                recipeID: recipeID,
+                ingredientID: ingredientID,
+                uOm: uOm,
+                quantity: ingredientQuantity
+            }
+        })
+            .then((response) => {
+                setRecipeID()
+                setIngredientID()
+                setUOM()
+                setIngredientQuantity()
+            })
+            .catch(function (error) {
+                console.log(error)
+                alert("Ingredient or recipe does not exist.")
+                setRecipeID()
+                setIngredientID()
+                setUOM()
+                setIngredientQuantity()
+            })
     }
 
-    // verify that the recipe and ingredient exists
-    function validateRecipeIngredient() {
-
-    }
 
     return (
         <>
             <Typography variant='h2'>RecipeIngredients</Typography>
-            <Tables columns={recipeIngredientsColumns} rows={recipeIngredientsRows} rowIDTitle={"muiID"}/>
+            <Tables columns={recipeIngredientsColumns} rows={recipeIngredientsRows} rowIDTitle={"muiID"} />
 
             {/* Associate ingredients with recipes */}
             <Typography variant='h3'>Add Ingredients to a Recipe</Typography>
