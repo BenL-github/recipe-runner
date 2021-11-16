@@ -22,8 +22,8 @@ router.post('/recipes', (req, res) => {
     })
 })
 
-router.search('/recipes', (req, res) => {
-    db.searchRecipe((err, results) => {
+router.get('/recipes/:keyword', (req, res) => {
+    db.searchRecipe(req.params.keyword, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {

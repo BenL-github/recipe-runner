@@ -49,8 +49,8 @@ module.exports.addRecipe = (recipe, callback) => {
     })
 }
 
-module.exports.searchRecipe = (recipe, callback) => {
-    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE %${recipe.title}%;`
+module.exports.searchRecipe = (keyword, callback) => {
+    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE '%${keyword}%';`
 
     pool.query(query, (err, result) => {
         if (err) {

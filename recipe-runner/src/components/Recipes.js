@@ -65,23 +65,28 @@ function Recipes() {
     // behavior when user searches for a recipe
     const onSearch = () => {
         // query database for matching SELECT
-        // const someFuncHere
-        let rows = []
-        recipeRows.map((row) => {
-            let title = row.recipeTitle.toLowerCase()
-            if (title.includes(keyword)) {
-                rows.push(row)
-                setIsResults(true)
-                setIsNoResults(false)
+        axios({
+            method: "GET",
+            url: baseURL + `recipes/${keyword}`,
+            data: {
+                title: keyword
             }
         })
-
-        setSearchRows(rows)
-
-        if (rows.length < 1) {
-            setIsNoResults(true)
-            setIsResults(false)
-        }
+            .then((response) => {
+                if (response.data.length > 0) {
+                    setSearchRows(response.data)
+                    setIsResults(true)
+                    setIsNoResults(false)
+                } else {
+                    setIsNoResults(true)
+                    setIsResults(false)
+                }
+            })
+            .catch(function (error) {
+                console.log(error)
+                setIsNoResults(true)
+                setIsResults(false)
+            })
     }
 
     // behavior when a user deletes a recipe
@@ -138,7 +143,7 @@ function Recipes() {
             {/* Results Found! */}
             {isResults && <>
                 <Typography variant="h4">Search Results</Typography>
-                <Tables columns={recipeColumns} rows={searchRows} />
+                <Tables columns={recipeColumns} rows={searchRows} rowIDTitle={"recipeID"} />
             </>}
 
             {/* Delete a Recipe */}
