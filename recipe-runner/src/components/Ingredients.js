@@ -73,9 +73,6 @@ function Ingredients() {
         })
     }
 
-
-    
-
     return (
         <>
             <Typography variant='h2'>Ingredients</Typography>

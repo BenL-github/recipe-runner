@@ -233,12 +233,11 @@ module.exports.addSelectedRecipe = (selectedRecipe, callback) => {
 
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
-    let query = `SELECT recipeID, recipeTitle, ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
+    let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
-                 JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
-                 GROUP BY recipeID;`
+                 JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
 
-    pool.query(query, (err, results) => {
+    pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -252,7 +251,7 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
     let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
                  VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, ${recipeIngredient.uOm}, ${recipeIngredient.quantity});'`
 
-    pool.query(query, (err, results) => {
+    pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
