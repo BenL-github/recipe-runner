@@ -16,21 +16,34 @@ function Ingredients() {
         { field: 'price', headerName: 'price', type: 'number', width: 90 }
     ];
 
-    // const ingr_rows = [
-    //     { id: 1, ingredientName: 'Chicken Breast', price: 3.99 },
-    //     { id: 2, ingredientName: 'Wheat Noodles', price: 4.00 },
-    //     { id: 3, ingredientName: 'Tikka Masala Sauce', price: 7.50 },
-    //     { id: 4, ingredientName: 'Chinese Dumpling Wrappers', price: 3.25 },
-    // ];
-
     const [ingredientName, setIngredientName] = useState("")
     const [ingredientPrice, setIngredientPrice] = useState()
     const [ingredientID, setIngredientID] = useState()
     const [ingredientRows, setIngredientRows] = useState([])
 
+    // get request to database on page load
+    useEffect(() => {
+        axios
+            .get(baseURL + "ingredients")
+            .then((response) => {
+                setIngredientRows(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }, [])
+
     // handles add behavior
     const onAdd = () => {
-
+        console.log(ingredientName, ingredientPrice)
+        axios({
+            method: "POST",
+            url: baseURL + "ingredients",
+            data: {
+                name: ingredientName,
+                price: ingredientPrice
+            }
+        })
     }
 
     // handles modify behavior
@@ -38,20 +51,8 @@ function Ingredients() {
 
     }
 
-    // retrieve rows from api
-    // useEffect(() => {
-    //     fetch('/api/ingredients')
-    //     .then(res => res.json())
-    //     .then(ingredients => console.log({ingredients}))
-    // })
 
-    useEffect(() => {
-        axios
-            .get(baseURL + "ingredients")
-            .then((response) => {
-                setIngredientRows(response.data)
-            })
-    }, [])
+    
 
     return (
         <>

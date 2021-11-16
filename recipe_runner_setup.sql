@@ -120,7 +120,7 @@ UNLOCK TABLES;
 --
 
 CREATE TABLE `Ingredients`(
-    `ingredientID` int(11) UNIQUE NOT NULL,
+    `ingredientID` int(11) UNIQUE NOT NULL AUTO_INCREMENT,
     `ingredientName` varchar(255) NOT NULL,
     `price` DECIMAL(6,2) NOT NULL,
     PRIMARY KEY (`ingredientID`)

@@ -95,7 +95,7 @@ module.exports.getIngredientsTable = (callback) => {
 
 module.exports.addIngredient = (ingredient, callback) => {
     let query = `INSERT INTO Ingredients (ingredientName, price)
-                 VALUES (${ingredient.name}, ${ingredient.price});`
+                 VALUES ('${ingredient.name}', ${ingredient.price});`
 
     pool.query(query, (err, result) => {
         if (err) {
