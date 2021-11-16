@@ -13,7 +13,7 @@ router.get('/recipes', (req, res) => {
 })
 
 router.post('/recipes', (req, res) => {
-    db.addRecipe((err, results) => {
+    db.addRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
         } else {
