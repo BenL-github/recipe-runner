@@ -19,8 +19,6 @@ function Users() {
         { field: 'zipCode', headerName: 'zipCode', width: 150 },
     ]
 
-    
-
     const [fname, setFname] = useState("")
     const [lname, setLname] = useState("")
     const [email, setEmail] = useState("")
@@ -28,14 +26,14 @@ function Users() {
     const [user_rows, setUserRows] = useState([])
 
     const form = {
-        buttonLabel:"Add User", 
-        title:"Add New User", 
-        text:"Please insert user's first name, last name, email, and zip",
+        buttonLabel: "Add User",
+        title: "Add New User",
+        text: "Please insert user's first name, last name, email, and zip",
         inputs: [
-            {id:"fname", label:"fname", type:"text", key:"fname", hook: setFname},
-            {id:"lname", label:"lname", type:"text", key:"lname", hook: setLname},
-            {id:"email", label:"email", type:"email", key:"email", hook: setEmail},
-            {id:"zipCode", label:"zipCode", type:"number", key:"zipCode", hook: setZipCode},
+            { id: "fname", label: "fname", type: "text", key: "fname", hook: setFname },
+            { id: "lname", label: "lname", type: "text", key: "lname", hook: setLname },
+            { id: "email", label: "email", type: "email", key: "email", hook: setEmail },
+            { id: "zipCode", label: "zipCode", type: "number", key: "zipCode", hook: setZipCode },
         ]
     }
 
@@ -64,81 +62,25 @@ function Users() {
                 zipCode: zipCode
             }
         })
-            .catch((error)=>{
+            .catch((error) => {
                 console.log(error);
             })
     }
 
     return (
-        <>  
-            <Container maxWidth='false' sx={{display:'flex', justifyContent:'space-between', width:'95%', mb:'0.5em'}}>
+        <>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>Users Table</Typography>
-                <FormDialog 
+                <FormDialog
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}
                     submitAction={onAdd}
                     inputs={form.inputs}
-                    sx={{m:'1em'}}
+                    sx={{ m: '1em' }}
                 />
             </Container>
             <Tables columns={user_columns} rows={user_rows} rowIDTitle={"customerID"} />
-            {/* <Typography variant='h3'>Add a User</Typography>
-            <div>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='fName' variant='outlined' 
-                            onChange={(e) => setFname(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='lName' variant='outlined' 
-                            onChange={(e) => setLname(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='email' variant='outlined' 
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='zipCode' variant='outlined' 
-                            onChange={(e) => setZipCode(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onAdd}> Add </Button>
-                    </Grid>
-                </Grid>
-            </div>
-            <Typography variant='h3'>Update a User</Typography>
-            <div>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='userID' variant='outlined' />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='fName' variant='outlined' />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='lName' variant='outlined' />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='email' variant='outlined' />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='zipCode' variant='outlined' />
-                    </Grid>
-
-                    <Grid item>
-                        <TextField id='outlined-basic' label='cartID' variant='outlined' />
-                    </Grid>
-
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined"> Update </Button>
-                    </Grid>
-                </Grid>
-            </div> */}
         </>
     )
 }
