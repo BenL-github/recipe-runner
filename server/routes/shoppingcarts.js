@@ -13,7 +13,7 @@ router.get('/shoppingcarts', (req, res) => {
 })
 
 router.post('/shoppingcarts', (req, res) => {
-    db.addShoppingCart((err, results) => {
+    db.addShoppingCart(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
         } else {

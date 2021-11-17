@@ -184,8 +184,8 @@ module.exports.getShoppingCartsTable = (callback) => {
 }
 
 module.exports.addShoppingCart = (cart, callback) => {
-    let query = `INSERT INTO ShoppingCarts (cartID, customerID)
-                 VALUES (${cart.id}, ${cart.userID});`
+    let query = `INSERT INTO ShoppingCarts (cartID, cartOwner)
+                 VALUES (${cart.cartID}, ${cart.cartOwner});`
 
     pool.query(query, (err, result) => {
         if (err) {

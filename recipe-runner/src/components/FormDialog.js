@@ -25,7 +25,7 @@ export default function FormDialog(props) {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen} sx={{my:'auto'}}>
+      <Button variant="outlined" onClick={handleClickOpen} sx={{my:'auto', marginLeft: '1em'}}>
         {buttonLabel}
       </Button>
       <Dialog open={open} onClose={handleClose}>

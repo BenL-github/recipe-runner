@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Tables from './Tables'
 import { Typography } from '@mui/material';
-import { Grid } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
+import { Container } from '@mui/material';
 import axios from 'axios';
+import FormDialog from './FormDialog';
 
 function ShoppingCarts() {
     const baseURL = "http://localhost:34876/"
@@ -15,9 +14,19 @@ function ShoppingCarts() {
         // add a function to get the full name of the owner from the user data
     ]
 
-    const [username, setUsername] = useState("");
-    const [userID, setUserID] = useState();
+    const [cartID, setCartID] = useState();
+    const [cartOwner, setCartOwner] = useState();
     const [cartRows, setCartRows] = useState([]);
+
+    const form = {
+        buttonLabel: "Add Cart",
+        title: "Add New Cart",
+        text: "Please enter a valid customerID along with the new cart.",
+        inputs: [
+            { id: "cartID", label: "cartID", type: "number", key: "cartID", hook: setCartID },
+            { id: "cartOwner", label: "cartOwner", type: "number", key: "cartOwner", hook: setCartOwner },
+        ]
+    }
 
     // add mui placeholder ids
     const addIDs = (data) => {
@@ -43,29 +52,35 @@ function ShoppingCarts() {
             })
     }, [])
 
+    // add 
+    function onAdd(){
+        axios({
+            method: "POST",
+            url: baseURL + "shoppingcarts",
+            data: {
+                cartID: cartID,
+                cartOwner: cartOwner
+            }
+        })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     return (
         <>
-            <Typography variant='h2'>ShoppingCarts</Typography>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+                <Typography variant='h3'>ShoppingCarts Table</Typography>
+                <FormDialog
+                    buttonLabel={form.buttonLabel}
+                    title={form.title}
+                    text={form.text}
+                    submitAction={onAdd}
+                    inputs={form.inputs}
+                    sx={{ m: '1em' }}
+                />
+            </Container>
             <Tables columns={cart_columns} rows={cartRows} rowIDTitle={"muiID"}/>
-            <div style={{ marginTop: 10 }}>
-                {/* Insert new shopping cart */}
-                <Typography variant='h3'>Create a New Shopping Cart</Typography>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Cart ID#' variant='outlined'
-                            onChange={(e) => setUsername(e.target.value)} />
-                    </Grid>
-                    
-                    <Grid item>
-                        <TextField id='outlined-basic' label='User ID#' variant='outlined'
-                            onChange={(e) => setUserID(e.target.value)} />
-                    </Grid>
-                    
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" > Create New Cart </Button>
-                    </Grid>
-                </Grid>
-            </div>
         </>
     )
 }

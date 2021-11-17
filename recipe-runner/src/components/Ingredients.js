@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'
 import Tables from './Tables'
 import { Typography } from '@mui/material';
-import { Grid } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
+import FormDialog from './FormDialog';
+import Container from '@mui/material/Container';
 
 function Ingredients() {
     const baseURL = "http://localhost:34876/"
@@ -20,6 +19,27 @@ function Ingredients() {
     const [ingredientPrice, setIngredientPrice] = useState()
     const [ingredientID, setIngredientID] = useState()
     const [ingredientRows, setIngredientRows] = useState([])
+
+    const add_form = {
+        buttonLabel: "Add Ingredient",
+        title: "Add New Ingredient",
+        text: "Please an ingredient name and a valid price.",
+        inputs: [
+            { id: "ingredientName", label: "ingredientName", type: "text", key: "ingredientName", hook: setIngredientName },
+            { id: "ingredientPrice", label: "ingredientPrice", type: "number", key: "ingredientPrice", hook: setIngredientPrice }
+        ]
+    }
+
+    const update_form = {
+        buttonLabel: "Update Ingredient",
+        title: "Update Ingredient",
+        text: "Please a valid ingredient id along with changes.",
+        inputs: [
+            { id: "ingredientID", label: "ingredientID", type: "number", key: "ingredientID", hook: setIngredientID },
+            { id: "ingredientName", label: "ingredientName", type: "text", key: "ingredientName", hook: setIngredientName },
+            { id: "ingredientPrice", label: "ingredientPrice", type: "number", key: "ingredientPrice", hook: setIngredientPrice }
+        ]
+    }
 
     // get request to database on page load
     useEffect(() => {
@@ -75,31 +95,30 @@ function Ingredients() {
 
     return (
         <>
-            <Typography variant='h2'>Ingredients</Typography>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+                <Typography variant='h3'>Ingredients Table</Typography>
+                <Container disableGutters sx={{width:'auto', marginRight: 0, marginLeft: 0, display:'flex', justifyContent: 'space-around', px:0}}>
+                    <FormDialog
+                        buttonLabel={add_form.buttonLabel}
+                        title={add_form.title}
+                        text={add_form.text}
+                        submitAction={onAdd}
+                        inputs={add_form.inputs}
+                    />
+                    <FormDialog
+                        buttonLabel={update_form.buttonLabel}
+                        title={update_form.title}
+                        text={update_form.text}
+                        submitAction={onModify}
+                        inputs={update_form.inputs}
+                        sx={{ marginLeft:'1em'}}
+                    />
+                </Container>
+            </Container>
+
             <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientID"} />
 
-            {/* ADD a new ingredient */}
-            <div>
-                <Typography variant='h3'>Add an Ingredient</Typography>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined'
-                            onChange={(e) => setIngredientName(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='price' variant='outlined'
-                            onChange={(e) => setIngredientPrice(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onAdd}> Add </Button>
-                    </Grid>
-                </Grid>
-            </div>
-
-            {/* UPDATE existing ingredient */}
-            <div style={{ marginTop: 10 }}>
+            {/* <div style={{ marginTop: 10 }}>
                 <Typography variant='h3'>Update an Ingredient</Typography>
                 <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                     <Grid item>
@@ -121,7 +140,7 @@ function Ingredients() {
                         <Button variant="outlined" onClick={onModify}> Modify </Button>
                     </Grid>
                 </Grid>
-            </div>
+            </div> */}
         </>
     )
 }
