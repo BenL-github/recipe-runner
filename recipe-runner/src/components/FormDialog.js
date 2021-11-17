@@ -15,20 +15,17 @@ export default function FormDialog(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const handleSubmit = () => {
+    setOpen(false);
+    submitAction();
+  }
   const handleClose = () => {
-    if(submitAction == undefined){
-      setOpen(false);
-    } else {
-      setOpen(false);
-      submitAction();
-    }
-    
+    setOpen(false);
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+    <>
+      <Button variant="outlined" onClick={handleClickOpen} sx={{my:'auto'}}>
         {buttonLabel}
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -40,10 +37,10 @@ export default function FormDialog(props) {
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
