@@ -171,9 +171,7 @@ module.exports.updateUser = (user, callback) => {
 
 // SHOPPING CARTS
 module.exports.getShoppingCartsTable = (callback) => {
-    let query = `SELECT cartID, cartOwner, fullName AS (fName, lName) FROM ShoppingCarts
-                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner
-                 GROUP BY cartID;`
+    let query = `SELECT * FROM ShoppingCarts;`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -260,26 +258,3 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
         }
     })
 }
-
-// Export it for use in our application
-module.exports.getRecipesTable;
-module.exports.addRecipe
-module.exports.searchRecipe
-module.exports.deleteRecipe
-
-module.exports.getIngredientsTable;
-module.exports.addIngredient
-module.exports.updateIngredient
-
-module.exports.getUsersTable;
-module.exports.addUser
-module.exports.updateUser
-
-module.exports.getShoppingCartsTable;
-module.exports.addShoppingCart
-
-module.exports.getSelectedRecipesTable;
-module.exports.addSelectedRecipe
-
-module.exports.getRecipeIngredientsTable;
-module.exports.addRecipeIngredient

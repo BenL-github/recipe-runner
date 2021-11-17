@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 
-export default function Navigation(props) {
+export default function Navigation() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -55,7 +55,7 @@ export default function Navigation(props) {
                         <MenuItem onClick={handleClose}><Link href="recipeingredients" underline='none'>RecipeIngredients</Link></MenuItem>
                     </Menu>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        RecipeRunner Admin
+                        <Link href="/" underline='none' color="inherit">RecipeRunner Admin</Link>
                     </Typography>
                     <Button href="/" color="inherit">Home</Button>
                     <Button color="inherit">Logout</Button>

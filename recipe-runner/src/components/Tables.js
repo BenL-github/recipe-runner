@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import * as React from 'react';
-import { DataGrid, GridArrowUpwardIcon } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { DataGrid} from '@mui/x-data-grid';
 
 const Tables = ({ columns, rows, rowIDTitle }) => {
 
