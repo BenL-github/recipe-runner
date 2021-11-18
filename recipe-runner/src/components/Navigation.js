@@ -22,7 +22,7 @@ export default function Navigation() {
 
     return (
         <Box sx={{ flexGrow: 1, mb: 4 }}>
-            <AppBar position="static" elevation={1}color="warning">
+            <AppBar position="static" elevation={1}sx={{backgroundColor: "#4673A2"}}>
                 <Toolbar>
                     <IconButton
                         id="basic-button"

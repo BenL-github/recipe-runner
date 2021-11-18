@@ -62,6 +62,9 @@ function ShoppingCarts() {
                 cartOwner: cartOwner
             }
         })
+            .then((res) => {
+                window.location.reload();
+            })
             .catch((err) => {
                 console.log(err);
             })

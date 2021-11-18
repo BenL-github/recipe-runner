@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
-import { Grid } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
 import { Container } from '@mui/material';
@@ -24,7 +23,7 @@ function Recipes() {
     const [recipeDescription, setRecipeDescription] = useState()
 
     const add_form = {
-        buttonLabel: "Add Recipe",
+        buttonLabel: "Add a Recipe",
         title: "Add New Recipe",
         text: "Please enter recipe title, how many people the recipe serves, and a short description.",
         inputs: [
@@ -35,7 +34,7 @@ function Recipes() {
     }
 
     const delete_form = {
-        buttonLabel: "Delete Recipe",
+        buttonLabel: "Delete a Recipe",
         title: "Delete a Recipe",
         text: "Please enter valid recipe ID to be deleted.",
         inputs: [
@@ -74,9 +73,7 @@ function Recipes() {
             }
         })
             .then((response) => {
-                setRecipeTitle()
-                setRecipeDescription()
-                setRecipeServing()
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)
@@ -87,26 +84,36 @@ function Recipes() {
     const onSearch = () => {
         axios({
             method: "GET",
-            url: baseURL + `recipes/${keyword}`,
-            data: {
-                title: keyword
-            }
+            url: baseURL + `recipes/`,
+            params: {
+                keyword: keyword
+            },
         })
-            .then((response) => {
-                if (response.data.length > 0) {
-                    setSearchRows(response.data)
-                    setIsResults(true)
-                    setIsNoResults(false)
+            .then((res) => {
+                if (res.data.length > 0) {
+                    setRecipeRows(res.data);
                 } else {
-                    setIsNoResults(true)
-                    setIsResults(false)
+                    setRecipeRows([]);
                 }
             })
-            .catch(function (error) {
-                console.log(error)
-                setIsNoResults(true)
-                setIsResults(false)
+            .catch((err) => {
+                console.log(err);
             })
+        // .then((response) => {
+        //     if (response.data.length > 0) {
+        //         setSearchRows(response.data)
+        //         setIsResults(true)
+        //         setIsNoResults(false)
+        //     } else {
+        //         setIsNoResults(true)
+        //         setIsResults(false)
+        //     }
+        // })
+        // .catch(function (error) {
+        //     console.log(error)
+        //     setIsNoResults(true)
+        //     setIsResults(false)
+        // })
     }
 
     // behavior when a user deletes a recipe
@@ -119,7 +126,7 @@ function Recipes() {
             }
         })
             .then((response) => {
-                setRecipeID()
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)
@@ -130,7 +137,21 @@ function Recipes() {
         <>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>Recipes Table</Typography>
-                <Container disableGutters sx={{width:'auto', marginRight: 0, marginLeft: 0, display:'flex', justifyContent: 'space-around', px:0}}>
+                <Container disableGutters sx={{ width: 'auto', marginRight: 0, marginLeft: 0, display: 'flex', justifyContent: 'space-around', px: 0 }}>
+                    <TextField
+                        id='outlined-basic'
+                        size="small"
+                        label='Search Title'
+                        variant='outlined'
+                        onChange={(e) => setKeyword(e.target.value)}
+                        sx={{ marginLeft: '1em', my:'auto'}}
+                    />
+                    <Button
+                        variant="outlined"
+                        onClick={onSearch}
+                        sx={{ marginLeft: '1em', my: 'auto' }}
+                    >Search</Button>
+
                     <FormDialog
                         buttonLabel={add_form.buttonLabel}
                         title={add_form.title}
@@ -147,13 +168,15 @@ function Recipes() {
                     />
                 </Container>
             </Container>
+
             <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeID"} />
 
-            
-            <Typography variant='h3'>Search for a Recipe</Typography>
 
-            {/* Search Field */}
-            <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
+            {/*             
+            <Typography variant='h3'>Search for a Recipe</Typography> */}
+
+
+            {/* <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
                 <Grid item>
                     <TextField id='outlined-basic' label='Title Keyword' variant='outlined'
                         onChange={(e) => setKeyword(e.target.value)} />
@@ -161,19 +184,19 @@ function Recipes() {
                 <Grid item sx={{ my: 'auto' }}>
                     <Button variant="outlined" onClick={onSearch}> Search </Button>
                 </Grid>
-            </Grid>
+            </Grid> */}
 
-            {/* No Matching Results */}
+            {/*             
             {isNoResults && <>
                 <Typography variant='h4'>Search Results</Typography>
                 <Typography variant='p'>{`No recipes with the keyword "${keyword}"; try again with a different keyword or add a new recipe!`}</Typography>
             </>}
 
-            {/* Results Found! */}
+            
             {isResults && <>
                 <Typography variant="h4">Search Results</Typography>
                 <Tables columns={recipeColumns} rows={searchRows} rowIDTitle={"recipeID"} />
-            </>}
+            </>} */}
         </>
     )
 }

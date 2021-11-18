@@ -72,10 +72,7 @@ function RecipeIngredients() {
             }
         })
             .then((response) => {
-                setRecipeID()
-                setIngredientID()
-                setUOM()
-                setIngredientQuantity()
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)

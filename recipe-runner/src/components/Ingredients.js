@@ -64,8 +64,7 @@ function Ingredients() {
             }
         })
             .then((response) => {
-                setIngredientName("")
-                setIngredientPrice()
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)
@@ -84,9 +83,7 @@ function Ingredients() {
             }
         })
             .then((response) => {
-                setIngredientName("")
-                setIngredientPrice()
-                setIngredientID()
+                window.location.reload();
             })
             .catch(function (error) {
                 console.log(error)
@@ -118,29 +115,7 @@ function Ingredients() {
 
             <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientID"} />
 
-            {/* <div style={{ marginTop: 10 }}>
-                <Typography variant='h3'>Update an Ingredient</Typography>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient ID' variant='outlined'
-                            onChange={(e) => setIngredientID(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Ingredient Name' variant='outlined'
-                            onChange={(e) => setIngredientName(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='price' variant='outlined'
-                            onChange={(e) => setIngredientPrice(e.target.value)}
-                        />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onModify}> Modify </Button>
-                    </Grid>
-                </Grid>
-            </div> */}
+
         </>
     )
 }

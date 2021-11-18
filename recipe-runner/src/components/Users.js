@@ -59,6 +59,9 @@ function Users() {
                 zipCode: zipCode
             }
         })
+            .then((res) => {
+                window.location.reload();
+            })
             .catch((error) => {
                 console.log(error);
             })

@@ -65,6 +65,9 @@ function SelectedRecipes() {
                 selectedQuantity: selectedQuantity
             }
         })
+            .then((res) => {
+                window.location.reload();
+            })
             .catch((err) => {
                 console.log(err);
             })
