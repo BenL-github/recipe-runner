@@ -5,8 +5,8 @@ import axios from 'axios';
 import FormDialog from './FormDialog';
 import { Container } from '@mui/material';
 
-function Users() {
-    const baseURL = "http://localhost:34876/"
+function Users(props) {
+    const { baseURL } = props;
     // USERS
     const user_columns = [
         { field: 'customerID', headerName: 'customerID', width: 150 },

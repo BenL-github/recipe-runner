@@ -20,6 +20,8 @@ const theme = createTheme({
         fontWeightBold: 700
     }
 })
+
+const baseURL = "http://localhost:34876/"
 function App() {
     return (
         <Router>
@@ -34,36 +36,32 @@ function App() {
 
                         {/* Recipes */}
                         <Route path='/recipes'>
-                            <Recipes />
+                            <Recipes baseURL={baseURL}/>
                         </Route>
 
                         {/* Ingredients */}
                         <Route path='/ingredients'>
-                            <Ingredients />
+                            <Ingredients baseURL={baseURL}/>
                         </Route>
 
                         {/* Users */}
                         <Route path='/users'>
-                            <Users />
+                            <Users baseURL={baseURL}/>
                         </Route>
 
                         {/* Shopping Carts */}
                         <Route path='/shoppingcarts'>
-                            <ShoppingCarts />
+                            <ShoppingCarts baseURL={baseURL}/>
                         </Route>
 
                         {/* Selected Recipes */}
                         <Route path='/selectedrecipes'>
-                            <SelectedRecipes />
+                            <SelectedRecipes baseURL={baseURL}/>
                         </Route>
 
                         {/* Recipe Ingredients */}
                         <Route path='/recipeingredients'>
-                            <RecipeIngredients />
-                        </Route>
-
-                        <Route path='/testing'>
-                            <TestingForm />
+                            <RecipeIngredients baseURL={baseURL}/>
                         </Route>
                     </Switch>
                 </Container>

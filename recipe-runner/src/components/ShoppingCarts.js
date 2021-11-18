@@ -5,8 +5,8 @@ import axios from 'axios';
 import FormDialog from './FormDialog';
 import Tables from './Tables'
 
-function ShoppingCarts() {
-    const baseURL = "http://localhost:34876/"
+function ShoppingCarts(props) {
+    const { baseURL } = props;
     // SHOPPING CARTS
     const cart_columns = [
         { field: 'cartID', headerName: 'cartID', width: 150 },

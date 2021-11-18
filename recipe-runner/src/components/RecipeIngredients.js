@@ -5,8 +5,8 @@ import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
 import FormDialog
  from './FormDialog';
-function RecipeIngredients() {
-    const baseURL = "http://localhost:34876/"
+function RecipeIngredients(props) {
+    const { baseURL } = props;
 
     // RECIPE INGREDIENTS
     const recipeIngredientsColumns = [

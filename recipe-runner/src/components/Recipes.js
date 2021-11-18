@@ -7,8 +7,8 @@ import FormDialog from './FormDialog';
 import axios from 'axios';
 import Tables from './Tables'
 
-function Recipes() {
-    const baseURL = "http://localhost:34876/"
+function Recipes(props) {
+    const { baseURL } = props;
 
     // RECIPES
     const [keyword, setKeyword] = useState("")

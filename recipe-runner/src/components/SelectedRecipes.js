@@ -5,8 +5,8 @@ import axios from 'axios';
 import FormDialog from './FormDialog';
 import Tables from './Tables';
 
-function SelectedRecipes() {
-    const baseURL = "http://localhost:34876/"
+function SelectedRecipes(props) {
+    const { baseURL } = props;
 
     // SELECTED RECIPES
     const selectedRecipeColumns = [
