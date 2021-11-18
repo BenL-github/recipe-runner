@@ -12,8 +12,8 @@ router.get('/selectedrecipes', (req, res) => {
     })
 })
 
-router.post('selectedrecipes', (req, res) => {
-    db.addSelectedRecipe((err, results) => {
+router.post('/selectedrecipes', (req, res) => {
+    db.addSelectedRecipe(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
         } else {

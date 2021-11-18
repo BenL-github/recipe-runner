@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import Tables from './Tables'
 import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
 import axios from 'axios';
 import FormDialog from './FormDialog';
+import Tables from './Tables'
 
 function ShoppingCarts() {
     const baseURL = "http://localhost:34876/"
@@ -12,7 +12,7 @@ function ShoppingCarts() {
         { field: 'cartID', headerName: 'cartID', width: 150 },
         { field: 'cartOwner', headerName: 'cartOwner', width: 150 },
         // add a function to get the full name of the owner from the user data
-    ]
+    ];
 
     const [cartID, setCartID] = useState();
     const [cartOwner, setCartOwner] = useState();
@@ -26,7 +26,7 @@ function ShoppingCarts() {
             { id: "cartID", label: "cartID", type: "number", key: "cartID", hook: setCartID },
             { id: "cartOwner", label: "cartOwner", type: "number", key: "cartOwner", hook: setCartOwner },
         ]
-    }
+    };
 
     // add mui placeholder ids
     const addIDs = (data) => {
@@ -35,7 +35,7 @@ function ShoppingCarts() {
             object["muiID"] = i
             i++
         })
-    }
+    };
 
     // get request to database on page load
     useEffect(() => {
@@ -50,7 +50,7 @@ function ShoppingCarts() {
             .catch(function (error) {
                 console.log(error)
             })
-    }, [])
+    }, []);
 
     // add 
     function onAdd(){
@@ -65,7 +65,7 @@ function ShoppingCarts() {
             .catch((err) => {
                 console.log(err);
             })
-    }
+    };
 
     return (
         <>

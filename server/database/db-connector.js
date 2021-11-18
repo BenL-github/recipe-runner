@@ -199,12 +199,7 @@ module.exports.addShoppingCart = (cart, callback) => {
 
 // SELECTED RECIPES
 module.exports.getSelectedRecipesTable = (callback) => {
-    let query = `SELECT cartID, fullName AS (fName, lName), recipeID, recipeTitle, selectedQuantity FROM SelectedRecipes
-                 JOIN ShoppingCarts ON ShoppingCarts.cartID = SelectedRecipes.cartID
-                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner
-                 JOIN Recipes ON Recipes.recipeID = SelectedRecipes.recipeID
-                 GROUP BY cartID;`
-
+    let query = `SELECT * FROM SelectedRecipes;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -215,9 +210,9 @@ module.exports.getSelectedRecipesTable = (callback) => {
     })
 }
 
-module.exports.addSelectedRecipe = (selectedRecipe, callback) => {
+module.exports.addSelectedRecipe = (data, callback) => {
     let query = `INSERT INTO SelectedRecipes (selectedCart, selectedRecipe, selectedQuantity)
-                 VALUES (${selectedRecipe.cartID}, ${selectedRecipe.recipeID}, ${selectedRecipe.quantity});`
+                 VALUES (${data.selectedCart}, ${data.selectedRecipe}, ${data.selectedQuantity});`
 
     pool.query(query, (err, result) => {
         if (err) {

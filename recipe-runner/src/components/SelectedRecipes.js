@@ -1,68 +1,89 @@
-import { useState } from 'react';
-import Tables from './Tables'
+import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
-import { Grid } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
+import { Container } from '@mui/material';
+import axios from 'axios';
+import FormDialog from './FormDialog';
+import Tables from './Tables';
 
 function SelectedRecipes() {
+    const baseURL = "http://localhost:34876/"
+
     // SELECTED RECIPES
-    const selected_recipe_columns = [
-        // should be pulled from shopping carts
-        { field: 'id', headerName: 'cartID', width: 75 },
-        { field: 'recipeID', headername: 'recipeID', width: 100 },
-        // should be pulled from recipes
+    const selectedRecipeColumns = [
+        { field: 'selectedCart', headerName: 'selectedCart', width: 200 },
+        { field: 'selectedRecipe', headername: 'selectedRecipe', width: 200 },
         { field: 'selectedQuantity', headername: 'selectedQuantity', width: 200 }
-    ]
+    ];
 
-    const selected_recipe_rows = [
-        { id: 1, recipeID: 1, selectedQuantity: 1 },
-        { id: 2, recipeID: 2, selectedQuantity: 3 },
-        { id: 3, recipeID: 4, selectedQuantity: 2 },
-        { id: 3, recipeID: 2, selectedQuantity: 2 },
-    ]
+    const [selectedCart, setCartID] = useState();
+    const [selectedRecipe, setRecipeID] = useState();
+    const [selectedQuantity, setSelectedQuantity] = useState();
+    const [selectedRecipeRows, setSelectedRecipeRows] = useState([]);
 
-    const [cartID, setCartID] = useState()
-    const [recipeID, setRecipeID] = useState()
-    const [recipeQuantity, setRecipeQuantity] = useState()
+    const form = {
+        buttonLabel: "Add SelectedRecipe",
+        title: "Add New Recipe to a Cart",
+        text: "Please enter a valid cart ID and valid recipe ID in addition to the quantity.",
+        inputs: [
+            { id: "selectedCart", label: "selectedCart", type: "number", key: "selectedCart", hook: setCartID },
+            { id: "selectedRecipe", label: "selectedRecipe", type: "number", key: "selectedRecipe", hook: setRecipeID },
+            { id: "selectedQuantity", label: "quantity", type: "number", key: "selectedQuantity", hook: setSelectedQuantity }
+        ]
+    };
 
-    // handles behavior when a new recipe is added to the cart
-    const onNewSelectedRecipe = () => {
-        // query database for recipe IDs and userIDs 
-        // if valid cart and recipe append to display rows
+    // add mui placeholder ids
+    const addIDs = (data) => {
+        let i = 0
+        data.map((object) => {
+            object["muiID"] = i
+            i++
+        })
+    };
 
-        // if invalid, error message
-    }
+    // get request to database on page load
+    useEffect(() => {
+        axios
+            .get(baseURL + 'selectedrecipes')
+            .then((response) => {
+                let data = response.data;
+                addIDs(data);
+                setSelectedRecipeRows(data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }, []);
 
-    // verify that the cart and recipe exists and the quantity added is greater than 1
-    function validateCart() {
-        // use the same logic here as in shopping carts
-    }
+    // add 
+    function onAdd(){
+        axios({
+            method: "POST",
+            url: baseURL + "selectedrecipes",
+            data: {
+                selectedCart: selectedCart,
+                selectedRecipe: selectedRecipe,
+                selectedQuantity: selectedQuantity
+            }
+        })
+            .catch((err) => {
+                console.log(err);
+            })
+    };
 
     return (
         <>
-            <Typography variant='h2'>SelectedRecipes</Typography>
-            <Tables columns={selected_recipe_columns} rows={selected_recipe_rows} />
-
-            {/* Insert new selected recipe (associate recipe with shopping cart) */}
-            <Typography variant='h3'>Add Recipes to a Shopping Cart</Typography>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='CartID#' variant='outlined'
-                            onChange={(e) => setCartID(e.target.value)} />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='RecipeID#' variant='outlined'
-                            onChange={(e) => setRecipeID(e.target.value)} />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Recipe Quantity' variant='outlined'
-                            onChange={(e) => setRecipeQuantity(e.target.value)} />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onNewSelectedRecipe}> Add Recipe to Cart </Button>
-                    </Grid>
-                </Grid>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+                <Typography variant='h3'>SelectedRecipes Table</Typography>
+                <FormDialog
+                    buttonLabel={form.buttonLabel}
+                    title={form.title}
+                    text={form.text}
+                    submitAction={onAdd}
+                    inputs={form.inputs}
+                    sx={{ m: '1em' }}
+                />
+            </Container>
+            <Tables columns={selectedRecipeColumns} rows={selectedRecipeRows} rowIDTitle={"muiID"}/>
         </>
     )
 }

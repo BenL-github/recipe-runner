@@ -23,7 +23,7 @@ function Ingredients() {
     const add_form = {
         buttonLabel: "Add Ingredient",
         title: "Add New Ingredient",
-        text: "Please an ingredient name and a valid price.",
+        text: "Please enter an ingredient name and a valid price.",
         inputs: [
             { id: "ingredientName", label: "ingredientName", type: "text", key: "ingredientName", hook: setIngredientName },
             { id: "ingredientPrice", label: "ingredientPrice", type: "number", key: "ingredientPrice", hook: setIngredientPrice }
