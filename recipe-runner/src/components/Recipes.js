@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Tables from './Tables'
-import RecipeInput from './RecipeInput'
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import { Container } from '@mui/material';
+import FormDialog from './FormDialog';
 import axios from 'axios';
-import RecipeIngredients from './RecipeIngredients';
+import Tables from './Tables'
 
 function Recipes() {
     const baseURL = "http://localhost:34876/"
@@ -18,9 +18,30 @@ function Recipes() {
     const [searchRows, setSearchRows] = useState([])
     const [recipeID, setRecipeID] = useState()
     const [recipeRows, setRecipeRows] = useState([])
+
     const [recipeTitle, setRecipeTitle] = useState()
     const [recipeServing, setRecipeServing] = useState()
     const [recipeDescription, setRecipeDescription] = useState()
+
+    const add_form = {
+        buttonLabel: "Add Recipe",
+        title: "Add New Recipe",
+        text: "Please enter recipe title, how many people the recipe serves, and a short description.",
+        inputs: [
+            { id: "recipeTitle", label: "title", type: "text", key: "recipeTitle", hook: setRecipeTitle },
+            { id: "recipeServing", label: "serving(s)", type: "number", key: "recipeServing", hook: setRecipeServing },
+            { id: "recipeDescription", label: "description", type: "text", key: "recipeDescription", hook: setRecipeDescription }
+        ]
+    }
+
+    const delete_form = {
+        buttonLabel: "Delete Recipe",
+        title: "Delete a Recipe",
+        text: "Please enter valid recipe ID to be deleted.",
+        inputs: [
+            { id: "recipeID", label: "recipeID", type: "number", key: "recipeID", hook: setRecipeID }
+        ]
+    }
 
     const recipeColumns = [
         { field: 'recipeID', headerName: 'recipeID', width: 150 },
@@ -107,30 +128,28 @@ function Recipes() {
 
     return (
         <>
-            <Typography variant='h2'>Recipes</Typography>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+                <Typography variant='h3'>Recipes Table</Typography>
+                <Container disableGutters sx={{width:'auto', marginRight: 0, marginLeft: 0, display:'flex', justifyContent: 'space-around', px:0}}>
+                    <FormDialog
+                        buttonLabel={add_form.buttonLabel}
+                        title={add_form.title}
+                        text={add_form.text}
+                        submitAction={onAdd}
+                        inputs={add_form.inputs}
+                    />
+                    <FormDialog
+                        buttonLabel={delete_form.buttonLabel}
+                        title={delete_form.title}
+                        text={delete_form.text}
+                        submitAction={onDelete}
+                        inputs={delete_form.inputs}
+                    />
+                </Container>
+            </Container>
             <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeID"} />
 
-            {/* Add new recipe */}
-            <div>
-                <Typography variant='h3'>Add New Recipe</Typography>
-                <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Recipe Title' variant='outlined'
-                            onChange={(e) => setRecipeTitle(e.target.value)} />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Recipe Serving' variant='outlined'
-                            onChange={(e) => setRecipeServing(e.target.value)} />
-                    </Grid>
-                    <Grid item>
-                        <TextField id='outlined-basic' label='Recipe Description' variant='outlined'
-                            onChange={(e) => setRecipeDescription(e.target.value)} />
-                    </Grid>
-                    <Grid item sx={{ my: 'auto' }}>
-                        <Button variant="outlined" onClick={onAdd}> Create New Recipe </Button>
-                    </Grid>
-                </Grid>
-            </div>
+            
             <Typography variant='h3'>Search for a Recipe</Typography>
 
             {/* Search Field */}
@@ -155,18 +174,6 @@ function Recipes() {
                 <Typography variant="h4">Search Results</Typography>
                 <Tables columns={recipeColumns} rows={searchRows} rowIDTitle={"recipeID"} />
             </>}
-
-            {/* Delete a Recipe */}
-            <Typography variant="h3"> Delete a Recipe </Typography>
-            <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                <Grid item>
-                    <TextField id='outlined-basic' label='Recipe ID#' variant='outlined'
-                        onChange={(e) => setRecipeID(e.target.value)} />
-                </Grid>
-                <Grid item sx={{ my: 'auto' }}>
-                    <Button variant="outlined" onClick={onDelete}> Delete </Button>
-                </Grid>
-            </Grid>
         </>
     )
 }
