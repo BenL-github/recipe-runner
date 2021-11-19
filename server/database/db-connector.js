@@ -13,14 +13,6 @@ const mysql = require('mysql');
 //     database: process.env.MYSQL_DB
 // });
 
-const pool = mysql.createPool({
-    connectionLimit: 10,
-    host: "classmysql.engr.oregonstate.edu",
-    user: "cs340_libenn",
-    password: "0469",
-    database: "cs340_libenn"
-})
-
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
     let query = "SELECT * FROM Recipes;";

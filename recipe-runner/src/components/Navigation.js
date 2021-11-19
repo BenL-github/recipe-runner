@@ -47,12 +47,12 @@ export default function Navigation() {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}><Link href="recipes" underline='none'>Recipes</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="ingredients" underline='none'>Ingredients</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="users" underline='none'>Users</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="shoppingcarts" underline='none'>ShoppingCarts</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="selectedrecipes" underline='none'>SelectedRecipes</Link></MenuItem>
-                        <MenuItem onClick={handleClose}><Link href="recipeingredients" underline='none'>RecipeIngredients</Link></MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="recipes" >Recipes</MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="ingredients" >Ingredients</MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="users" >Users</MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="shoppingcarts" >ShoppingCarts</MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="selectedrecipes" >SelectedRecipes</MenuItem>
+                        <MenuItem onClick={handleClose} component="a" href="recipeingredients" >RecipeIngredients</MenuItem>
                     </Menu>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <Link href="/" underline='none' color="inherit">RecipeRunner Admin</Link>
