@@ -21,7 +21,7 @@ const theme = createTheme({
     }
 })
 
-const baseURL = "http://localhost:34876/"
+const baseURL = "http://flip3.engr.oregonstate.edu:34876/"
 function App() {
     return (
         <Router>
