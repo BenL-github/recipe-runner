@@ -12,6 +12,7 @@ const usersRoutes = require('./routes/users')
 const shoppingcartsRoutes = require('./routes/shoppingcarts')
 const selectedrecipesRoutes = require('./routes/selectedrecipes')
 const recipeingredientsRoutes = require('./routes/recipeingredients')
+const demo = require('./routes/demo')
 app.use(express.static(path.join(__dirname, "..", "build")))
 app.use(express.static("public"));
 app.use(cors())
@@ -27,5 +28,6 @@ app.use('/', usersRoutes)
 app.use('/', shoppingcartsRoutes)
 app.use('/', selectedrecipesRoutes)
 app.use('/', recipeingredientsRoutes)
+app.use('/', demo)
 
 app.listen(port, () => console.log(`Server started successfully.`));
