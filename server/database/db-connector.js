@@ -248,7 +248,7 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
 
 // DEMO 
 // retrieves grocery list of a specific user 
-module.exports.getUserGroceryList = (data, callback) => {
+module.exports.getUserGroceryList = (customerID, callback) => {
     let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.ingredientQuantity) AS quantity, ri.uOm 
                  FROM Users AS u 
                  JOIN ShoppingCarts as sc ON sc.cartOwner = u.customerID 
@@ -256,7 +256,7 @@ module.exports.getUserGroceryList = (data, callback) => {
                  JOIN Recipes as r ON sr.selectedRecipe = r.recipeID 
                  JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
                  JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
-                 WHERE u.customerID = ${data.id} 
+                 WHERE u.customerID = ${customerID} 
                  GROUP BY ri.ingredientID 
                  ORDER BY i.ingredientID ASC;`
 
