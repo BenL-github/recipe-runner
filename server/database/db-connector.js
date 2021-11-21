@@ -5,13 +5,13 @@ const mysql = require('mysql');
 // user = cs340_onid
 // pass = db_pass
 // database = cs340_onid
-// const pool = mysql.createPool({
-//     connectionLimit: 10,
-//     host: process.env.MYSQL_HOST,
-//     user: process.env.MYSQL_USER,
-//     password: process.env.MYSQL_PASS,
-//     database: process.env.MYSQL_DB
-// });
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'classmysql.engr.oregonstate.edu',
+    user: 'cs340_libenn',
+    password: '0469',
+    database: 'cs340_libenn'
+});
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
@@ -235,6 +235,30 @@ module.exports.getRecipeIngredientsTable = (callback) => {
 module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
     let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
                  VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, '${recipeIngredient.uOm}', ${recipeIngredient.quantity});`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+// DEMO 
+// retrieves grocery list of a specific user 
+module.exports.getUserGroceryList = (data, callback) => {
+    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.ingredientQuantity) AS quantity, ri.uOm 
+                 FROM Users AS u 
+                 JOIN ShoppingCarts as sc ON sc.cartOwner = u.customerID 
+                 JOIN SelectedRecipes as sr ON sr.selectedCart = sc.cartID 
+                 JOIN Recipes as r ON sr.selectedRecipe = r.recipeID 
+                 JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
+                 JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
+                 WHERE u.customerID = ${data.id} 
+                 GROUP BY ri.ingredientID 
+                 ORDER BY i.ingredientID ASC;`
 
     pool.query(query, (err, result) => {
         if (err) {

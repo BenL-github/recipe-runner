@@ -9,7 +9,6 @@ import Users from './components/Users'
 import ShoppingCarts from './components/ShoppingCarts'
 import SelectedRecipes from './components/SelectedRecipes'
 import RecipeIngredients from './components/RecipeIngredients';
-import TestingForm from './components/test';
 
 const theme = createTheme({
     typography: {
@@ -21,7 +20,7 @@ const theme = createTheme({
     }
 })
 
-const baseURL = "http://flip3.engr.oregonstate.edu:34876/"
+const baseURL = "http://localhost:34876/"
 function App() {
     return (
         <Router>
