@@ -1,9 +1,10 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 
-export default function FormInput({id, label, type, key, hook}){
+export default function FormInput({id, label, type, key, hook, disabled}){
     return (
         <TextField
+            disabled={disabled}
             autoFocus
             margin="dense"
             id={id}
