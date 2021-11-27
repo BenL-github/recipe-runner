@@ -9,6 +9,7 @@ import Users from './components/Users'
 import ShoppingCarts from './components/ShoppingCarts'
 import SelectedRecipes from './components/SelectedRecipes'
 import RecipeIngredients from './components/RecipeIngredients';
+import Demo from './components/Demo';
 
 const theme = createTheme({
     typography: {
@@ -61,6 +62,10 @@ function App() {
                         {/* Recipe Ingredients */}
                         <Route path='/recipeingredients'>
                             <RecipeIngredients baseURL={baseURL}/>
+                        </Route>
+
+                        <Route path='/demo'>
+                            <Demo baseURL={baseURL}/>
                         </Route>
                     </Switch>
                 </Container>

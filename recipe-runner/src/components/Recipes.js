@@ -99,21 +99,6 @@ function Recipes(props) {
             .catch((err) => {
                 console.log(err);
             })
-        // .then((response) => {
-        //     if (response.data.length > 0) {
-        //         setSearchRows(response.data)
-        //         setIsResults(true)
-        //         setIsNoResults(false)
-        //     } else {
-        //         setIsNoResults(true)
-        //         setIsResults(false)
-        //     }
-        // })
-        // .catch(function (error) {
-        //     console.log(error)
-        //     setIsNoResults(true)
-        //     setIsResults(false)
-        // })
     }
 
     // behavior when a user deletes a recipe
