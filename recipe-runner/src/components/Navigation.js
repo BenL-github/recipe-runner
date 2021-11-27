@@ -58,7 +58,9 @@ export default function Navigation() {
                         <Link href="/" underline='none' color="inherit">RecipeRunner Admin</Link>
                     </Typography>
                     <Button href="/" color="inherit">Home</Button>
+                    <Button href="/demo" color="inherit">Demo</Button>
                     <Button color="inherit">Logout</Button>
+                    
                 </Toolbar>
             </AppBar>
         </Box>
