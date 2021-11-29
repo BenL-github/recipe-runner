@@ -5,7 +5,7 @@ const mysql = require('mysql');
 // user = cs340_onid
 // pass = db_pass
 // database = cs340_onid
-const pool = mysql.createPool({
+const pool = mysql.createPool({  
     connectionLimit: 10,
     process.env.PGHOST,
     process.env.PGUSER,
