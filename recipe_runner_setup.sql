@@ -94,7 +94,7 @@ UNLOCK TABLES;
 
 CREATE TABLE `SelectedRecipes`(
     `selectedCart` int(11) NOT NULL,
-    `selectedRecipe` int(11) NULL,
+    `selectedRecipe` int(11),
     `selectedQuantity` int(11) NOT NULL,
     PRIMARY KEY (`selectedCart`, `selectedRecipe`),
     CONSTRAINT `SelectedRecipes_fk_1` FOREIGN KEY (`selectedCart`) REFERENCES `ShoppingCarts` (`cartID`),
@@ -155,7 +155,7 @@ UNLOCK TABLES;
 --
 
 CREATE TABLE `RecipeIngredients`(
-    `recipeID` int(11) NULL,
+    `recipeID` int(11),
     `ingredientID` int(11) NOT NULL,
     `uOm` varchar(255) NOT NULL,
     `ingredientQuantity` int(11) NOT NULL,

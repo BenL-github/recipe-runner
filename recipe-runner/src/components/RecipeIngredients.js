@@ -40,6 +40,10 @@ function RecipeIngredients(props) {
     const addIDs = (data) => {
         let i = 0
         data.map((object) => {
+            // if recipe is null, fill out cell with "null"
+            if(!object["recipeID"]){
+                object["recipeID"] = "null"
+            }
             object["muiID"] = i
             i++
         })
@@ -50,9 +54,9 @@ function RecipeIngredients(props) {
         axios
             .get(baseURL + 'recipeingredients')
             .then((response) => {
-                let data = response.data
-                addIDs(data)
-                setRecipeIngredientsRows(data)
+                let data = response.data;
+                addIDs(data);
+                setRecipeIngredientsRows(data);
             })
             .catch(function (error) {
                 console.log(error)
