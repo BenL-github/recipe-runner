@@ -220,7 +220,7 @@ module.exports.addSelectedRecipe = (data, callback) => {
 module.exports.getRecipeIngredientsTable = (callback) => {
     let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
-                 JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
+                 LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
 
     pool.query(query, (err, result) => {
         if (err) {

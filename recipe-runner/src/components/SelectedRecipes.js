@@ -35,6 +35,10 @@ function SelectedRecipes(props) {
     const addIDs = (data) => {
         let i = 0
         data.map((object) => {
+            // if recipe is null, fill out cell with "null"
+            if(!object["selectedRecipe"]){
+                object["selectedRecipe"] = "null"
+            }
             object["muiID"] = i
             i++
         })
@@ -46,6 +50,7 @@ function SelectedRecipes(props) {
             .get(baseURL + 'selectedrecipes')
             .then((response) => {
                 let data = response.data;
+                console.log(data)
                 addIDs(data);
                 setSelectedRecipeRows(data);
             })
