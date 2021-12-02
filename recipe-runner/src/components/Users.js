@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import Tables from './Tables'
-import { Typography } from '@mui/material';
 import axios from 'axios';
 import FormDialog from './FormDialog';
-import { Container } from '@mui/material';
+import { Container, Snackbar, Typography } from '@mui/material';
 
 function Users(props) {
     const { baseURL } = props;
@@ -16,11 +15,12 @@ function Users(props) {
         { field: 'zipCode', headerName: 'zipCode', width: 150 },
     ]
 
-    const [fname, setFname] = useState("")
-    const [lname, setLname] = useState("")
-    const [email, setEmail] = useState("")
-    const [zipCode, setZipCode] = useState()
-    const [user_rows, setUserRows] = useState([])
+    const [fname, setFname] = useState("");
+    const [lname, setLname] = useState("");
+    const [email, setEmail] = useState("");
+    const [zipCode, setZipCode] = useState();
+    const [user_rows, setUserRows] = useState([]);
+    const [snackbarReveal, setSnackbarReveal] = useState(false);
 
     const form = {
         buttonLabel: "Add User",
@@ -33,6 +33,9 @@ function Users(props) {
             { id: "zipCode", label: "zipCode", type: "number", key: "zipCode", hook: setZipCode },
         ]
     }
+    const handleClose = () => {
+        setSnackbarReveal(false);
+      };
 
     // get request to database on page load
     useEffect(() => {
@@ -64,6 +67,7 @@ function Users(props) {
             })
             .catch((error) => {
                 console.log(error);
+                setSnackbarReveal(true);
             })
     }
 
@@ -81,6 +85,12 @@ function Users(props) {
                 />
             </Container>
             <Tables columns={user_columns} rows={user_rows} rowIDTitle={"customerID"} />
+            <Snackbar
+                anchorOrigin={{vertical:'bottom', horizontal:'center'}}
+                open={snackbarReveal}
+                message="Invalid Form Input"
+                onClose={handleClose}
+            />
         </>
     )
 }
