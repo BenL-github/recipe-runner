@@ -50,7 +50,7 @@ function Ingredients(props) {
             .catch(function (error) {
                 console.log(error)
             })
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handles add behavior
     const onAdd = () => {

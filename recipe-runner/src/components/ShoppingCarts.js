@@ -29,7 +29,7 @@ function ShoppingCarts(props) {
     // add mui placeholder ids
     const addIDs = (data) => {
         let i = 0
-        data.map((userObject) => {
+        data.forEach((userObject) => {
             userObject["muiID"] = i
             i++
             userObject["fullName"] = `${userObject.fName} ${userObject.lName}`
@@ -50,7 +50,7 @@ function ShoppingCarts(props) {
     
     useEffect(() => {
         pageSetup()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // filter out users who don't already have carts
     const filterUsers = (userData, cartData) => {

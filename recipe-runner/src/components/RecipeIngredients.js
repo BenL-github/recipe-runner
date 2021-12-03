@@ -34,7 +34,7 @@ function RecipeIngredients(props) {
     // add mui placeholder ids
     const addIDs = (data) => {
         let i = 0
-        data.map((object) => {
+        data.forEach((object) => {
             // if recipe is null, fill out cell with "null"
             if(!object["recipeID"]){
                 object["recipeID"] = "null"
@@ -60,7 +60,7 @@ function RecipeIngredients(props) {
 
     useEffect(() => {
         pageSetup()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handle behavior when an ingredient is associated with a recipe
     const onAdd = (recipeID, ingredientID, uOm, ingredientQuantity) => {
