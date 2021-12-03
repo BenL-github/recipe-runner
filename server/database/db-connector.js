@@ -5,7 +5,7 @@ const mysql = require('mysql');
 // user = cs340_onid
 // pass = db_pass
 // database = cs340_onid
-const pool = mysql.createPool({  
+const pool = mysql.createPool({
     connectionLimit: 10,
     process.env.PGHOST,
     process.env.PGUSER,
@@ -253,16 +253,16 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
 // DEMO 
 // retrieves grocery list of a specific user 
 module.exports.getUserGroceryList = (customerID, callback) => {
-    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.ingredientQuantity) AS quantity, ri.uOm 
-                 FROM Users AS u 
-                 JOIN ShoppingCarts as sc ON sc.cartOwner = u.customerID 
-                 JOIN SelectedRecipes as sr ON sr.selectedCart = sc.cartID 
-                 JOIN Recipes as r ON sr.selectedRecipe = r.recipeID 
-                 JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
-                 JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
-                 WHERE u.customerID = ${customerID} 
-                 GROUP BY ri.ingredientID 
-                 ORDER BY i.ingredientID ASC;`
+    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.ingredientQuantity * sr.selectedQuantity) AS quantity, ri.uOm
+                    FROM Users AS u 
+                    JOIN ShoppingCarts as sc ON sc.cartOwner = u.customerID 
+                    JOIN SelectedRecipes as sr ON sr.selectedCart = sc.cartID 
+                    JOIN Recipes as r ON sr.selectedRecipe = r.recipeID 
+                    JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
+                    JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
+                    WHERE u.customerID = ${customerID}
+                    GROUP BY ri.ingredientID 
+                    ORDER BY i.ingredientID ASC;`
 
     pool.query(query, (err, result) => {
         if (err) {
