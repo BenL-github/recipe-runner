@@ -18,6 +18,9 @@ function ShoppingCarts(props) {
     const [cartOwner, setCartOwner] = useState();
     const [cartRows, setCartRows] = useState([]);
 
+    // store existing users 
+    const [users, setUsers] = useState([])
+
     const form = {
         buttonLabel: "Add Cart",
         title: "Add New Cart",
@@ -37,7 +40,7 @@ function ShoppingCarts(props) {
         })
     };
 
-    // get request to database on page load
+    // get request to populate primary table
     useEffect(() => {
         axios
             .get(baseURL + "shoppingcarts")
@@ -52,13 +55,26 @@ function ShoppingCarts(props) {
             })
     }, []);
 
+    // get request for existing users
+    useEffect(() => {
+        axios
+        .get(baseURL + "users")
+        .then((response) => {
+            console.log(response.data)
+            setUsers(response.data)
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    }, [])
+
+
     // add 
     function onAdd(){
         axios({
             method: "POST",
             url: baseURL + "shoppingcarts",
             data: {
-                cartID: cartID,
                 cartOwner: cartOwner
             }
         })
