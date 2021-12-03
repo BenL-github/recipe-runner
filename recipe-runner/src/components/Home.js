@@ -1,9 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import Card from './Card'
-import { Paper } from '@mui/material'
 import { Container } from '@mui/material'
-import { Typography } from '@mui/material'
 const Home = () => {
     return (
         <Container maxWidth='false' sx={{width:50/100, display: 'flex', justifyContent: 'space-between'}}>

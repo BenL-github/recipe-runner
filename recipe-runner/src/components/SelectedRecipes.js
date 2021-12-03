@@ -17,9 +17,6 @@ function SelectedRecipes(props) {
         { field: 'selectedQuantity', headername: 'selectedQuantity', width: 200 }
     ];
 
-    const [selectedCart, setCartID] = useState();
-    const [selectedRecipe, setRecipeID] = useState();
-    const [selectedQuantity, setSelectedQuantity] = useState();
     const [selectedRecipeRows, setSelectedRecipeRows] = useState([]);
     const [carts, setCarts] = useState([])
     const [recipes, setRecipes] = useState([])
@@ -37,7 +34,7 @@ function SelectedRecipes(props) {
     // add mui placeholder ids
     const addIDs = (data) => {
         let i = 0
-        data.map((object) => {
+        data.forEach((object) => {
             // if recipe is null, fill out cell with "null"
             if (!object["selectedRecipe"]) {
                 object["selectedRecipe"] = "null"
@@ -65,7 +62,7 @@ function SelectedRecipes(props) {
 
     useEffect(() => {
         pageSetup()
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // add 
     const onAdd = (selectedCart, selectedRecipe, selectedQuantity) => {

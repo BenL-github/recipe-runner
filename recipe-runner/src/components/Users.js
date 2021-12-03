@@ -48,7 +48,7 @@ function Users(props) {
             .catch(function (error) {
                 console.log(error)
             })
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handles behavior to add a new user
     const onAdd = () => {

@@ -56,7 +56,7 @@ function Recipes(props) {
             .catch(function (error) {
                 console.log(error)
             })
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // behavior when user adds a new recipe
     const onAdd = () => {
