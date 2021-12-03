@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
 import axios from 'axios';
-import FormDialog from './FormDialog';
+import FormDialogSelect from './FormDialogSelect';
 import Tables from './Tables'
 
 function ShoppingCarts(props) {
@@ -11,71 +11,60 @@ function ShoppingCarts(props) {
     const cart_columns = [
         { field: 'cartID', headerName: 'cartID', width: 150 },
         { field: 'cartOwner', headerName: 'cartOwner', width: 150 },
-        // add a function to get the full name of the owner from the user data
+        { field: 'fullName', headerName: 'Owner Name', width: 200 },
     ];
 
-    const [cartID, setCartID] = useState();
-    const [cartOwner, setCartOwner] = useState();
     const [cartRows, setCartRows] = useState([]);
-
-    // store existing users 
     const [users, setUsers] = useState([])
 
     const form = {
         buttonLabel: "Add Cart",
         title: "Add New Cart",
-        text: "Please enter a valid customerID along with the new cart.",
+        text: "Select a user without a cart to create one for them.",
         inputs: [
-            { id: "cartID", label: "cartID", type: "number", key: "cartID", hook: setCartID },
-            { id: "cartOwner", label: "cartOwner", type: "number", key: "cartOwner", hook: setCartOwner },
+            { data: users },
         ]
     };
 
     // add mui placeholder ids
     const addIDs = (data) => {
         let i = 0
-        data.map((object) => {
-            object["muiID"] = i
+        data.map((userObject) => {
+            userObject["muiID"] = i
             i++
+            userObject["fullName"] = `${userObject.fName} ${userObject.lName}`
         })
     };
 
-    // get request to populate primary table
-    useEffect(() => {
-        axios
-            .get(baseURL + "shoppingcarts")
-            .then((response) => {
-                let data = response.data
-                console.log(data);
-                addIDs(data);
-                setCartRows(data);
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }, []);
+    // get request to populate primary table and get users for drop down table
+    async function pageSetup() {
+        const [firstResponse, secondResponse] = await Promise.all([
+            axios.get(baseURL + "shoppingcarts"),
+            axios.get(baseURL + "users")
+        ])
 
-    // get request for existing users
+        addIDs(firstResponse.data)
+        setCartRows(firstResponse.data)
+        setUsers(filterUsers(secondResponse.data, firstResponse.data))
+    }
+    
     useEffect(() => {
-        axios
-        .get(baseURL + "users")
-        .then((response) => {
-            console.log(response.data)
-            setUsers(response.data)
-        })
-        .catch(function (error) {
-            console.log(error)
-        })
+        pageSetup()
     }, [])
 
+    // filter out users who don't already have carts
+    const filterUsers = (userData, cartData) => {
+        userData = userData.filter(ar => !cartData.find(rm => (rm.cartOwner === ar.customerID)))
+        return userData
+    }
 
     // add 
-    function onAdd(){
+    const onAdd = (userID) => {
         axios({
             method: "POST",
             url: baseURL + "shoppingcarts",
             data: {
-                cartOwner: cartOwner
+                cartOwner: userID
             }
         })
             .then((res) => {
@@ -90,16 +79,16 @@ function ShoppingCarts(props) {
         <>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>ShoppingCarts Table</Typography>
-                <FormDialog
+                {users && <FormDialogSelect
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}
                     submitAction={onAdd}
                     inputs={form.inputs}
                     sx={{ m: '1em' }}
-                />
+                />}
             </Container>
-            <Tables columns={cart_columns} rows={cartRows} rowIDTitle={"muiID"}/>
+            <Tables columns={cart_columns} rows={cartRows} rowIDTitle={"muiID"} />
         </>
     )
 }
