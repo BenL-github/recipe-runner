@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
 import axios from 'axios';
-import FormDialogSelect from './FormDialogSelect';
+import SelectDialogShoppingCarts from './SelectDialogShoppingCarts';
 import Tables from './Tables'
 
 function ShoppingCarts(props) {
@@ -79,7 +79,7 @@ function ShoppingCarts(props) {
         <>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>ShoppingCarts Table</Typography>
-                {users && <FormDialogSelect
+                {users && <SelectDialogShoppingCarts
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}

@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 
-export default function FormDialogSelect(props) {
+export default function SelectDialogShoppingCarts(props) {
   const { buttonLabel, title, text, submitAction, inputs } = props;
   const [userID, setUserID] = React.useState();
   const [open, setOpen] = React.useState(false);

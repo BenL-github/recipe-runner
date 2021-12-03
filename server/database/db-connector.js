@@ -192,7 +192,10 @@ module.exports.addShoppingCart = (cart, callback) => {
 
 // SELECTED RECIPES
 module.exports.getSelectedRecipesTable = (callback) => {
-    let query = `SELECT * FROM SelectedRecipes;`
+    let query = `SELECT selectedCart, selectedRecipe, selectedQuantity, fName, lName, recipeTitle FROM SelectedRecipes
+                 JOIN Recipes ON Recipes.recipeID = selectedRecipe
+                 JOIN ShoppingCarts ON ShoppingCarts.cartID = selectedCart
+                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
