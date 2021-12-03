@@ -12,9 +12,6 @@ function Recipes(props) {
 
     // RECIPES
     const [keyword, setKeyword] = useState("")
-    const [isResults, setIsResults] = useState(false)
-    const [isNoResults, setIsNoResults] = useState(false)
-    const [searchRows, setSearchRows] = useState([])
     const [recipeID, setRecipeID] = useState()
     const [recipeRows, setRecipeRows] = useState([])
 

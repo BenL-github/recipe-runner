@@ -163,7 +163,8 @@ module.exports.updateUser = (user, callback) => {
 
 // SHOPPING CARTS
 module.exports.getShoppingCartsTable = (callback) => {
-    let query = `SELECT * FROM ShoppingCarts;`
+    let query = `SELECT cartID, cartOwner, fName, lName FROM ShoppingCarts
+                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner;`
 
     pool.query(query, (err, result) => {
         if (err) {
