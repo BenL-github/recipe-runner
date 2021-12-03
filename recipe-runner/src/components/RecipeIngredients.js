@@ -3,8 +3,7 @@ import axios from 'axios'
 import Tables from './Tables'
 import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
-import FormDialog
- from './FormDialog';
+import SelectDialogRecipeIngredients from './SelectDialogRecipeIngredients';
 function RecipeIngredients(props) {
     const { baseURL } = props;
 
@@ -18,21 +17,17 @@ function RecipeIngredients(props) {
         { field: 'ingredientName', headername: 'ingredientName', width: 200 },
     ]
 
-    const [recipeID, setRecipeID] = useState()
-    const [ingredientID, setIngredientID] = useState()
-    const [ingredientQuantity, setIngredientQuantity] = useState()
-    const [uOm, setUOM] = useState()
     const [recipeIngredientsRows, setRecipeIngredientsRows] = useState([])
+    const [recipes, setRecipes] = useState([])
+    const [ingredients, setIngredients] = useState([])
 
     const form = {
         buttonLabel: "Add RecipeIngredient",
         title: "Add an Ingredient to a Recipe",
         text: "Please a valid recipe id, ingredient id, a quantity, and a unit of measurement.",
         inputs: [
-            { id: "recipeID", label: "recipeID", type: "number", key: "recipeID", hook: setRecipeID },
-            { id: "ingredientID", label: "ingredientID", type: "number", key: "ingredientID", hook: setIngredientID },
-            { id: "ingredientQuantity", label: "ingredientQuantity", type: "number", key: "ingredientQuantity", hook: setIngredientQuantity },
-            { id: "uOm", label: "uOm", type: "text", key: "uOm", hook: setUOM }
+            { recipeData: recipes },
+            { ingredientData: ingredients }
         ]
     }
 
@@ -50,21 +45,25 @@ function RecipeIngredients(props) {
     }
 
     // get request to database on page load
+    async function pageSetup() {
+        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+            axios.get(baseURL + "recipeingredients"),
+            axios.get(baseURL + "recipes"),
+            axios.get(baseURL + "ingredients")
+        ])
+
+        addIDs(firstResponse.data)
+        setRecipeIngredientsRows(firstResponse.data)
+        setRecipes(secondResponse.data)
+        setIngredients(thirdResponse.data)
+    }
+
     useEffect(() => {
-        axios
-            .get(baseURL + 'recipeingredients')
-            .then((response) => {
-                let data = response.data;
-                addIDs(data);
-                setRecipeIngredientsRows(data);
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
+        pageSetup()
     }, [])
 
     // handle behavior when an ingredient is associated with a recipe
-    const onAdd = () => {
+    const onAdd = (recipeID, ingredientID, uOm, ingredientQuantity) => {
         axios({
             method: "POST",
             url: baseURL + 'recipeingredients',
@@ -80,11 +79,6 @@ function RecipeIngredients(props) {
             })
             .catch(function (error) {
                 console.log(error)
-                alert("Ingredient or recipe does not exist.")
-                setRecipeID()
-                setIngredientID()
-                setUOM()
-                setIngredientQuantity()
             })
     }
 
@@ -93,7 +87,7 @@ function RecipeIngredients(props) {
         <>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>RecipeIngredients Table</Typography>
-                <FormDialog
+                <SelectDialogRecipeIngredients
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}
