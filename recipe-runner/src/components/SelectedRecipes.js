@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { Container } from '@mui/material';
 import axios from 'axios';
-import FormDialog from './FormDialog';
+import SelectDialogSelectedRecipes from './SelectDialogSelectedRecipes';
 import Tables from './Tables';
 
 function SelectedRecipes(props) {
@@ -10,8 +10,10 @@ function SelectedRecipes(props) {
 
     // SELECTED RECIPES
     const selectedRecipeColumns = [
-        { field: 'selectedCart', headerName: 'selectedCart', width: 200 },
-        { field: 'selectedRecipe', headername: 'selectedRecipe', width: 200 },
+        { field: 'selectedCart', headerName: 'selectedCart', width: 150 },
+        { field: 'fullName', headerName: 'Cart Owner', width: 200 },
+        { field: 'selectedRecipe', headerName: 'selectedRecipe', width: 150 },
+        { field: 'recipeTitle', headerName: 'Title', width: 200 },
         { field: 'selectedQuantity', headername: 'selectedQuantity', width: 200 }
     ];
 
@@ -19,15 +21,16 @@ function SelectedRecipes(props) {
     const [selectedRecipe, setRecipeID] = useState();
     const [selectedQuantity, setSelectedQuantity] = useState();
     const [selectedRecipeRows, setSelectedRecipeRows] = useState([]);
+    const [carts, setCarts] = useState([])
+    const [recipes, setRecipes] = useState([])
 
     const form = {
         buttonLabel: "Add SelectedRecipe",
         title: "Add New Recipe to a Cart",
-        text: "Please enter a valid cart ID and valid recipe ID in addition to the quantity.",
+        text: "Select a cart, recipe, and quantity of recipes to add to selected cart.",
         inputs: [
-            { id: "selectedCart", label: "selectedCart", type: "number", key: "selectedCart", hook: setCartID },
-            { id: "selectedRecipe", label: "selectedRecipe", type: "number", key: "selectedRecipe", hook: setRecipeID },
-            { id: "selectedQuantity", label: "quantity", type: "number", key: "selectedQuantity", hook: setSelectedQuantity }
+            { cartData: carts },
+            { recipeData: recipes },
         ]
     };
 
@@ -36,31 +39,36 @@ function SelectedRecipes(props) {
         let i = 0
         data.map((object) => {
             // if recipe is null, fill out cell with "null"
-            if(!object["selectedRecipe"]){
+            if (!object["selectedRecipe"]) {
                 object["selectedRecipe"] = "null"
             }
             object["muiID"] = i
             i++
+            object["fullName"] = `${object.fName} ${object.lName}`
         })
     };
 
     // get request to database on page load
+    async function pageSetup() {
+        const [firstResponse, secondResponse, thirdResponse] = await Promise.all([
+            axios.get(baseURL + "shoppingcarts"),
+            axios.get(baseURL + "recipes"),
+            axios.get(baseURL + "selectedRecipes")
+        ])
+        console.log(firstResponse.data, secondResponse.data, thirdResponse.data)
+        addIDs(thirdResponse.data)
+        setCarts(firstResponse.data)
+        setRecipes(secondResponse.data)
+        setSelectedRecipeRows(thirdResponse.data)
+
+    }
+
     useEffect(() => {
-        axios
-            .get(baseURL + 'selectedrecipes')
-            .then((response) => {
-                let data = response.data;
-                console.log(data)
-                addIDs(data);
-                setSelectedRecipeRows(data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }, []);
+        pageSetup()
+    }, [])
 
     // add 
-    function onAdd(){
+    const onAdd = (selectedCart, selectedRecipe, selectedQuantity) => {
         axios({
             method: "POST",
             url: baseURL + "selectedrecipes",
@@ -82,7 +90,7 @@ function SelectedRecipes(props) {
         <>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>SelectedRecipes Table</Typography>
-                <FormDialog
+                <SelectDialogSelectedRecipes
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}
@@ -91,7 +99,7 @@ function SelectedRecipes(props) {
                     sx={{ m: '1em' }}
                 />
             </Container>
-            <Tables columns={selectedRecipeColumns} rows={selectedRecipeRows} rowIDTitle={"muiID"}/>
+            <Tables columns={selectedRecipeColumns} rows={selectedRecipeRows} rowIDTitle={"muiID"} />
         </>
     )
 }
