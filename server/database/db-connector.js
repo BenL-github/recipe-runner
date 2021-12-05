@@ -163,8 +163,8 @@ module.exports.updateUser = (user, callback) => {
 
 // SHOPPING CARTS
 module.exports.getShoppingCartsTable = (callback) => {
-    let query = `SELECT cartID, cartOwner, fName, lName FROM ShoppingCarts
-                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner;`
+    let query = `SELECT cartID, customerID, fName, lName FROM ShoppingCarts
+                 JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -177,8 +177,8 @@ module.exports.getShoppingCartsTable = (callback) => {
 }
 
 module.exports.addShoppingCart = (cart, callback) => {
-    let query = `INSERT INTO ShoppingCarts (cartOwner)
-                 VALUES (${cart.cartOwner});`
+    let query = `INSERT INTO ShoppingCarts (customerID)
+                 VALUES (${cart.customerID});`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -192,10 +192,10 @@ module.exports.addShoppingCart = (cart, callback) => {
 
 // SELECTED RECIPES
 module.exports.getSelectedRecipesTable = (callback) => {
-    let query = `SELECT selectedCart, selectedRecipe, selectedQuantity, fName, lName, recipeTitle FROM SelectedRecipes
-                 JOIN Recipes ON Recipes.recipeID = selectedRecipe
-                 JOIN ShoppingCarts ON ShoppingCarts.cartID = selectedCart
-                 JOIN Users ON Users.customerID = ShoppingCarts.cartOwner;`
+    let query = `SELECT cartID, recipeID, quantity, fName, lName, recipeTitle FROM SelectedRecipes
+                 JOIN Recipes ON Recipes.recipeID = recipeID
+                 JOIN ShoppingCarts ON ShoppingCarts.cartID = cartID
+                 JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -207,8 +207,8 @@ module.exports.getSelectedRecipesTable = (callback) => {
 }
 
 module.exports.addSelectedRecipe = (data, callback) => {
-    let query = `INSERT INTO SelectedRecipes (selectedCart, selectedRecipe, selectedQuantity)
-                 VALUES (${data.selectedCart}, ${data.selectedRecipe}, ${data.selectedQuantity});`
+    let query = `INSERT INTO SelectedRecipes (cartID, recipeID, quantity)
+                 VALUES (${data.cartID}, ${data.recipeID}, ${data.quantity});`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -222,7 +222,7 @@ module.exports.addSelectedRecipe = (data, callback) => {
 
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
-    let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, ingredientQuantity, uOm FROM RecipeIngredients
+    let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
                  LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
 
@@ -237,7 +237,7 @@ module.exports.getRecipeIngredientsTable = (callback) => {
 }
 
 module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
-    let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, ingredientQuantity)
+    let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, quantity)
                  VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, '${recipeIngredient.uOm}', ${recipeIngredient.quantity});`
 
     pool.query(query, (err, result) => {
@@ -253,11 +253,11 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
 // DEMO 
 // retrieves grocery list of a specific user 
 module.exports.getUserGroceryList = (customerID, callback) => {
-    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.ingredientQuantity * sr.selectedQuantity) AS quantity, ri.uOm
+    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.quantity * sr.quantity) AS quantity, ri.uOm
                     FROM Users AS u 
-                    JOIN ShoppingCarts as sc ON sc.cartOwner = u.customerID 
-                    JOIN SelectedRecipes as sr ON sr.selectedCart = sc.cartID 
-                    JOIN Recipes as r ON sr.selectedRecipe = r.recipeID 
+                    JOIN ShoppingCarts as sc ON sc.customerID = u.customerID 
+                    JOIN SelectedRecipes as sr ON sr.cartID = sc.cartID 
+                    JOIN Recipes as r ON sr.recipeID = r.recipeID 
                     JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
                     JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
                     WHERE u.customerID = ${customerID}
