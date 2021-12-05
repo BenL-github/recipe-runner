@@ -11,7 +11,7 @@ function RecipeIngredients(props) {
     const recipeIngredientsColumns = [
         { field: 'recipeID', headerName: 'recipeID', width: 125 },
         { field: 'ingredientID', headername: "ingredientID", width: 150 },
-        { field: 'ingredientQuantity', headername: 'ingredientQuantity', width: 200 },
+        { field: 'quantity', headername: 'quantity', width: 200 },
         { field: 'uOm', headerName: "unit of measurement", width: 200 },
         { field: 'recipeTitle', headerName: 'title', width: 200 },
         { field: 'ingredientName', headername: 'ingredientName', width: 200 },
@@ -63,7 +63,7 @@ function RecipeIngredients(props) {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handle behavior when an ingredient is associated with a recipe
-    const onAdd = (recipeID, ingredientID, uOm, ingredientQuantity) => {
+    const onAdd = (recipeID, ingredientID, uOm, quantity) => {
         axios({
             method: "POST",
             url: baseURL + 'recipeingredients',
@@ -71,7 +71,7 @@ function RecipeIngredients(props) {
                 recipeID: recipeID,
                 ingredientID: ingredientID,
                 uOm: uOm,
-                quantity: ingredientQuantity
+                quantity: quantity
             }
         })
             .then((response) => {

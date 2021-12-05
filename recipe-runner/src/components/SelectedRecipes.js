@@ -10,11 +10,11 @@ function SelectedRecipes(props) {
 
     // SELECTED RECIPES
     const selectedRecipeColumns = [
-        { field: 'selectedCart', headerName: 'selectedCart', width: 150 },
+        { field: 'cartID', headerName: 'cartID', width: 150 },
         { field: 'fullName', headerName: 'Cart Owner', width: 200 },
-        { field: 'selectedRecipe', headerName: 'selectedRecipe', width: 150 },
+        { field: 'recipeID', headerName: 'recipeID', width: 150 },
         { field: 'recipeTitle', headerName: 'Title', width: 200 },
-        { field: 'selectedQuantity', headername: 'selectedQuantity', width: 200 }
+        { field: 'quantity', headername: 'quantity', width: 200 }
     ];
 
     const [selectedRecipeRows, setSelectedRecipeRows] = useState([]);
@@ -36,8 +36,8 @@ function SelectedRecipes(props) {
         let i = 0
         data.forEach((object) => {
             // if recipe is null, fill out cell with "null"
-            if (!object["selectedRecipe"]) {
-                object["selectedRecipe"] = "null"
+            if (!object["recipeID"]) {
+                object["recipeID"] = "null"
             }
             object["muiID"] = i
             i++
@@ -65,14 +65,14 @@ function SelectedRecipes(props) {
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // add 
-    const onAdd = (selectedCart, selectedRecipe, selectedQuantity) => {
+    const onAdd = (cartID, recipeID, quantity) => {
         axios({
             method: "POST",
             url: baseURL + "selectedrecipes",
             data: {
-                selectedCart: selectedCart,
-                selectedRecipe: selectedRecipe,
-                selectedQuantity: selectedQuantity
+                cartID: cartID,
+                recipeID: recipeID,
+                quantity: quantity
             }
         })
             .then((res) => {
