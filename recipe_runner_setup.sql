@@ -39,9 +39,9 @@ UNLOCK TABLES;
 
 CREATE TABLE `ShoppingCarts`(
     `cartID` int(11) UNIQUE NOT NULL AUTO_INCREMENT,
-    `cartOwner` int(11) UNIQUE NOT NULL,
+    `customerID` int(11) UNIQUE NOT NULL,
     PRIMARY KEY (`cartID`),
-    CONSTRAINT `ShoppingCarts_fk_1` FOREIGN KEY (`cartOwner`) REFERENCES `Users` (`customerID`)
+    CONSTRAINT `ShoppingCarts_fk_1` FOREIGN KEY (`customerID`) REFERENCES `Users` (`customerID`)
 );
 
 --
@@ -93,12 +93,12 @@ UNLOCK TABLES;
 --
 
 CREATE TABLE `SelectedRecipes`(
-    `selectedCart` int(11) NOT NULL,
-    `selectedRecipe` int(11),
-    `selectedQuantity` int(11) NOT NULL,
-    PRIMARY KEY (`selectedCart`, `selectedRecipe`),
-    CONSTRAINT `SelectedRecipes_fk_1` FOREIGN KEY (`selectedCart`) REFERENCES `ShoppingCarts` (`cartID`),
-    CONSTRAINT `SelectedRecipes_fk_2` FOREIGN KEY (`selectedRecipe`) REFERENCES `Recipes` (`recipeID`) ON DELETE CASCADE
+    `cartID` int(11) NOT NULL,
+    `recipeID` int(11),
+    `quantity` int(11) NOT NULL,
+    PRIMARY KEY (`cartID`, `recipeID`),
+    CONSTRAINT `SelectedRecipes_fk_1` FOREIGN KEY (`cartID`) REFERENCES `ShoppingCarts` (`cartID`),
+    CONSTRAINT `SelectedRecipes_fk_2` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE CASCADE
 );
 
 -- 
@@ -158,7 +158,7 @@ CREATE TABLE `RecipeIngredients`(
     `recipeID` int(11),
     `ingredientID` int(11) NOT NULL,
     `uOm` varchar(255) NOT NULL,
-    `ingredientQuantity` int(11) NOT NULL,
+    `quantity` int(11) NOT NULL,
     PRIMARY KEY (`recipeID`, `ingredientID`),
     CONSTRAINT `RecipeIngredients_fk_1` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE CASCADE,
     CONSTRAINT `RecipeIngredients_fk_2` FOREIGN KEY (`ingredientID`) REFERENCES `Ingredients` (`ingredientID`)
