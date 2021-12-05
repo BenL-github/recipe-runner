@@ -163,7 +163,7 @@ module.exports.updateUser = (user, callback) => {
 
 // SHOPPING CARTS
 module.exports.getShoppingCartsTable = (callback) => {
-    let query = `SELECT cartID, customerID, fName, lName FROM ShoppingCarts
+    let query = `SELECT cartID, ShoppingCarts.customerID, fName, lName FROM ShoppingCarts
                  JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
 
     pool.query(query, (err, result) => {
@@ -192,9 +192,9 @@ module.exports.addShoppingCart = (cart, callback) => {
 
 // SELECTED RECIPES
 module.exports.getSelectedRecipesTable = (callback) => {
-    let query = `SELECT cartID, recipeID, quantity, fName, lName, recipeTitle FROM SelectedRecipes
-                 JOIN Recipes ON Recipes.recipeID = recipeID
-                 JOIN ShoppingCarts ON ShoppingCarts.cartID = cartID
+    let query = `SELECT SelectedRecipes.cartID, SelectedRecipes.recipeID, quantity, fName, lName, recipeTitle FROM SelectedRecipes
+                 JOIN Recipes ON Recipes.recipeID = SelectedRecipes.recipeID
+                 JOIN ShoppingCarts ON ShoppingCarts.cartID = SelectedRecipes.cartID
                  JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
     pool.query(query, (err, result) => {
         if (err) {

@@ -11,8 +11,8 @@ function SelectedRecipes(props) {
     // SELECTED RECIPES
     const selectedRecipeColumns = [
         { field: 'cartID', headerName: 'cartID', width: 150 },
-        { field: 'fullName', headerName: 'Cart Owner', width: 200 },
         { field: 'recipeID', headerName: 'recipeID', width: 150 },
+        { field: 'fullName', headerName: 'Cart Owner', width: 200 },
         { field: 'recipeTitle', headerName: 'Title', width: 200 },
         { field: 'quantity', headername: 'quantity', width: 200 }
     ];
