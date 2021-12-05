@@ -10,7 +10,7 @@ function ShoppingCarts(props) {
     // SHOPPING CARTS
     const cart_columns = [
         { field: 'cartID', headerName: 'cartID', width: 150 },
-        { field: 'cartOwner', headerName: 'cartOwner', width: 150 },
+        { field: 'customerID', headerName: 'customerID', width: 150 },
         { field: 'fullName', headerName: 'Owner Name', width: 200 },
     ];
 
@@ -54,7 +54,7 @@ function ShoppingCarts(props) {
 
     // filter out users who don't already have carts
     const filterUsers = (userData, cartData) => {
-        userData = userData.filter(ar => !cartData.find(rm => (rm.cartOwner === ar.customerID)))
+        userData = userData.filter(ar => !cartData.find(rm => (rm.customerID === ar.customerID)))
         return userData
     }
 
@@ -64,7 +64,7 @@ function ShoppingCarts(props) {
             method: "POST",
             url: baseURL + "shoppingcarts",
             data: {
-                cartOwner: userID
+                customerID: userID
             }
         })
             .then((res) => {
