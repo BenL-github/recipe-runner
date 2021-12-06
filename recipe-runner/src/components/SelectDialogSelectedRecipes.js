@@ -45,7 +45,7 @@ export default function SelectDialogSelectedRecipes(props) {
               onChange={(e) => setCartID(e.target.value)}
             >
               {inputs[0].cartData.map((cart) => (
-                <MenuItem value={cart.cartID}> {cart.cartOwner} - {cart.fName} {cart.lName}</MenuItem>
+                <MenuItem value={cart.cartID}> {cart.customerID} - {cart.fName} {cart.lName}</MenuItem>
               ))}
             </Select>
           </FormControl>
