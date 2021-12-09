@@ -96,9 +96,8 @@ CREATE TABLE `SelectedRecipes`(
     `cartID` int(11) NOT NULL,
     `recipeID` int(11),
     `quantity` int(11) NOT NULL,
-    PRIMARY KEY (`cartID`, `recipeID`),
     CONSTRAINT `SelectedRecipes_fk_1` FOREIGN KEY (`cartID`) REFERENCES `ShoppingCarts` (`cartID`),
-    CONSTRAINT `SelectedRecipes_fk_2` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE CASCADE
+    CONSTRAINT `SelectedRecipes_fk_2` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE SET NULL
 );
 
 -- 
@@ -159,8 +158,7 @@ CREATE TABLE `RecipeIngredients`(
     `ingredientID` int(11) NOT NULL,
     `uOm` varchar(255) NOT NULL,
     `quantity` int(11) NOT NULL,
-    PRIMARY KEY (`recipeID`, `ingredientID`),
-    CONSTRAINT `RecipeIngredients_fk_1` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE CASCADE,
+    CONSTRAINT `RecipeIngredients_fk_1` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE SET NULL,
     CONSTRAINT `RecipeIngredients_fk_2` FOREIGN KEY (`ingredientID`) REFERENCES `Ingredients` (`ingredientID`)
 );
 
