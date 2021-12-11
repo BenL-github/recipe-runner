@@ -67,6 +67,23 @@ module.exports.deleteRecipe = (recipe, callback) => {
     })
 }
 
+module.exports.updateRecipe = (recipe, callback) => {
+    let query = `UPDATE Recipes 
+                SET recipeTitle='${recipe.title}', 
+                recipeDescription='${recipe.description}',
+                recipeServing='${recipe.serving}'
+                WHERE recipeID=${recipe.id};`;
+    
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
 // INGREDIENTS
 module.exports.getIngredientsTable = (callback) => {
     // sql query for all rows from Ingredients table
@@ -118,6 +135,21 @@ module.exports.updateIngredient = (ingredient, callback) => {
     })
 }
 
+module.exports.deleteIngredient = (ingredient, callback) => {
+    let query = `DELETE FROM Ingredients WHERE ingredientID=${ingredient.id};`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            // query resulted in error
+            console.log(err);
+            callback(true);
+        } else {
+            // query success
+            callback(false, result)
+        }
+    })
+}
+
 // USERS
 module.exports.getUsersTable = (callback) => {
     let query = "SELECT * FROM Users;"
@@ -151,6 +183,18 @@ module.exports.updateUser = (user, callback) => {
                  SET fName=${user.fname}, lName=${user.lname}, email=${user.email}, zipCode=${user.zipCode}
                  WHERE customerID=${user.id};`
 
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.deleteUser = (user, callback) => {
+    let query = `DELETE FROM User WHERE customerID=${user.id};`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
