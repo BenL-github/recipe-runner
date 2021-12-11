@@ -264,6 +264,20 @@ module.exports.addSelectedRecipe = (data, callback) => {
     })
 }
 
+module.exports.deleteSelectedRecipe = (data, callback) => {
+    let query = `DELETE FROM SelectedRecipe 
+                WHERE recipeID=${data.recipeID} AND cartID=${data.cartID};`
+          
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
     let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
@@ -292,6 +306,11 @@ module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
             callback(false, result)
         }
     })
+}
+
+module.exports.deleteSelectedRecipe = (data, callback) => {
+    let query = `DELETE FROM SelectedRecipe
+                WHERE recipeID = ${data.recipeID} AND cartID= ${data.cartID};`
 }
 
 // DEMO 
