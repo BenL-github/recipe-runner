@@ -26,6 +26,7 @@ function Ingredients(props) {
         },
     ];
 
+    const [ingredientID, setIngredientID] = useState()
     const [ingredientName, setIngredientName] = useState("")
     const [ingredientPrice, setIngredientPrice] = useState()
     const [ingredientRows, setIngredientRows] = useState([])
@@ -38,6 +39,31 @@ function Ingredients(props) {
             { id: "ingredientName", label: "ingredientName", type: "text", key: "ingredientName", hook: setIngredientName },
             { id: "ingredientPrice", label: "ingredientPrice", type: "number", key: "ingredientPrice", hook: setIngredientPrice }
         ]
+    }
+
+    const delete_form = {
+        buttonLabel: "Delete Ingredient",
+        title: "Delete an Ingredient",
+        text: "Please enter a valid ingredient id.",
+        inputs: [
+            { id: "ingredientID", label: "ingredientID", type: "number", key: "ingredientID", hook: setIngredientID },
+        ]
+    }
+
+    const onDelete = () => {
+        axios({
+            method: "DELETE",
+            url: baseURL + 'ingredients',
+            data: {
+                id: ingredientID
+            }
+        })
+            .then((res) => {
+                window.location.reload();
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
     }
 
     // get request to database on page load
@@ -101,6 +127,13 @@ function Ingredients(props) {
                         text={add_form.text}
                         submitAction={onAdd}
                         inputs={add_form.inputs}
+                    />
+                    <FormDialog
+                        buttonLabel={delete_form.buttonLabel}
+                        title={delete_form.title}
+                        text={delete_form.text}
+                        submitAction={onDelete}
+                        inputs={delete_form.inputs}
                     />
                 </Container>
             </Container>

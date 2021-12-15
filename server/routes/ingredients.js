@@ -10,7 +10,7 @@ router.get('/ingredients', (req, res) => {
         } else {
             res.send(results);
         }
-    })
+    });
 })
 
 router.post('/ingredients', (req, res) => {
@@ -20,7 +20,7 @@ router.post('/ingredients', (req, res) => {
         } else {
             res.send(200)
         }
-    })
+    });
 })
 
 router.put('/ingredients', (req, res) => {
@@ -30,7 +30,17 @@ router.put('/ingredients', (req, res) => {
         } else {
             res.send(200)
         }
-    })
+    });
+})
+
+router.delete('/ingredients', (req, res) => {
+    db.deleteIngredient(req.body, (err, results) => {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    });
 })
 
 module.exports = router;
