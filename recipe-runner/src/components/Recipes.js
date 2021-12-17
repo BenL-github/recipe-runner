@@ -152,33 +152,6 @@ function Recipes(props) {
             </Container>
 
             <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeID"} />
-
-
-            {/*             
-            <Typography variant='h3'>Search for a Recipe</Typography> */}
-
-
-            {/* <Grid container spacing={2} sx={{ width: 95 / 100, marginLeft: 'auto', marginRight: 'auto' }}>
-                <Grid item>
-                    <TextField id='outlined-basic' label='Title Keyword' variant='outlined'
-                        onChange={(e) => setKeyword(e.target.value)} />
-                </Grid>
-                <Grid item sx={{ my: 'auto' }}>
-                    <Button variant="outlined" onClick={onSearch}> Search </Button>
-                </Grid>
-            </Grid> */}
-
-            {/*             
-            {isNoResults && <>
-                <Typography variant='h4'>Search Results</Typography>
-                <Typography variant='p'>{`No recipes with the keyword "${keyword}"; try again with a different keyword or add a new recipe!`}</Typography>
-            </>}
-
-            
-            {isResults && <>
-                <Typography variant="h4">Search Results</Typography>
-                <Tables columns={recipeColumns} rows={searchRows} rowIDTitle={"recipeID"} />
-            </>} */}
         </>
     )
 }

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'
 import Tables from './Tables'
 import { Typography } from '@mui/material';
-import FormDialog from './FormDialog';
 import UpdateFormDialog from './UpdateFormDialog';
 import Container from '@mui/material/Container';
+import Form from './Forms/Form';
+import AddIngredientForm from './Forms/Ingredients/AddIngredientForm';
+import DeleteIngredientForm from './Forms/Ingredients/DeleteIngredientForm';
 
-function Ingredients(props) {
+export default function Ingredients(props) {
     const { baseURL } = props;
 
     // INGREDIENTS
@@ -26,29 +28,10 @@ function Ingredients(props) {
         },
     ];
 
-    const [ingredientID, setIngredientID] = useState()
+    const [ingredientID, setIngredientID] = useState('')
     const [ingredientName, setIngredientName] = useState("")
     const [ingredientPrice, setIngredientPrice] = useState()
     const [ingredientRows, setIngredientRows] = useState([])
-
-    const add_form = {
-        buttonLabel: "Add Ingredient",
-        title: "Add New Ingredient",
-        text: "Please enter an ingredient name and a valid price.",
-        inputs: [
-            { id: "ingredientName", label: "ingredientName", type: "text", key: "ingredientName", hook: setIngredientName },
-            { id: "ingredientPrice", label: "ingredientPrice", type: "number", key: "ingredientPrice", hook: setIngredientPrice }
-        ]
-    }
-
-    const delete_form = {
-        buttonLabel: "Delete Ingredient",
-        title: "Delete an Ingredient",
-        text: "Please enter a valid ingredient id.",
-        inputs: [
-            { id: "ingredientID", label: "ingredientID", type: "number", key: "ingredientID", hook: setIngredientID },
-        ]
-    }
 
     const onDelete = () => {
         axios({
@@ -76,6 +59,9 @@ function Ingredients(props) {
             .catch(function (error) {
                 console.log(error)
             })
+        setIngredientRows([{ingredientID:1,ingredientName:"chicken thigh",price:4.99},
+        {ingredientID:2, ingredientName:"Corn",price:1},
+        {ingredientID:3, ingredientName:"Bread",price:1.50}])
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handles add behavior
@@ -121,20 +107,33 @@ function Ingredients(props) {
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>Ingredients Table</Typography>
                 <Container disableGutters sx={{ width: 'auto', marginRight: 0, marginLeft: 0, display: 'flex', justifyContent: 'space-around', px: 0 }}>
-                    <FormDialog
-                        buttonLabel={add_form.buttonLabel}
-                        title={add_form.title}
-                        text={add_form.text}
+                    
+                    {/* Add Ingredient */}
+                    <Form
+                        buttonLabel="Add Ingredient"
+                        title="Add a New Ingredient"
+                        text="Please enter an ingredient name and price"
                         submitAction={onAdd}
-                        inputs={add_form.inputs}
-                    />
-                    <FormDialog
-                        buttonLabel={delete_form.buttonLabel}
-                        title={delete_form.title}
-                        text={delete_form.text}
+                    >
+                        <AddIngredientForm 
+                            setIngredientName={setIngredientName} 
+                            setIngredientPrice={setIngredientPrice}
+                        />
+                    </Form>
+                    
+                    {/* Delete Ingredient */}
+                    <Form
+                        buttonLabel="Delete Ingredient"
+                        title="Delete an Ingredient"
+                        text="Please select an ingredient to be deleted"
                         submitAction={onDelete}
-                        inputs={delete_form.inputs}
-                    />
+                    >
+                        <DeleteIngredientForm
+                            setIngredientID={setIngredientID}
+                            ingredients={ingredientRows}
+                            value={ingredientID}
+                         />
+                    </Form>
                 </Container>
             </Container>
 
@@ -145,4 +144,4 @@ function Ingredients(props) {
     )
 }
 
-export default Ingredients
+
