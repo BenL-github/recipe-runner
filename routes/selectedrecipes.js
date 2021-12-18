@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db-connector');
 
-router.get('/selectedrecipes', (req, res) => {
+router.get('/api/selectedrecipes', (req, res) => {
     db.getSelectedRecipesTable((err, results) => {
         if (err) {
             res.send(500, "Server Error")
@@ -12,7 +12,7 @@ router.get('/selectedrecipes', (req, res) => {
     })
 })
 
-router.post('/selectedrecipes', (req, res) => {
+router.post('/api/selectedrecipes', (req, res) => {
     db.addSelectedRecipe(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
