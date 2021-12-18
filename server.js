@@ -30,4 +30,8 @@ app.use('/', selectedrecipesRoutes)
 app.use('/', recipeingredientsRoutes)
 app.use('/', demo)
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname+'/recipe-runner/build/index.html'));
+  });
+
 app.listen(port, () => console.log(`Server started successfully.`));
