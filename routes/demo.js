@@ -3,7 +3,7 @@ const db = require('../database/db-connector');
 const router = express.Router();
 
 
-router.get('/demo', (req, res) => {
+router.get('/api/demo', (req, res) => {
     if (req.query.customerID){
         db.getUserGroceryList(req.query.customerID, function (err, results){
             if (err) {

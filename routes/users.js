@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db-connector');
 
-router.get('/users', (req, res) => {
+router.get('/api/users', (req, res) => {
     db.getUsersTable((err, results) => {
         if (err) {
             res.send(500, "Server Error")
@@ -12,7 +12,7 @@ router.get('/users', (req, res) => {
     })
 })
 
-router.post('/users', (req,res) => {
+router.post('/api/users', (req,res) => {
     db.addUser(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
@@ -22,7 +22,7 @@ router.post('/users', (req,res) => {
     })
 })
 
-router.put('/users', (req, res) => {
+router.put('/api/users', (req, res) => {
     db.updateUser((err, results) => {
         if (err) {
             res.send(500, "Server Error")

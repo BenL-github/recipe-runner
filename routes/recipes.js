@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/db-connector');
 
-router.get('/recipes', (req, res) => {
+router.get('/api/recipes', (req, res) => {
     if (req.query.keyword){
         db.searchRecipe(req.query.keyword, function (err, results){
             if (err) {
@@ -22,7 +22,7 @@ router.get('/recipes', (req, res) => {
     }
 })
 
-router.post('/recipes', (req, res) => {
+router.post('/api/recipes', (req, res) => {
     db.addRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
@@ -32,7 +32,7 @@ router.post('/recipes', (req, res) => {
     })
 })
 
-router.delete('/recipes', (req, res) => {
+router.delete('/api/recipes', (req, res) => {
     db.deleteRecipe(req.body, function (err, results) {
         if (err) {
             res.send(500, "Server Error")
