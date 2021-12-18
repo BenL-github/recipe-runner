@@ -1,55 +1,51 @@
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS `Users`;
-DROP TABLE IF EXISTS `ShoppingCarts`;
-DROP TABLE IF EXISTS `SelectedRecipes`;
-DROP TABLE IF EXISTS `Recipes`;
-DROP TABLE IF EXISTS `RecipeIngredients`;
-DROP TABLE IF EXISTS `Ingredients`;
-SET FOREIGN_KEY_CHECKS = 1;
-
+DROP TABLE IF EXISTS Users CASCADE;
+DROP TABLE IF EXISTS ShoppingCarts CASCADE;
+DROP TABLE IF EXISTS SelectedRecipes CASCADE;
+DROP TABLE IF EXISTS Recipes CASCADE;
+DROP TABLE IF EXISTS Ingredients CASCADE;
+DROP TABLE IF EXISTS RecipeIngredients CASCADE;
 --
--- Table structure for table `Users`
+-- Table structure for table Users
 --
 
-CREATE TABLE `Users`(
-    `customerID` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
-    `fName` varchar(255) NOT NULL,
-    `lName` varchar(255) NOT NULL,
-    `email` varchar(255) NOT NULL,
-    `zipCode` int(5) NOT NULL,
-    PRIMARY KEY (`customerID`)
+CREATE TABLE IF NOT EXISTS Users (
+     customerID  SERIAL NOT NULL UNIQUE ,
+     fName  varchar(255) NOT NULL,
+     lName  varchar(255) NOT NULL,
+     email  varchar(255) NOT NULL,
+     zipCode  integer NOT NULL,
+    PRIMARY KEY ( customerID )
 );
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table  Users 
 --
 
-LOCK TABLES `Users` WRITE;
-INSERT INTO `Users` VALUES 
+
+INSERT INTO  Users  VALUES 
     (1, 'Timothy', 'Jan', 'jant@oregonstate.edu', 83854),
     (2, 'Benny', 'Li', 'libenn@oregonstate.edu', 99999),
     (3, 'Darth', 'Vader', 'vaderd@oregonstate.edu', 12345),
     (4, 'Luke', 'Skywalker', 'skywalkerl@oregonstate.edu', 54321),
     (5, 'Leia', 'Organa', 'organal@oregonstate.edu', 11111);
-UNLOCK TABLES;
+
 
 --
--- Table structure for table `ShoppingCarts`
+-- Table structure for table  ShoppingCarts 
 --
 
-CREATE TABLE `ShoppingCarts`(
-    `cartID` int(11) UNIQUE NOT NULL AUTO_INCREMENT,
-    `customerID` int(11) UNIQUE NOT NULL,
-    PRIMARY KEY (`cartID`),
-    CONSTRAINT `ShoppingCarts_fk_1` FOREIGN KEY (`customerID`) REFERENCES `Users` (`customerID`)
+CREATE TABLE IF NOT EXISTS ShoppingCarts (
+     cartID  integer UNIQUE NOT NULL ,
+     customerID  integer UNIQUE NOT NULL,
+    PRIMARY KEY ( cartID ),
+    CONSTRAINT  ShoppingCarts_fk_1  FOREIGN KEY ( customerID ) REFERENCES  Users  ( customerID )
 );
 
 --
--- Dumping data for table `ShoppingCarts`
+-- Dumping data for table  ShoppingCarts 
 --
 
-LOCK TABLES `ShoppingCarts` WRITE;
-INSERT INTO `ShoppingCarts` VALUES
+INSERT INTO ShoppingCarts  VALUES
     -- timothy
     (1, 1),
     -- benny
@@ -60,77 +56,74 @@ INSERT INTO `ShoppingCarts` VALUES
     (4, 4),
     -- leia
     (5, 5);
-UNLOCK TABLES;
+
 
 --
--- Table structure for table `Recipes`
+-- Table structure for table  Recipes 
 --
 
-CREATE TABLE `Recipes`(
-    `recipeID` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
-    `recipeTitle` varchar(255) NOT NULL,
-    `recipeDescription` varchar(255) NOT NULL,
-    `recipeServing` int(11) NOT NULL,
-    PRIMARY KEY(`recipeID`)
+CREATE TABLE IF NOT EXISTS Recipes (
+     recipeID  SERIAL NOT NULL UNIQUE,
+     recipeTitle  varchar(255) NOT NULL,
+     recipeDescription  varchar(255) NOT NULL,
+     recipeServing  integer NOT NULL,
+    PRIMARY KEY( recipeID )
 );
 
 -- 
--- Dumping data for table `SelectedRecipes`
+-- Dumping data for table  SelectedRecipes 
 --
 
-LOCK TABLES `Recipes` WRITE;
-INSERT INTO `Recipes` VALUES
+INSERT INTO  Recipes  VALUES
     (1, 'Chicken Tikka Masala', 'Chicken breast simmered in fragrant red Indian curry', 4),
     (2, 'Beet Salad', 'Cubed boiled beets in balsamic dressing', 2),
-    (3, "Grandma's Apple Pie", 'A classic American dessert - tastes like the holidays', 8),
+    (3, 'Grandma Apple Pie', 'A classic American dessert - tastes like the holidays', 8),
     (4, 'Spicy Omelette', 'Southwestern style omelette with jalapenos and tomatoes', 2),
     (5, 'BLT Sandwich', 'The perfect sandwich when you need to get rid of old stuff in your fridge', 1);
-UNLOCK TABLES;
+
 
 
 --
--- Table structure for table `SelectedRecipes`
+-- Table structure for table  SelectedRecipes 
 --
 
-CREATE TABLE `SelectedRecipes`(
-    `cartID` int(11) NOT NULL,
-    `recipeID` int(11),
-    `quantity` int(11) NOT NULL,
-    CONSTRAINT `SelectedRecipes_fk_1` FOREIGN KEY (`cartID`) REFERENCES `ShoppingCarts` (`cartID`),
-    CONSTRAINT `SelectedRecipes_fk_2` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE SET NULL
+CREATE TABLE IF NOT EXISTS SelectedRecipes (
+     cartID  integer NOT NULL,
+     recipeID  integer,
+     quantity  integer NOT NULL,
+    CONSTRAINT  SelectedRecipes_fk_1  FOREIGN KEY ( cartID ) REFERENCES  ShoppingCarts  ( cartID ),
+    CONSTRAINT  SelectedRecipes_fk_2  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE SET NULL
 );
 
 -- 
--- Dumping data for table `SelectedRecipes`
+-- Dumping data for table  SelectedRecipes 
 --
 
-LOCK TABLES `SelectedRecipes` WRITE;
-INSERT INTO `SelectedRecipes` VALUES 
+INSERT INTO  SelectedRecipes  VALUES 
 -- (cartID, recipeID, quantity)
     (1, 1, 15),
     (1, 2, 2),
     (2, 5, 1),
     (3, 4, 4),
     (4, 1, 2);
-UNLOCK TABLES;
+
 
 --
--- Table structure for table `Ingredients`
+-- Table structure for table  Ingredients 
 --
 
-CREATE TABLE `Ingredients`(
-    `ingredientID` int(11) UNIQUE NOT NULL AUTO_INCREMENT,
-    `ingredientName` varchar(255) NOT NULL,
-    `price` DECIMAL(6,2) NOT NULL,
-    PRIMARY KEY (`ingredientID`)
+CREATE TABLE IF NOT EXISTS Ingredients (
+     ingredientID  SERIAL UNIQUE NOT NULL,
+     ingredientName  varchar(255) NOT NULL,
+     price  DECIMAL NOT NULL,
+    PRIMARY KEY ( ingredientID )
 );
 
 -- 
--- Dumping data for table `Ingredients`
+-- Dumping data for table  Ingredients 
 --
 
-LOCK TABLES `Ingredients` WRITE;
-INSERT INTO `Ingredients` VALUES
+INSERT INTO  Ingredients  VALUES
     (1, 'Chicken Breast', 4.99),
     (2, 'Tikka Masala Simmer Sauce', 6.99),
     (3, 'Salt', 2.99),
@@ -147,27 +140,26 @@ INSERT INTO `Ingredients` VALUES
     (14, 'Bacon', 3.99),
     (15, 'Whole Wheat Bread', 4.99),
     (16, 'Mayonnaise', 4.99);
-UNLOCK TABLES;
+
 
 --
--- Table structure for table `RecipeIngredients`
+-- Table structure for table  RecipeIngredients 
 --
 
-CREATE TABLE `RecipeIngredients`(
-    `recipeID` int(11),
-    `ingredientID` int(11) NOT NULL,
-    `uOm` varchar(255) NOT NULL,
-    `quantity` int(11) NOT NULL,
-    CONSTRAINT `RecipeIngredients_fk_1` FOREIGN KEY (`recipeID`) REFERENCES `Recipes` (`recipeID`) ON DELETE SET NULL,
-    CONSTRAINT `RecipeIngredients_fk_2` FOREIGN KEY (`ingredientID`) REFERENCES `Ingredients` (`ingredientID`)
+CREATE TABLE IF NOT EXISTS RecipeIngredients (
+     recipeID  integer,
+     ingredientID  integer NOT NULL,
+     uOm  varchar(255) NOT NULL,
+     quantity  integer NOT NULL,
+    CONSTRAINT  RecipeIngredients_fk_1  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE SET NULL,
+    CONSTRAINT  RecipeIngredients_fk_2  FOREIGN KEY ( ingredientID ) REFERENCES  Ingredients  ( ingredientID )
 );
 
 -- 
--- Dumping data for table `RecipeIngredients`
+-- Dumping data for table  RecipeIngredients 
 --
 
-LOCK TABLES `RecipeIngredients` WRITE;
-INSERT INTO `RecipeIngredients` VALUES
+INSERT INTO  RecipeIngredients  VALUES
     -- Chicken Tikka Masala (1)
     (1, 1, '1lb breast', 2), 
     (1, 2, 'jar', 1), 
@@ -194,4 +186,3 @@ INSERT INTO `RecipeIngredients` VALUES
     (5, 14, 'strip of bacon', 3), 
     (5, 15, 'slice', 2), 
     (5, 16, 'tbsp', 1); 
-UNLOCK TABLES;

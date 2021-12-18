@@ -7,10 +7,10 @@ const mysql = require('mysql');
 // database = cs340_onid
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'classmysql.engr.oregonstate.edu',
-    user: 'cs340_libenn',
-    password: '0469',
-    database: 'cs340_libenn'
+    host: 'ec2-52-54-38-229.compute-1.amazonaws.com',
+    user: 'fxlbkmpoanhprf',
+    password: 'ca08262ce4f3d70351c714cad9121e4205ebb62220e57eecfb3fd47fd41dff93',
+    database: 'dac4etvf3ssr8l'
 });
 
 // RECIPES
