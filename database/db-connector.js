@@ -7,10 +7,10 @@ const mysql = require('mysql');
 // database = cs340_onid
 const pool = mysql.createPool({
     connectionLimit: 10,
-    process.env.PGHOST,
-    process.env.PGUSER,
-    process.env.PGPASSWORD',
-    process.env.PGDATABASE
+    host: process.env.PGHOST,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE
 });
 
 // RECIPES
