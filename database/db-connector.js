@@ -1,6 +1,13 @@
 const { Pool, Client } = require('pg');
 const client = new Client();
-const pool = new Pool();
+const pool = new Pool({
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    process.env.PGPORT
+})
+
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
@@ -62,7 +69,7 @@ module.exports.updateRecipe = (recipe, callback) => {
                 recipeDescription='${recipe.description}',
                 recipeServing='${recipe.serving}'
                 WHERE recipeID=${recipe.id};`;
-    
+
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -256,7 +263,7 @@ module.exports.addSelectedRecipe = (data, callback) => {
 module.exports.deleteSelectedRecipe = (data, callback) => {
     let query = `DELETE FROM SelectedRecipe 
                 WHERE recipeID=${data.recipeID} AND cartID=${data.cartID};`
-          
+
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
