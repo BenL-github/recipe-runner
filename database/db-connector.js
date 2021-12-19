@@ -1,17 +1,6 @@
-const mysql = require('mysql');
-
-// create an .env file with MYSQL_USER = ...\
-// host = classmysql.engr.oregonstate.edu
-// user = cs340_onid
-// pass = db_pass
-// database = cs340_onid
-const pool = mysql.createPool({
-    connectionLimit: 10,
-    host: 'ec2-52-54-38-229.compute-1.amazonaws.com',
-    user: 'fxlbkmpoanhprf',
-    password: 'ca08262ce4f3d70351c714cad9121e4205ebb62220e57eecfb3fd47fd41dff93',
-    database: 'dac4etvf3ssr8l'
-});
+const { Pool, Client } = require('pg');
+const client = new Client();
+const pool = new Pool();
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
