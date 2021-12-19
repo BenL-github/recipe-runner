@@ -1,6 +1,13 @@
 const { Pool, Client } = require('pg');
 const client = new Client();
-const pool = new Pool();
+const pool = new Pool({
+    user: 'fxlbkmpoanhprf',
+    host: 'ec2-52-54-38-229.compute-1.amazonaws.com',
+    database: 'dac4etvf3ssr8l',
+    password: 'ca08262ce4f3d70351c714cad9121e4205ebb62220e57eecfb3fd47fd41dff93',
+    port: 5432
+})
+
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
@@ -62,7 +69,7 @@ module.exports.updateRecipe = (recipe, callback) => {
                 recipeDescription='${recipe.description}',
                 recipeServing='${recipe.serving}'
                 WHERE recipeID=${recipe.id};`;
-    
+
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -256,7 +263,7 @@ module.exports.addSelectedRecipe = (data, callback) => {
 module.exports.deleteSelectedRecipe = (data, callback) => {
     let query = `DELETE FROM SelectedRecipe 
                 WHERE recipeID=${data.recipeID} AND cartID=${data.cartID};`
-          
+
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
