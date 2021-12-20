@@ -1,13 +1,38 @@
-const { Pool, Client } = require('pg');
-const client = new Client();
+const { Pool } = require('pg');
+require('dotenv').config()
+
+// if (process.env.DATABASE_URL) {
+//     pool = new Pool({
+//         connectionString: process.env.DATABASE_URL,
+//         ssl: {
+//             rejectUnauthorized: false
+//           }
+//     });
+// } else {
+//     // if on local
+//     pool = new Pool({
+//         user: process.env.PGUSER,
+//         host: process.env.PGHOST,
+//         database: process.env.PGDATABASE,
+//         password: process.env.PGPASSWORD,
+//         process.env.PGPORT,
+//         ssl: {
+//             rejectUnauthorized: false
+//           }
+//     });
+// }
 const pool = new Pool({
     user: process.env.PGUSER,
     host: process.env.PGHOST,
     database: process.env.PGDATABASE,
     password: process.env.PGPASSWORD,
-    process.env.PGPORT
+    port: process.env.PGPORT,
+    ssl: {
+        rejectUnauthorized: false
+     }
 })
 
+pool.connect();
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {

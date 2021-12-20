@@ -21,7 +21,7 @@ const theme = createTheme({
     }
 })
 
-const baseURL = "/api/"
+const baseURL = "http://localhost:34880/api/"
 function App() {
     return (
         <Router>

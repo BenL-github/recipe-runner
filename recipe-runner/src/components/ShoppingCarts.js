@@ -9,9 +9,9 @@ function ShoppingCarts(props) {
     const { baseURL } = props;
     // SHOPPING CARTS
     const cart_columns = [
-        { field: 'cartID', headerName: 'cartID', width: 150 },
-        { field: 'customerID', headerName: 'customerID', width: 150 },
-        { field: 'fullName', headerName: 'Owner Name', width: 200 },
+        { field: 'cartid', headerName: 'cartID', width: 150 },
+        { field: 'customerid', headerName: 'customerID', width: 150 },
+        { field: 'fname', headerName: 'Owner Name', width: 200 },
     ];
 
     const [cartRows, setCartRows] = useState([]);

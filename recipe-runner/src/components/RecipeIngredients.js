@@ -9,12 +9,12 @@ function RecipeIngredients(props) {
 
     // RECIPE INGREDIENTS
     const recipeIngredientsColumns = [
-        { field: 'recipeID', headerName: 'recipeID', width: 125 },
-        { field: 'ingredientID', headername: "ingredientID", width: 150 },
+        { field: 'recipeid', headerName: 'recipeID', width: 125 },
+        { field: 'ingredientid', headername: "ingredientID", width: 150 },
         { field: 'quantity', headername: 'quantity', width: 200 },
-        { field: 'uOm', headerName: "unit of measurement", width: 200 },
-        { field: 'recipeTitle', headerName: 'title', width: 200 },
-        { field: 'ingredientName', headername: 'ingredientName', width: 200 },
+        { field: 'uom', headerName: "unit of measurement", width: 200 },
+        { field: 'recipetitle', headerName: 'title', width: 200 },
+        { field: 'ingredientname', headername: 'ingredientName', width: 200 },
     ]
 
     const [recipeIngredientsRows, setRecipeIngredientsRows] = useState([])
@@ -36,8 +36,8 @@ function RecipeIngredients(props) {
         let i = 0
         data.forEach((object) => {
             // if recipe is null, fill out cell with "null"
-            if(!object["recipeID"]){
-                object["recipeID"] = "null"
+            if(!object["recipeid"]){
+                object["recipeid"] = "null"
             }
             object["muiID"] = i
             i++

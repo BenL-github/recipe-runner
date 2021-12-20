@@ -8,7 +8,7 @@ router.get('/api/recipes', (req, res) => {
             if (err) {
                 res.send(500, "Server Error")
             } else {
-                res.send(results)
+                res.send(results.rows)
             }
         });
     } else {
@@ -16,7 +16,7 @@ router.get('/api/recipes', (req, res) => {
             if (err) {
                 res.send(500, "Server Error")
             } else{
-                res.send(results)
+                res.send(results.rows)
             }
         });
     }
@@ -41,15 +41,5 @@ router.delete('/api/recipes', (req, res) => {
         }
     })
 })
-
-// router.get('/recipes/:keyword', (req, res) => {
-//     db.searchRecipe(req.params.keyword, function (err, results) {
-//         if (err) {
-//             res.send(500, "Server Error")
-//         } else {
-//             res.send(results)
-//         }
-//     })
-// })
 
 module.exports = router;

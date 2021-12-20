@@ -12,21 +12,21 @@ function Recipes(props) {
 
     // RECIPES
     const [keyword, setKeyword] = useState("")
-    const [recipeID, setRecipeID] = useState()
+    const [recipeid, setRecipeID] = useState()
     const [recipeRows, setRecipeRows] = useState([])
 
-    const [recipeTitle, setRecipeTitle] = useState()
-    const [recipeServing, setRecipeServing] = useState()
-    const [recipeDescription, setRecipeDescription] = useState()
+    const [recipetitle, setRecipeTitle] = useState()
+    const [recipeserving, setRecipeServing] = useState()
+    const [recipedescription, setRecipeDescription] = useState()
 
     const add_form = {
         buttonLabel: "Add a Recipe",
         title: "Add New Recipe",
         text: "Please enter recipe title, how many people the recipe serves, and a short description.",
         inputs: [
-            { id: "recipeTitle", label: "title", type: "text", key: "recipeTitle", hook: setRecipeTitle },
-            { id: "recipeServing", label: "serving(s)", type: "number", key: "recipeServing", hook: setRecipeServing },
-            { id: "recipeDescription", label: "description", type: "text", key: "recipeDescription", hook: setRecipeDescription }
+            { id: "recipetitle", label: "title", type: "text", key: "recipeTitle", hook: setRecipeTitle },
+            { id: "recipeserving", label: "serving(s)", type: "number", key: "recipeServing", hook: setRecipeServing },
+            { id: "recipedescription", label: "description", type: "text", key: "recipeDescription", hook: setRecipeDescription }
         ]
     }
 
@@ -35,15 +35,15 @@ function Recipes(props) {
         title: "Delete a Recipe",
         text: "Please enter valid recipe ID to be deleted.",
         inputs: [
-            { id: "recipeID", label: "recipeID", type: "number", key: "recipeID", hook: setRecipeID }
+            { id: "recipeid", label: "recipeID", type: "number", key: "recipeID", hook: setRecipeID }
         ]
     }
 
     const recipeColumns = [
-        { field: 'recipeID', headerName: 'recipeID', width: 150 },
-        { field: 'recipeTitle', headerName: 'recipeTitle', width: 200 },
-        { field: 'recipeServing', headerName: 'recipeServing', type: 'number', width: 150 },
-        { field: 'recipeDescription', headerName: 'recipeDescription', width: 800 },
+        { field: 'recipeid', headerName: 'recipeID', width: 150 },
+        { field: 'recipetitle', headerName: 'recipeTitle', width: 200 },
+        { field: 'recipeserving', headerName: 'recipeServing', type: 'number', width: 150 },
+        { field: 'recipedescription', headerName: 'recipeDescription', width: 800 },
     ];
 
     // get request to database on page load
@@ -64,9 +64,9 @@ function Recipes(props) {
             method: "POST",
             url: baseURL + "recipes",
             data: {
-                title: recipeTitle,
-                description: recipeDescription,
-                serving: recipeServing
+                title: recipetitle,
+                description: recipedescription,
+                serving: recipeserving
             }
         })
             .then((response) => {
@@ -104,7 +104,7 @@ function Recipes(props) {
             method: "DELETE",
             url: baseURL + 'recipes',
             data: {
-                id: recipeID
+                id: recipeid
             }
         })
             .then((response) => {
@@ -151,7 +151,7 @@ function Recipes(props) {
                 </Container>
             </Container>
 
-            <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeID"} />
+            <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeid"} />
         </>
     )
 }
