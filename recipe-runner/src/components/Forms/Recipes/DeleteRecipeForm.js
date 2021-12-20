@@ -16,21 +16,21 @@ const MenuProps = {
 };
 
 export default function DeleteIngredientForm(props) {
-    const {setIngredientID, ingredients, value} = props;
+    const {setRecipeID, recipes, value} = props;
 
     return (
         <FormControl fullWidth sx={{ my:2 }}>
-            <InputLabel id="delete-ingredient-label">Ingredient</InputLabel>
+            <InputLabel id="delete-recipe-label">Recipe</InputLabel>
             <Select
-                labelId="delete-ingredient-label"
-                label="IngredientID"
-                onChange={(e) => setIngredientID(e.target.value)}
+                labelId="delete-recipe-label"
+                label="recipeID"
+                onChange={(e) => setRecipeID(e.target.value)}
                 value={value}
                 MenuProps={MenuProps}
             >
-                {ingredients.map((ingredient) => (
-                    <MenuItem key={ingredient.ingredientid} value={ingredient.ingredientid}> 
-                        {ingredient.ingredientid} - {ingredient.ingredientname}
+                {recipes.map((recipe) => (
+                    <MenuItem key={recipe.recipeid} value={recipe.recipeid}> 
+                        {recipe.recipeid} - {recipe.recipetitle}
                     </MenuItem>
                 ))}
             </Select>

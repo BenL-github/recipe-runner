@@ -23,7 +23,18 @@ router.get('/api/recipes', (req, res) => {
 })
 
 router.post('/api/recipes', (req, res) => {
+    console.log(req.body);
     db.addRecipe(req.body, function (err, results) {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    })
+})
+
+router.put('/api/recipes', (req, res) => {
+    db.updateRecipe(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
         } else {

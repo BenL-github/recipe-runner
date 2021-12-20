@@ -4,13 +4,25 @@ const router = express.Router();
 
 
 router.get('/api/ingredients', (req, res) => {
-    db.getIngredientsTable((err, results) => {
-        if (err) {
-            res.send(500, "Server Error");
-        } else {
-            res.send(results.rows);
-        }
-    });
+    if (req.query.keyword) {
+        db.searchIngredient(req.query.keyword, (err, result) => {
+            if (err) {
+                res.send(500, "Server Error");
+            } else {
+                console.log(result.rows)
+                res.send(result.rows)
+            }
+        })
+    } else {
+        db.getIngredientsTable((err, result) => {
+            if (err) {
+                res.send(500, "Server Error");
+            } else {
+                res.send(result.rows);
+            }
+        });
+    }
+    
 })
 
 router.post('/api/ingredients', (req, res) => {

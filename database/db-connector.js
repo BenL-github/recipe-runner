@@ -1,42 +1,32 @@
 const { Pool } = require('pg');
-require('dotenv').config()
+require('dotenv').config();
 
-// if (process.env.DATABASE_URL) {
-//     pool = new Pool({
-//         connectionString: process.env.DATABASE_URL,
-//         ssl: {
-//             rejectUnauthorized: false
-//           }
-//     });
-// } else {
-//     // if on local
-//     pool = new Pool({
-//         user: process.env.PGUSER,
-//         host: process.env.PGHOST,
-//         database: process.env.PGDATABASE,
-//         password: process.env.PGPASSWORD,
-//         process.env.PGPORT,
-//         ssl: {
-//             rejectUnauthorized: false
-//           }
-//     });
-// }
-const pool = new Pool({
-    user: process.env.PGUSER,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
-    ssl: {
-        rejectUnauthorized: false
-     }
-})
+if (process.env.DATABASE_URL) {
+    pool = new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+} else {
+    // if on local
+    pool = new Pool({
+        user: process.env.PGUSER,
+        host: process.env.PGHOST,
+        database: process.env.PGDATABASE,
+        password: process.env.PGPASSWORD,
+        port: process.env.PGPORT,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+}
 
 pool.connect();
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {
-    let query = "SELECT * FROM Recipes;";
+    let query = "SELECT * FROM Recipes ORDER BY recipeid ASC;";
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -49,6 +39,7 @@ module.exports.getRecipesTable = (callback) => {
 }
 
 module.exports.addRecipe = (recipe, callback) => {
+    console.log(recipe.description)
     let query = `INSERT INTO Recipes (recipeTitle, recipeDescription, recipeServing)
                  VALUES ('${recipe.title}', '${recipe.description}', ${recipe.serving});`
 
@@ -63,7 +54,7 @@ module.exports.addRecipe = (recipe, callback) => {
 }
 
 module.exports.searchRecipe = (keyword, callback) => {
-    let query = `SELECT * FROM Recipes WHERE recipeTitle LIKE '%${keyword}%';`
+    let query = `SELECT * FROM Recipes WHERE recipeTitle ILIKE '%${keyword}%';`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -108,7 +99,7 @@ module.exports.updateRecipe = (recipe, callback) => {
 // INGREDIENTS
 module.exports.getIngredientsTable = (callback) => {
     // sql query for all rows from Ingredients table
-    let query = "SELECT * FROM Ingredients;";
+    let query = "SELECT * FROM Ingredients ORDER BY ingredientid ASC;";
 
     // get pool connection
     pool.query(query, (err, result) => {
@@ -157,7 +148,7 @@ module.exports.updateIngredient = (ingredient, callback) => {
 }
 
 module.exports.deleteIngredient = (ingredient, callback) => {
-    let query = `DELETE FROM Ingredients WHERE ingredientID=${ingredient.id};`
+    let query = `DELETE FROM Ingredients WHERE ingredientID=${ingredient.id};`;
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -168,7 +159,21 @@ module.exports.deleteIngredient = (ingredient, callback) => {
             // query success
             callback(false, result)
         }
-    })
+    });
+}
+
+module.exports.searchIngredient = (keyword, callback) => {
+    let query = `SELECT * FROM Ingredients WHERE ingredientname ILIKE '%${keyword}%';`;
+    pool.query(query, (err, result) => {
+        if (err) {
+            // query resulted in error
+            console.log(err);
+            callback(true);
+        } else {
+            // query success
+            callback(false, result)
+        }
+    });
 }
 
 // USERS

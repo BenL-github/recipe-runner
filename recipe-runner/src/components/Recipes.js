@@ -1,43 +1,21 @@
 import { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
-import { Container } from '@mui/material';
-import FormDialog from './FormDialog';
+import { Typography, TextField, Button, Container } from '@mui/material';
 import axios from 'axios';
 import Tables from './Tables'
+import Form from './Forms/Form';
+import AddRecipeForm from './Forms/Recipes/AddRecipeForm';
+import DeleteRecipeForm from './Forms/Recipes/DeleteRecipeForm';
+import UpdateRecipeForm from './Forms/Recipes/UpdateRecipeForm';
 
 function Recipes(props) {
     const { baseURL } = props;
-
-    // RECIPES
     const [keyword, setKeyword] = useState("")
-    const [recipeid, setRecipeID] = useState()
+    const [recipeid, setRecipeID] = useState(1)
     const [recipeRows, setRecipeRows] = useState([])
 
     const [recipetitle, setRecipeTitle] = useState()
     const [recipeserving, setRecipeServing] = useState()
     const [recipedescription, setRecipeDescription] = useState()
-
-    const add_form = {
-        buttonLabel: "Add a Recipe",
-        title: "Add New Recipe",
-        text: "Please enter recipe title, how many people the recipe serves, and a short description.",
-        inputs: [
-            { id: "recipetitle", label: "title", type: "text", key: "recipeTitle", hook: setRecipeTitle },
-            { id: "recipeserving", label: "serving(s)", type: "number", key: "recipeServing", hook: setRecipeServing },
-            { id: "recipedescription", label: "description", type: "text", key: "recipeDescription", hook: setRecipeDescription }
-        ]
-    }
-
-    const delete_form = {
-        buttonLabel: "Delete a Recipe",
-        title: "Delete a Recipe",
-        text: "Please enter valid recipe ID to be deleted.",
-        inputs: [
-            { id: "recipeid", label: "recipeID", type: "number", key: "recipeID", hook: setRecipeID }
-        ]
-    }
 
     const recipeColumns = [
         { field: 'recipeid', headerName: 'recipeID', width: 150 },
@@ -57,25 +35,6 @@ function Recipes(props) {
                 console.log(error)
             })
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-    // behavior when user adds a new recipe
-    const onAdd = () => {
-        axios({
-            method: "POST",
-            url: baseURL + "recipes",
-            data: {
-                title: recipetitle,
-                description: recipedescription,
-                serving: recipeserving
-            }
-        })
-            .then((response) => {
-                window.location.reload();
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
 
     // behavior when user searches for a recipe
     const onSearch = () => {
@@ -98,6 +57,41 @@ function Recipes(props) {
             })
     }
 
+    // behavior when user adds a new recipe
+    const onAdd = () => {
+        axios({
+            method: "POST",
+            url: baseURL + "recipes",
+            data: {
+                title: recipetitle,
+                description: recipedescription,
+                serving: recipeserving
+            }
+        })
+            .then((response) => {
+                window.location.reload();
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    // update
+    const onModify = () => {
+        axios({
+            method: "PUT",
+            url: baseURL + "recipes",
+            data: {
+                id: recipeid,
+                title: recipetitle,
+                serving: recipeserving,
+                description: recipedescription
+            }
+        })
+        .then((res) => window.location.reload())
+        .catch((err) => console.log(err))
+    }
+
     // behavior when a user deletes a recipe
     const onDelete = () => {
         axios({
@@ -107,7 +101,7 @@ function Recipes(props) {
                 id: recipeid
             }
         })
-            .then((response) => {
+            .then((res) => {
                 window.location.reload();
             })
             .catch(function (error) {
@@ -120,6 +114,7 @@ function Recipes(props) {
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
                 <Typography variant='h3'>Recipes Table</Typography>
                 <Container disableGutters sx={{ width: 'auto', marginRight: 0, marginLeft: 0, display: 'flex', justifyContent: 'space-around', px: 0 }}>
+                    {/* Search */}
                     <TextField
                         id='outlined-basic'
                         size="small"
@@ -134,20 +129,50 @@ function Recipes(props) {
                         sx={{ marginLeft: '1em', my: 'auto' }}
                     >Search</Button>
 
-                    <FormDialog
-                        buttonLabel={add_form.buttonLabel}
-                        title={add_form.title}
-                        text={add_form.text}
+                    {/* Add Recipe */}
+                    <Form
+                        buttonLabel="Add Recipe"
+                        title="Add A Recipe"
+                        text="Please enter a recipe title, serving size, and description"
                         submitAction={onAdd}
-                        inputs={add_form.inputs}
-                    />
-                    <FormDialog
-                        buttonLabel={delete_form.buttonLabel}
-                        title={delete_form.title}
-                        text={delete_form.text}
+                    >
+                        <AddRecipeForm
+                            setRecipeTitle={setRecipeTitle}
+                            setRecipeServing={setRecipeServing}
+                            setRecipeDescription={setRecipeDescription}
+                        />
+                    </Form>
+
+                    {/* Modify Recipe */}
+                    <Form
+                        buttonLabel="Edit Recipe"
+                        title="Edit A Recipe"
+                        text="Please enter a new recipe title, serving size, and description"
+                        submitAction={onModify}
+                    >
+                        <UpdateRecipeForm
+                            setRecipeID={setRecipeID}
+                            setRecipeTitle={setRecipeTitle}
+                            setRecipeServing={setRecipeServing}
+                            setRecipeDescription={setRecipeDescription}
+                            recipes={recipeRows}
+                            value={recipeid}
+                        />
+                    </Form>
+                    
+                    {/*  Delete */}
+                    <Form
+                        buttonLabel="Delete Recipe"
+                        title="Delete a Recipe"
+                        text="Please select a Recipe to Delete"
                         submitAction={onDelete}
-                        inputs={delete_form.inputs}
-                    />
+                    >
+                        <DeleteRecipeForm
+                            setRecipeID={setRecipeID}
+                            recipes={recipeRows}
+                            value={recipeid}
+                        />
+                    </Form>
                 </Container>
             </Container>
 
