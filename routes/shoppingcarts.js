@@ -7,7 +7,7 @@ router.get('/api/shoppingcarts', (req, res) => {
         if (err) {
             res.send(500, "Server Error")
         } else {
-            res.send(results)
+            res.send(results.rows)
         }
     })
 })

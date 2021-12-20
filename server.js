@@ -16,7 +16,7 @@ const demo = require('./routes/demo')
 app.use(express.static(path.join(__dirname, "recipe-runner/build")))
 app.use(express.static("public"));
 app.use(cors())
-const port = process.env.PORT || 34876;
+const port = process.env.PORT || 34880;
 
 
 // app.use((req, res, next) => {

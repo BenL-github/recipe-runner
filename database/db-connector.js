@@ -1,13 +1,38 @@
-const { Pool, Client } = require('pg');
-const client = new Client();
+const { Pool } = require('pg');
+require('dotenv').config()
+
+// if (process.env.DATABASE_URL) {
+//     pool = new Pool({
+//         connectionString: process.env.DATABASE_URL,
+//         ssl: {
+//             rejectUnauthorized: false
+//           }
+//     });
+// } else {
+//     // if on local
+//     pool = new Pool({
+//         user: 'fxlbkmpoanhprf',
+//         host: 'ec2-52-54-38-229.compute-1.amazonaws.com',
+//         database: 'dac4etvf3ssr8l',
+//         password: 'ca08262ce4f3d70351c714cad9121e4205ebb62220e57eecfb3fd47fd41dff93',
+//         port: 5432,
+//         ssl: {
+//             rejectUnauthorized: false
+//           }
+//     });
+// }
 const pool = new Pool({
-    user: 'fxlbkmpoanhprf',
-    host: 'ec2-52-54-38-229.compute-1.amazonaws.com',
-    database: 'dac4etvf3ssr8l',
-    password: 'ca08262ce4f3d70351c714cad9121e4205ebb62220e57eecfb3fd47fd41dff93',
-    port: 5432
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+    ssl: {
+        rejectUnauthorized: false
+     }
 })
 
+pool.connect();
 
 // RECIPES
 module.exports.getRecipesTable = (callback) => {

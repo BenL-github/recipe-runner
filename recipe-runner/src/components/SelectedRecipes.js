@@ -10,10 +10,10 @@ function SelectedRecipes(props) {
 
     // SELECTED RECIPES
     const selectedRecipeColumns = [
-        { field: 'cartID', headerName: 'cartID', width: 150 },
-        { field: 'recipeID', headerName: 'recipeID', width: 150 },
-        { field: 'fullName', headerName: 'Cart Owner', width: 200 },
-        { field: 'recipeTitle', headerName: 'Title', width: 200 },
+        { field: 'cartid', headerName: 'cartID', width: 150 },
+        { field: 'recipeid', headerName: 'recipeID', width: 150 },
+        { field: 'fname', headerName: 'Cart Owner', width: 200 },
+        { field: 'recipetitle', headerName: 'Title', width: 200 },
         { field: 'quantity', headername: 'quantity', width: 200 }
     ];
 
@@ -36,12 +36,12 @@ function SelectedRecipes(props) {
         let i = 0
         data.forEach((object) => {
             // if recipe is null, fill out cell with "null"
-            if (!object["recipeID"]) {
-                object["recipeID"] = "null"
+            if (!object["recipeid"]) {
+                object["recipeid"] = "null"
             }
             object["muiID"] = i
             i++
-            object["fullName"] = `${object.fName} ${object.lName}`
+            object["fullname"] = `${object.fName} ${object.lName}`
         })
     };
 
@@ -57,6 +57,7 @@ function SelectedRecipes(props) {
         setCarts(firstResponse.data)
         setRecipes(secondResponse.data)
         setSelectedRecipeRows(thirdResponse.data)
+        console.log(thirdResponse.data)
 
     }
 

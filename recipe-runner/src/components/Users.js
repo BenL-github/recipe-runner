@@ -8,11 +8,11 @@ function Users(props) {
     const { baseURL } = props;
     // USERS
     const user_columns = [
-        { field: 'customerID', headerName: 'customerID', width: 150 },
-        { field: 'fName', headerName: 'fName', width: 150 },
-        { field: 'lName', headerName: 'lName', width: 150 },
+        { field: 'customerid', headerName: 'customerID', width: 150 },
+        { field: 'fname', headerName: 'fName', width: 150 },
+        { field: 'lname', headerName: 'lName', width: 150 },
         { field: 'email', headerName: 'email', width: 150 },
-        { field: 'zipCode', headerName: 'zipCode', width: 150 },
+        { field: 'zipcode', headerName: 'zipCode', width: 150 },
     ]
 
     const [fname, setFname] = useState("");
@@ -30,7 +30,7 @@ function Users(props) {
             { id: "fname", label: "fname", type: "text", key: "fname", hook: setFname },
             { id: "lname", label: "lname", type: "text", key: "lname", hook: setLname },
             { id: "email", label: "email", type: "email", key: "email", hook: setEmail },
-            { id: "zipCode", label: "zipCode", type: "number", key: "zipCode", hook: setZipCode },
+            { id: "zipcode", label: "zipCode", type: "number", key: "zipCode", hook: setZipCode },
         ]
     }
     const handleClose = () => {
@@ -84,7 +84,7 @@ function Users(props) {
                     sx={{ m: '1em' }}
                 />
             </Container>
-            <Tables columns={user_columns} rows={user_rows} rowIDTitle={"customerID"} />
+            <Tables columns={user_columns} rows={user_rows} rowIDTitle={"customerid"} />
             <Snackbar
                 anchorOrigin={{vertical:'bottom', horizontal:'center'}}
                 open={snackbarReveal}

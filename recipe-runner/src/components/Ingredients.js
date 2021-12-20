@@ -13,8 +13,8 @@ export default function Ingredients(props) {
 
     // INGREDIENTS
     const ingredientColumns = [
-        { field: 'ingredientID', headerName: 'ingredientID', width: 150 },
-        { field: 'ingredientName', headerName: 'ingredientName', width: 200 },
+        { field: 'ingredientid', headerName: 'ingredientID', width: 150 },
+        { field: 'ingredientname', headerName: 'ingredientName', width: 200 },
         { field: 'price', headerName: 'price', type: 'number', width: 90 },
         {
             field: 'action', headerName: 'action', width: 150,
@@ -59,9 +59,6 @@ export default function Ingredients(props) {
             .catch(function (error) {
                 console.log(error)
             })
-        setIngredientRows([{ingredientID:1,ingredientName:"chicken thigh",price:4.99},
-        {ingredientID:2, ingredientName:"Corn",price:1},
-        {ingredientID:3, ingredientName:"Bread",price:1.50}])
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     // handles add behavior
@@ -137,7 +134,7 @@ export default function Ingredients(props) {
                 </Container>
             </Container>
 
-            <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientID"} />
+            <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientid"} />
 
 
         </>
