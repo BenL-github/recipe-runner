@@ -20,7 +20,7 @@ export default function AddRecipeForm(props) {
             <TextField
                 label="Recipe Serving"
                 type="number"
-                onBlur={(e) => setRecipeServing(e.target.value)}
+                onChange={(e) => setRecipeServing(e.target.value)}
 
                 variant="standard"
                 margin="dense"
