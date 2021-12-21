@@ -42,7 +42,7 @@ export default function UpdateRecipeForm(props) {
                 <TextField
                     label="Recipe Title"
                     type="text"
-                    onChange={(e) => setRecipeTitle(e.target.value)}
+                    onBlur={(e) => setRecipeTitle(e.target.value)}
 
                     variant="standard"
                     margin="dense"
@@ -66,7 +66,7 @@ export default function UpdateRecipeForm(props) {
                 <TextField
                     label="Recipe Description"
                     type="text"
-                    onChange={(e) => setRecipeDescription(e.target.value)}
+                    onBlur={(e) => setRecipeDescription(e.target.value)}
 
                     variant="standard"
                     margin="dense"

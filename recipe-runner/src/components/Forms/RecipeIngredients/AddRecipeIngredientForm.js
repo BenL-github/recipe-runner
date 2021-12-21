@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { InputLabel } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { InputLabel, MenuItem, FormControl, Select, TextField } from "@mui/material";
 import Form from '../Form';
 import axios from "axios";
-
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -66,8 +61,8 @@ export default function AddRecipeIngredientForm(props) {
             text="Please enter a recipe, ingredient, uom, and quantity."
             submitAction={onAdd}
         >
+            {/* Select recipe */}
             <FormControl fullWidth sx={{ my: 2 }}>
-                {/* Select recipe */}
                 <InputLabel id="add-recipe-label">Recipe</InputLabel>
                 <Select
                     labelId="add-recipe-label"
@@ -82,9 +77,10 @@ export default function AddRecipeIngredientForm(props) {
                         </MenuItem>
                     ))}
                 </Select>
-                </FormControl>
-                <FormControl fullWidth sx={{ my: 2 }}>
-                {/* Select ingredient */}
+            </FormControl>
+
+            {/* Select ingredient */}
+            <FormControl fullWidth sx={{ my: 2 }}>
 
                 <InputLabel id="add-ingredient-label">Ingredient</InputLabel>
                 <Select
@@ -100,31 +96,32 @@ export default function AddRecipeIngredientForm(props) {
                         </MenuItem>
                     ))}
                 </Select>
-                </FormControl>
-                {/* Edit uom */}
-                <TextField
-                    label="uom"
-                    type="text"
-                    onBlur={(e) => setUOM(e.target.value)}
+            </FormControl>
 
-                    variant="standard"
-                    margin="dense"
-                    sx={{ paddingRight: 2 }}
-                    autoFocus
-                />
+            {/* Edit uom */}
+            <TextField
+                label="uom"
+                type="text"
+                onBlur={(e) => setUOM(e.target.value)}
 
-                {/* Edit quantity */}
-                <TextField
-                    label="quantity"
-                    type="number"
-                    onChange={(e) => setQuantity(e.target.value)}
+                variant="standard"
+                margin="dense"
+                sx={{ paddingRight: 2 }}
+                autoFocus
+            />
 
-                    variant="standard"
-                    margin="dense"
-                    sx={{ paddingRight: 2 }}
-                    autoFocus
-                />
-            
+            {/* Edit quantity */}
+            <TextField
+                label="quantity"
+                type="number"
+                onChange={(e) => setQuantity(e.target.value)}
+
+                variant="standard"
+                margin="dense"
+                sx={{ paddingRight: 2 }}
+                autoFocus
+            />
+
         </Form>
     )
 };

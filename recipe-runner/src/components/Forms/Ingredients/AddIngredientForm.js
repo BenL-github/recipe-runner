@@ -9,7 +9,7 @@ export default function AddIngredientForm(props) {
             <TextField
                 label="ingredient name"
                 type="text"
-                onChange={(e) => setIngredientName(e.target.value)}
+                onBlur={(e) => setIngredientName(e.target.value)}
 
                 variant="standard"
                 margin="dense"
