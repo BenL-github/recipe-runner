@@ -308,7 +308,8 @@ module.exports.deleteSelectedRecipe = (data, callback) => {
 module.exports.getRecipeIngredientsTable = (callback) => {
     let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
-                 LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID;`
+                 LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
+                 ORDER BY Recipes.recipeID ASC;`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -320,9 +321,10 @@ module.exports.getRecipeIngredientsTable = (callback) => {
     })
 }
 
-module.exports.addRecipeIngredient = (recipeIngredient, callback) => {
-    let query = `INSERT INTO RecipeIngredients (recipeID, ingredientID, uOm, quantity)
-                 VALUES (${recipeIngredient.recipeID}, ${recipeIngredient.ingredientID}, '${recipeIngredient.uOm}', ${recipeIngredient.quantity});`
+module.exports.addRecipeIngredient = (data, callback) => {
+    console.log(data);
+    let query = `INSERT INTO RecipeIngredients (recipeid, ingredientid, uom, quantity)
+                 VALUES (${data.recipeid}, ${data.ingredientid}, '${data.uom}', ${data.quantity});`
 
     pool.query(query, (err, result) => {
         if (err) {

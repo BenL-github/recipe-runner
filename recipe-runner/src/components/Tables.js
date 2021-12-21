@@ -9,8 +9,8 @@ const Tables = ({ columns, rows, rowIDTitle }) => {
                 rows={rows}
                 columns={columns}
                 getRowId={(rows) => rows[`${rowIDTitle}`]}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 autoHeight
                 disableColumnMenu
                 disableColumnReorder
