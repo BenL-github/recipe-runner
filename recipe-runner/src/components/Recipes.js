@@ -145,7 +145,7 @@ function Recipes(props) {
 
                     {/* Modify Recipe */}
                     <Form
-                        buttonLabel="Edit Recipe"
+                        buttonLabel="Update Recipe"
                         title="Edit A Recipe"
                         text="Please enter a new recipe title, serving size, and description"
                         submitAction={onModify}
