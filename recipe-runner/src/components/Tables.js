@@ -12,9 +12,8 @@ const Tables = ({ columns, rows, rowIDTitle }) => {
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 autoHeight
+                hideFooterSelectedRowCount
                 disableColumnMenu
-                disableColumnReorder
-                disableMultipleColumnsSorting
             />
         </div>
     )

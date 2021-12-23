@@ -73,8 +73,10 @@ function Users(props) {
 
     return (
         <>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+            <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Users Table</Typography>
+            </Container>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
                 <FormDialog
                     buttonLabel={form.buttonLabel}
                     title={form.title}

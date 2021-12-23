@@ -108,9 +108,12 @@ export default function Ingredients(props) {
 
     return (
         <>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+            <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Ingredients Table</Typography>
-                <Container disableGutters sx={{ width: 'auto', marginRight: 0, marginLeft: 0, display: 'flex', justifyContent: 'space-around', px: 0 }}>
+            </Container>
+            
+                
+                <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
                     
                     {/* Search Ingredient */}
                     <TextField
@@ -170,7 +173,7 @@ export default function Ingredients(props) {
                         />
                     </Form>
                 </Container>
-            </Container>
+            
 
             <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientid"} />
 

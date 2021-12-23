@@ -20,8 +20,8 @@ function Recipes(props) {
     const recipeColumns = [
         { field: 'recipeid', headerName: 'recipeID', width: 150 },
         { field: 'recipetitle', headerName: 'recipeTitle', width: 200 },
-        { field: 'recipeserving', headerName: 'recipeServing', type: 'number', width: 150 },
-        { field: 'recipedescription', headerName: 'recipeDescription', width: 800 },
+        { field: 'recipeserving', headerName: 'recipeServing', width: 150 },
+        { field: 'recipedescription', headerName: 'recipeDescription', width: 500 },
     ];
 
     // get request to database on page load
@@ -88,8 +88,8 @@ function Recipes(props) {
                 description: recipedescription
             }
         })
-        .then((res) => window.location.reload())
-        .catch((err) => console.log(err))
+            .then((res) => window.location.reload())
+            .catch((err) => console.log(err))
     }
 
     // behavior when a user deletes a recipe
@@ -111,72 +111,73 @@ function Recipes(props) {
 
     return (
         <>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
+            <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Recipes Table</Typography>
-                <Container disableGutters sx={{ width: 'auto', marginRight: 0, marginLeft: 0, display: 'flex', justifyContent: 'space-around', px: 0 }}>
-                    {/* Search */}
-                    <TextField
-                        id='outlined-basic'
-                        size="small"
-                        label='Search Title'
-                        variant='outlined'
-                        onChange={(e) => setKeyword(e.target.value)}
-                        sx={{ marginLeft: '1em', my:'auto'}}
+            </Container>
+            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+
+                {/* Search */}
+                <TextField
+                    id='outlined-basic'
+                    size="small"
+                    label='Search Title'
+                    variant='outlined'
+                    onChange={(e) => setKeyword(e.target.value)}
+                    sx={{ marginLeft: '1em', my: 'auto' }}
+                />
+                <Button
+                    variant="outlined"
+                    onClick={onSearch}
+                    sx={{ marginLeft: '1em', my: 'auto' }}
+                >Search</Button>
+
+                {/* Add Recipe */}
+                <Form
+                    buttonLabel="Add Recipe"
+                    title="Add A Recipe"
+                    text="Please enter a recipe title, serving size, and description"
+                    submitAction={onAdd}
+                >
+                    <AddRecipeForm
+                        setRecipeTitle={setRecipeTitle}
+                        setRecipeServing={setRecipeServing}
+                        setRecipeDescription={setRecipeDescription}
                     />
-                    <Button
-                        variant="outlined"
-                        onClick={onSearch}
-                        sx={{ marginLeft: '1em', my: 'auto' }}
-                    >Search</Button>
+                </Form>
 
-                    {/* Add Recipe */}
-                    <Form
-                        buttonLabel="Add Recipe"
-                        title="Add A Recipe"
-                        text="Please enter a recipe title, serving size, and description"
-                        submitAction={onAdd}
-                    >
-                        <AddRecipeForm
-                            setRecipeTitle={setRecipeTitle}
-                            setRecipeServing={setRecipeServing}
-                            setRecipeDescription={setRecipeDescription}
-                        />
-                    </Form>
+                {/* Modify Recipe */}
+                <Form
+                    buttonLabel="Update Recipe"
+                    title="Edit A Recipe"
+                    text="Please enter a new recipe title, serving size, and description"
+                    submitAction={onModify}
+                >
+                    <UpdateRecipeForm
+                        setRecipeID={setRecipeID}
+                        setRecipeTitle={setRecipeTitle}
+                        setRecipeServing={setRecipeServing}
+                        setRecipeDescription={setRecipeDescription}
+                        recipes={recipeRows}
+                        value={recipeid}
+                    />
+                </Form>
 
-                    {/* Modify Recipe */}
-                    <Form
-                        buttonLabel="Update Recipe"
-                        title="Edit A Recipe"
-                        text="Please enter a new recipe title, serving size, and description"
-                        submitAction={onModify}
-                    >
-                        <UpdateRecipeForm
-                            setRecipeID={setRecipeID}
-                            setRecipeTitle={setRecipeTitle}
-                            setRecipeServing={setRecipeServing}
-                            setRecipeDescription={setRecipeDescription}
-                            recipes={recipeRows}
-                            value={recipeid}
-                        />
-                    </Form>
-                    
-                    {/*  Delete */}
-                    <Form
-                        buttonLabel="Delete Recipe"
-                        title="Delete a Recipe"
-                        text="Please select a Recipe to Delete"
-                        submitAction={onDelete}
-                    >
-                        <DeleteRecipeForm
-                            setRecipeID={setRecipeID}
-                            recipes={recipeRows}
-                            value={recipeid}
-                        />
-                    </Form>
-                </Container>
+                {/*  Delete */}
+                <Form
+                    buttonLabel="Delete Recipe"
+                    title="Delete a Recipe"
+                    text="Please select a Recipe to Delete"
+                    submitAction={onDelete}
+                >
+                    <DeleteRecipeForm
+                        setRecipeID={setRecipeID}
+                        recipes={recipeRows}
+                        value={recipeid}
+                    />
+                </Form>
             </Container>
 
-            <Tables columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeid"} />
+            <Tables density="comfortable" columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeid"} />
         </>
     )
 }
