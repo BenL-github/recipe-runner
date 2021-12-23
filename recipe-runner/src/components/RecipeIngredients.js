@@ -42,8 +42,10 @@ function RecipeIngredients(props) {
 
     return (
         <>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'space-between', width: '95%', mb: '0.5em' }}>
-                <Typography variant='h3'>RecipeIngredients Table</Typography>
+            <Container sx={{ textAlign: 'center' }}>
+                <Typography variant='h3'>Recipes Table</Typography>
+            </Container>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
                 <AddRecipeIngredientForm baseURL={baseURL}/>
             </Container>
             <Tables columns={recipeIngredientsColumns} rows={recipeIngredientsRows} rowIDTitle={"muiID"} />

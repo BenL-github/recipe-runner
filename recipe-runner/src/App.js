@@ -26,7 +26,7 @@ function App() {
     return (
         <Router>
             <ThemeProvider theme={theme}>
-                <Container maxWidth='false' disableGutters>
+                <Container>
                     <Navigation />
                     <Switch>
                         {/* Home */}
