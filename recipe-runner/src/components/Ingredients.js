@@ -3,7 +3,6 @@ import axios from 'axios'
 import Tables from './Tables'
 import { Typography, TextField, Button } from '@mui/material';
 import Container from '@mui/material/Container';
-import Form from './Forms/Form';
 import AddIngredientForm from './Forms/Ingredients/AddIngredientForm';
 import DeleteIngredientForm from './Forms/Ingredients/DeleteIngredientForm';
 import UpdateIngredientForm from './Forms/Ingredients/UpdateIngredientForm';
@@ -18,9 +17,6 @@ export default function Ingredients(props) {
         { field: 'price', headerName: 'price', type: 'number', width: 90 },
     ];
 
-    const [ingredientid, setIngredientID] = useState("");
-    const [ingredientname, setIngredientName] = useState("");
-    const [ingredientprice, setIngredientPrice] = useState();
     const [keyword, setKeyword] = useState("");
     const [ingredientRows, setIngredientRows] = useState([]);
 
@@ -57,61 +53,11 @@ export default function Ingredients(props) {
             })
     }
 
-    // handles add behavior
-    const onAdd = () => {
-        axios({
-            method: "POST",
-            url: baseURL + "ingredients",
-            data: {
-                name: ingredientname,
-                price: ingredientprice
-            }
-        })
-            .then((response) => {
-                window.location.reload();
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
-
-    // handles modify behavior
-    const onModify = () => {
-        axios({
-            method: "PUT",
-            url: baseURL + "ingredients",
-            data: {
-                name: ingredientname,
-                price: ingredientprice,
-                id: ingredientid
-            }
-        })
-            .then((response) => window.location.reload())
-            .catch((err) => console.log(err))
-    }
-
-    const onDelete = () => {
-        axios({
-            method: "DELETE",
-            url: baseURL + 'ingredients',
-            data: {
-                id: ingredientid
-            }
-        })
-            .then((res) => {
-                window.location.reload();
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
-
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Ingredients Table</Typography>
             </Container>
-
 
             <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
 
@@ -131,47 +77,15 @@ export default function Ingredients(props) {
                 >Search</Button>
 
                 {/* Add Ingredient */}
-                <Form
-                    buttonLabel="Add Ingredient"
-                    title="Add a New Ingredient"
-                    text="Please enter an ingredient name and price"
-                    submitAction={onAdd}
-                >
-                    <AddIngredientForm
-                        setIngredientName={setIngredientName}
-                        setIngredientPrice={setIngredientPrice}
-                    />
-                </Form>
+                <AddIngredientForm baseURL={baseURL} />
 
                 {/* Update Ingredient */}
-                <Form
-                    buttonLabel="Update Ingredient"
-                    title="Update an existing Ingredient"
-                    text="Please a new name and price"
-                    submitAction={onModify}
-                >
-                    <UpdateIngredientForm
-                        setIngredientID={setIngredientID}
-                        setIngredientName={setIngredientName}
-                        setIngredientPrice={setIngredientPrice}
-                        ingredients={ingredientRows}
-                        value={ingredientid}
-                    />
-                </Form>
+                <UpdateIngredientForm ingredients={ingredientRows} baseURL={baseURL} />
 
                 {/* Delete Ingredient */}
-                <Form
-                    buttonLabel="Delete Ingredient"
-                    title="Delete an Ingredient"
-                    text="Please select an ingredient to be deleted"
-                    submitAction={onDelete}
-                >
-                    <DeleteIngredientForm
-                        setIngredientID={setIngredientID}
-                        ingredients={ingredientRows}
-                        value={ingredientid}
-                    />
-                </Form>
+
+                <DeleteIngredientForm ingredients={ingredientRows} baseURL={baseURL} />
+
             </Container>
 
 

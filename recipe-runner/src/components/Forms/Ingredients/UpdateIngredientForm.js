@@ -1,9 +1,8 @@
-import * as React from "react";
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { InputLabel } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import * as React from 'react';
+import { Button, FormControl, InputLabel, Select, MenuItem, TextField } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
+import { useFormik } from 'formik';
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -17,50 +16,108 @@ const MenuProps = {
 };
 
 export default function UpdateIngredientForm(props) {
-    const { setIngredientID, setIngredientName, setIngredientPrice, ingredients, value } = props;
+    const { ingredients, baseURL } = props;
+    const [open, setOpen] = React.useState(false);
+
+    const formik = useFormik({
+        initialValues: {
+            ingredientid: "",
+            ingredientname: "",
+            price: ""
+        },
+        onSubmit: (values) => {
+            axios({
+                method: "PUT",
+                url: baseURL + "ingredients",
+                data: {
+                    ingredientid: values.ingredientid,
+                    ingredientname: values.ingredientname,
+                    price: values.price
+                }
+            })
+                .then((res) => window.location.reload())
+                .catch((err) => console.log(err))
+        }
+    })
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
-            <FormControl fullWidth sx={{ my: 2 }}>
-                {/* // Select ID */}
-                <InputLabel id="update-ingredient-label">Ingredient</InputLabel>
-                <Select
-                    labelId="update-ingredient-label"
-                    label="IngredientID"
-                    onChange={(e) => setIngredientID(e.target.value)}
-                    value={value}
-                    MenuProps={MenuProps}
-                >
-                    {ingredients.map((ingredient) => (
-                        <MenuItem key={ingredient.ingredientid} value={ingredient.ingredientid}>
-                            {ingredient.ingredientid} - {ingredient.ingredientname}
-                        </MenuItem>
-                    ))}
-                </Select>
+            <Button variant="outlined" onClick={handleClickOpen} sx={{ my: 'auto', marginLeft: '1em' }}>
+                Update
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+                <form onSubmit={formik.handleSubmit}>
+                    <DialogTitle>Update an Ingredient </DialogTitle>
 
-                {/* // Edit name */}
-                <TextField
-                    label="ingredient name"
-                    type="text"
-                    onBlur={(e) => setIngredientName(e.target.value)}
+                    <DialogContent>
+                        <DialogContentText sx={{ marginBottom: 2 }}>
+                            Please select an ingredient id and enter a new name and price.
+                        </DialogContentText>
 
-                    variant="standard"
-                    margin="dense"
-                    sx={{ paddingRight: 2 }}
-                    autoFocus
-                />
-                {/* // Edit price */}
-                <TextField
-                    label="ingredient price"
-                    type="number"
-                    onChange={(e) => setIngredientPrice(e.target.value)}
+                        {/* select an ingredient */}
+                        <FormControl fullWidth sx={{ my: 2 }}>
+                            <InputLabel id="delete-ingredient-label">Ingredient</InputLabel>
+                            <Select
+                                labelId="delete-ingredient-label"
+                                label="ingredientid"
+                                name="ingredientid"
+                                id="ingredientid"
+                                onChange={formik.handleChange}
+                                value={formik.values.ingredientid}
+                                MenuProps={MenuProps}
+                            >
+                                {ingredients.map((ingredient) => (
+                                    <MenuItem key={ingredient.ingredientid} value={ingredient.ingredientid}>
+                                        {ingredient.ingredientid} - {ingredient.ingredientname}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
 
-                    variant="standard"
-                    margin="dense"
-                    sx={{ paddingRight: 2 }}
-                    autoFocus
-                />
-            </FormControl>
+                        {/* name */}
+                        <TextField
+                            id="ingredientname"
+                            name="ingredientname"
+                            label="Ingredient Name"
+                            type="text"
+                            value={formik.values.ingredientname}
+                            onChange={formik.handleChange}
+
+                            variant="outlined"
+                            margin="dense"
+                            sx={{ paddingRight: 2 }}
+                            autoFocus
+                        />
+
+                        {/* price */}
+                        <TextField
+                            id="price"
+                            name="price"
+                            label="Price"
+                            type="number"
+                            value={formik.values.price}
+                            onChange={formik.handleChange}
+
+                            variant="outlined"
+                            margin="dense"
+                            sx={{ paddingRight: 2 }}
+                            autoFocus
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button onClick={handleClose}>Cancel</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
         </>
+
     )
 }
