@@ -304,11 +304,33 @@ module.exports.deleteSelectedRecipe = (data, callback) => {
     })
 }
 
+module.exports.deleteSelectedRecipe = (data, callback) => {
+    let query = `DELETE FROM SelectedRecipe
+                WHERE recipeID = ${data.recipeID} AND cartID= ${data.cartID};`
+}
+
 // RECIPE INGREDIENTS
 module.exports.getRecipeIngredientsTable = (callback) => {
     let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
                  LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
+                 ORDER BY Recipes.recipeID ASC;`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.searchRecipeIngredients = (keyword, callback) => {
+    let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
+                 JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
+                 LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
+                 WHERE Recipes.recipetitle ILIKE '%${keyword}%'
                  ORDER BY Recipes.recipeID ASC;`
 
     pool.query(query, (err, result) => {
@@ -336,9 +358,32 @@ module.exports.addRecipeIngredient = (data, callback) => {
     })
 }
 
-module.exports.deleteSelectedRecipe = (data, callback) => {
-    let query = `DELETE FROM SelectedRecipe
-                WHERE recipeID = ${data.recipeID} AND cartID= ${data.cartID};`
+module.exports.updateRecipeIngredient = (data, callback) => {
+    let query = `UPDATE RecipeIngredients
+                 SET uom= '${data.uom}', quantity= ${data.quantity}
+                 WHERE recipeID= ${data.recipeid} AND ingredientID= ${data.ingredientid};`
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.deleteRecipeIngredient = (data, callback) => {
+    let query = `DELETE FROM RecipeIngredients
+                WHERE recipeID= ${data.recipeid} AND ingredientID= ${data.ingredientid};`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
 }
 
 // DEMO 

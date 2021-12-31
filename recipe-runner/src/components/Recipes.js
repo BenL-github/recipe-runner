@@ -122,7 +122,7 @@ function Recipes(props) {
                     size="small"
                     label='Search Title'
                     variant='outlined'
-                    onChange={(e) => setKeyword(e.target.value)}
+                    onBlur={(e) => setKeyword(e.target.value)}
                     sx={{ marginLeft: '1em', my: 'auto' }}
                 />
                 <Button

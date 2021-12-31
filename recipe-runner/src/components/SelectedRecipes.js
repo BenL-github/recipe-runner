@@ -52,7 +52,6 @@ function SelectedRecipes(props) {
             axios.get(baseURL + "recipes"),
             axios.get(baseURL + "selectedRecipes")
         ])
-        console.log(firstResponse.data, secondResponse.data, thirdResponse.data)
         addIDs(thirdResponse.data)
         setCarts(firstResponse.data)
         setRecipes(secondResponse.data)
