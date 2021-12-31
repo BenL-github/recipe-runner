@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Typography, TextField, Button, Container } from '@mui/material';
 import axios from 'axios';
 import Tables from './Tables'
-import Form from './Forms/Form';
 import AddRecipeForm from './Forms/Recipes/AddRecipeForm';
 import DeleteRecipeForm from './Forms/Recipes/DeleteRecipeForm';
 import UpdateRecipeForm from './Forms/Recipes/UpdateRecipeForm';
@@ -10,12 +9,7 @@ import UpdateRecipeForm from './Forms/Recipes/UpdateRecipeForm';
 function Recipes(props) {
     const { baseURL } = props;
     const [keyword, setKeyword] = useState("")
-    const [recipeid, setRecipeID] = useState(1)
     const [recipeRows, setRecipeRows] = useState([])
-
-    const [recipetitle, setRecipeTitle] = useState()
-    const [recipeserving, setRecipeServing] = useState()
-    const [recipedescription, setRecipeDescription] = useState()
 
     const recipeColumns = [
         { field: 'recipeid', headerName: 'recipeID', width: 150 },
@@ -57,58 +51,6 @@ function Recipes(props) {
             })
     }
 
-    // behavior when user adds a new recipe
-    const onAdd = () => {
-        axios({
-            method: "POST",
-            url: baseURL + "recipes",
-            data: {
-                title: recipetitle,
-                description: recipedescription,
-                serving: recipeserving
-            }
-        })
-            .then((response) => {
-                window.location.reload();
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
-
-    // update
-    const onModify = () => {
-        axios({
-            method: "PUT",
-            url: baseURL + "recipes",
-            data: {
-                id: recipeid,
-                title: recipetitle,
-                serving: recipeserving,
-                description: recipedescription
-            }
-        })
-            .then((res) => window.location.reload())
-            .catch((err) => console.log(err))
-    }
-
-    // behavior when a user deletes a recipe
-    const onDelete = () => {
-        axios({
-            method: "DELETE",
-            url: baseURL + 'recipes',
-            data: {
-                id: recipeid
-            }
-        })
-            .then((res) => {
-                window.location.reload();
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
-    }
-
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
@@ -132,38 +74,13 @@ function Recipes(props) {
                 >Search</Button>
 
                 {/* Add Recipe */}
-                <AddRecipeForm baseURL={ baseURL }/>
+                <AddRecipeForm baseURL={baseURL} />
+                {/*  Modify Recipe */}
+                <UpdateRecipeForm baseURL={baseURL} recipes={recipeRows} />
+                {/* Delete Recipe */}
+                <DeleteRecipeForm baseURL={baseURL} recipes={recipeRows} />
 
-                {/* Modify Recipe */}
-                <Form
-                    buttonLabel="Update Recipe"
-                    title="Edit A Recipe"
-                    text="Please enter a new recipe title, serving size, and description"
-                    submitAction={onModify}
-                >
-                    <UpdateRecipeForm
-                        setRecipeID={setRecipeID}
-                        setRecipeTitle={setRecipeTitle}
-                        setRecipeServing={setRecipeServing}
-                        setRecipeDescription={setRecipeDescription}
-                        recipes={recipeRows}
-                        value={recipeid}
-                    />
-                </Form>
 
-                {/*  Delete */}
-                <Form
-                    buttonLabel="Delete Recipe"
-                    title="Delete a Recipe"
-                    text="Please select a Recipe to Delete"
-                    submitAction={onDelete}
-                >
-                    <DeleteRecipeForm
-                        setRecipeID={setRecipeID}
-                        recipes={recipeRows}
-                        value={recipeid}
-                    />
-                </Form>
             </Container>
 
             <Tables density="comfortable" columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeid"} />
