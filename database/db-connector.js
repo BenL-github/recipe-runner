@@ -38,10 +38,9 @@ module.exports.getRecipesTable = (callback) => {
     })
 }
 
-module.exports.addRecipe = (recipe, callback) => {
-    console.log(recipe.description)
+module.exports.addRecipe = (data, callback) => {
     let query = `INSERT INTO Recipes (recipeTitle, recipeDescription, recipeServing)
-                 VALUES ('${recipe.title}', '${recipe.description}', ${recipe.serving});`
+                 VALUES ('${data.recipetitle}', '${data.recipedescription}', ${data.recipeserving});`
 
     pool.query(query, (err, result) => {
         if (err) {

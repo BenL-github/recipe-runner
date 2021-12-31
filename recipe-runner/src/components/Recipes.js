@@ -132,18 +132,7 @@ function Recipes(props) {
                 >Search</Button>
 
                 {/* Add Recipe */}
-                <Form
-                    buttonLabel="Add Recipe"
-                    title="Add A Recipe"
-                    text="Please enter a recipe title, serving size, and description"
-                    submitAction={onAdd}
-                >
-                    <AddRecipeForm
-                        setRecipeTitle={setRecipeTitle}
-                        setRecipeServing={setRecipeServing}
-                        setRecipeDescription={setRecipeDescription}
-                    />
-                </Form>
+                <AddRecipeForm baseURL={ baseURL }/>
 
                 {/* Modify Recipe */}
                 <Form
