@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid} from '@mui/x-data-grid';
 
-const Tables = ({ columns, rows, rowIDTitle }) => {
+const Tables = ({ columns, rows, onCellClick, rowIDTitle }) => {
 
     return (
         <div style={{ height: 400, width: '95%', marginRight: 'auto', marginLeft: 'auto' }}>
@@ -12,8 +12,8 @@ const Tables = ({ columns, rows, rowIDTitle }) => {
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 autoHeight
-                hideFooterSelectedRowCount
                 disableColumnMenu
+                onCellClick={(e) => onCellClick(e.row)}
             />
         </div>
     )

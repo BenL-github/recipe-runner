@@ -111,69 +111,69 @@ export default function Ingredients(props) {
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Ingredients Table</Typography>
             </Container>
-            
-                
-                <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
-                    
-                    {/* Search Ingredient */}
-                    <TextField
-                        id='outlined-basic'
-                        size="small"
-                        label='Search Title'
-                        variant='outlined'
-                        onChange={(e) => setKeyword(e.target.value)}
-                        sx={{ marginLeft: '1em', my: 'auto' }}
+
+
+            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+
+                {/* Search Ingredient */}
+                <TextField
+                    id='outlined-basic'
+                    size="small"
+                    label='Search Title'
+                    variant='outlined'
+                    onChange={(e) => setKeyword(e.target.value)}
+                    sx={{ marginLeft: '1em', my: 'auto' }}
+                />
+                <Button
+                    variant="outlined"
+                    onClick={onSearch}
+                    sx={{ marginLeft: '1em', my: 'auto' }}
+                >Search</Button>
+
+                {/* Add Ingredient */}
+                <Form
+                    buttonLabel="Add Ingredient"
+                    title="Add a New Ingredient"
+                    text="Please enter an ingredient name and price"
+                    submitAction={onAdd}
+                >
+                    <AddIngredientForm
+                        setIngredientName={setIngredientName}
+                        setIngredientPrice={setIngredientPrice}
                     />
-                    <Button
-                        variant="outlined"
-                        onClick={onSearch}
-                        sx={{ marginLeft: '1em', my: 'auto' }}
-                    >Search</Button>
+                </Form>
 
-                    {/* Add Ingredient */}
-                    <Form
-                        buttonLabel="Add Ingredient"
-                        title="Add a New Ingredient"
-                        text="Please enter an ingredient name and price"
-                        submitAction={onAdd}
-                    >
-                        <AddIngredientForm
-                            setIngredientName={setIngredientName}
-                            setIngredientPrice={setIngredientPrice}
-                        />
-                    </Form>
+                {/* Update Ingredient */}
+                <Form
+                    buttonLabel="Update Ingredient"
+                    title="Update an existing Ingredient"
+                    text="Please a new name and price"
+                    submitAction={onModify}
+                >
+                    <UpdateIngredientForm
+                        setIngredientID={setIngredientID}
+                        setIngredientName={setIngredientName}
+                        setIngredientPrice={setIngredientPrice}
+                        ingredients={ingredientRows}
+                        value={ingredientid}
+                    />
+                </Form>
 
-                    {/* Update Ingredient */}
-                    <Form
-                        buttonLabel="Update Ingredient"
-                        title="Update an existing Ingredient"
-                        text="Please a new name and price"
-                        submitAction={onModify}
-                    >
-                        <UpdateIngredientForm
-                            setIngredientID={setIngredientID}
-                            setIngredientName={setIngredientName}
-                            setIngredientPrice={setIngredientPrice}
-                            ingredients={ingredientRows}
-                            value={ingredientid}
-                        />
-                    </Form>
+                {/* Delete Ingredient */}
+                <Form
+                    buttonLabel="Delete Ingredient"
+                    title="Delete an Ingredient"
+                    text="Please select an ingredient to be deleted"
+                    submitAction={onDelete}
+                >
+                    <DeleteIngredientForm
+                        setIngredientID={setIngredientID}
+                        ingredients={ingredientRows}
+                        value={ingredientid}
+                    />
+                </Form>
+            </Container>
 
-                    {/* Delete Ingredient */}
-                    <Form
-                        buttonLabel="Delete Ingredient"
-                        title="Delete an Ingredient"
-                        text="Please select an ingredient to be deleted"
-                        submitAction={onDelete}
-                    >
-                        <DeleteIngredientForm
-                            setIngredientID={setIngredientID}
-                            ingredients={ingredientRows}
-                            value={ingredientid}
-                        />
-                    </Form>
-                </Container>
-            
 
             <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientid"} />
 
