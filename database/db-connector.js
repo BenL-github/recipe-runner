@@ -113,9 +113,9 @@ module.exports.getIngredientsTable = (callback) => {
     })
 }
 
-module.exports.addIngredient = (ingredient, callback) => {
+module.exports.addIngredient = (data, callback) => {
     let query = `INSERT INTO Ingredients (ingredientName, price)
-                 VALUES ('${ingredient.name}', ${ingredient.price});`
+                 VALUES ('${data.ingredientname}', ${data.ingredientprice});`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -129,10 +129,10 @@ module.exports.addIngredient = (ingredient, callback) => {
     })
 }
 
-module.exports.updateIngredient = (ingredient, callback) => {
+module.exports.updateIngredient = (data, callback) => {
     let query = `UPDATE Ingredients
-                 SET ingredientName='${ingredient.name}', price=${ingredient.price}
-                 WHERE ingredientID=${ingredient.id};`
+                 SET ingredientName='${data.ingredientname}', price=${data.price}
+                 WHERE ingredientID=${data.ingredientid};`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -146,8 +146,8 @@ module.exports.updateIngredient = (ingredient, callback) => {
     })
 }
 
-module.exports.deleteIngredient = (ingredient, callback) => {
-    let query = `DELETE FROM Ingredients WHERE ingredientID=${ingredient.id};`;
+module.exports.deleteIngredient = (data, callback) => {
+    let query = `DELETE FROM Ingredients WHERE ingredientID=${data.ingredientid};`;
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -264,7 +264,8 @@ module.exports.getSelectedRecipesTable = (callback) => {
     let query = `SELECT SelectedRecipes.cartID, SelectedRecipes.recipeID, quantity, fName, lName, recipeTitle FROM SelectedRecipes
                  JOIN Recipes ON Recipes.recipeID = SelectedRecipes.recipeID
                  JOIN ShoppingCarts ON ShoppingCarts.cartID = SelectedRecipes.cartID
-                 JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
+                 JOIN Users ON Users.customerID = ShoppingCarts.customerID
+                 ORDER by Recipes.recipeID ASC;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -277,7 +278,7 @@ module.exports.getSelectedRecipesTable = (callback) => {
 
 module.exports.addSelectedRecipe = (data, callback) => {
     let query = `INSERT INTO SelectedRecipes (cartID, recipeID, quantity)
-                 VALUES (${data.cartID}, ${data.recipeID}, ${data.quantity});`
+                 VALUES (${data.cartid}, ${data.recipeid}, ${data.quantity});`
 
     pool.query(query, (err, result) => {
         if (err) {

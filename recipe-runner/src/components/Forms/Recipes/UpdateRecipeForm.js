@@ -60,7 +60,7 @@ export default function UpdateRecipeForm(props) {
 
                     <DialogContent>
                         <DialogContentText sx={{ marginBottom: 2 }}>
-                            Please select a recipe that will be updated and a new serving size & description
+                            Please select a recipe that will be updated and a new title, serving size, & description
                         </DialogContentText>
 
                         {/* select a recipe */}

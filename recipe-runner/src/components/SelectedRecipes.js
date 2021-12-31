@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 import axios from 'axios';
 import SelectDialogSelectedRecipes from './SelectDialogSelectedRecipes';
 import Tables from './Tables';
+import AddSelectedRecipeForm from './Forms/SelectedRecipe/AddSelectedRecipeForm'
 
 function SelectedRecipes(props) {
     const { baseURL } = props;
@@ -88,15 +89,8 @@ function SelectedRecipes(props) {
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>SelectedRecipes Table</Typography>
             </Container>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
-                <SelectDialogSelectedRecipes
-                    buttonLabel={form.buttonLabel}
-                    title={form.title}
-                    text={form.text}
-                    submitAction={onAdd}
-                    inputs={form.inputs}
-                    sx={{ m: '1em' }}
-                />
+            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+                <AddSelectedRecipeForm baseURL={baseURL}/>
             </Container>
             <Tables columns={selectedRecipeColumns} rows={selectedRecipeRows} rowIDTitle={"muiID"} />
         </>
