@@ -65,8 +65,8 @@ module.exports.searchRecipe = (keyword, callback) => {
     })
 }
 
-module.exports.deleteRecipe = (recipe, callback) => {
-    let query = `DELETE FROM Recipes WHERE recipeID = ${recipe.id};`
+module.exports.deleteRecipe = (data, callback) => {
+    let query = `DELETE FROM Recipes WHERE recipeID = ${data.recipeid};`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -78,12 +78,12 @@ module.exports.deleteRecipe = (recipe, callback) => {
     })
 }
 
-module.exports.updateRecipe = (recipe, callback) => {
+module.exports.updateRecipe = (data, callback) => {
     let query = `UPDATE Recipes 
-                SET recipeTitle='${recipe.title}', 
-                recipeDescription='${recipe.description}',
-                recipeServing='${recipe.serving}'
-                WHERE recipeID=${recipe.id};`;
+                SET recipeTitle='${data.recipetitle}', 
+                recipeDescription='${data.recipedescription}',
+                recipeServing='${data.recipeserving}'
+                WHERE recipeID=${data.recipeid};`;
 
     pool.query(query, (err, result) => {
         if (err) {
