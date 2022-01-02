@@ -7,20 +7,19 @@ import AddSelectedRecipeForm from './Forms/SelectedRecipe/AddSelectedRecipeForm'
 import UpdateSelectedRecipeForm from './Forms/SelectedRecipe/UpdateSelectedRecipeForm';
 import DeleteSelectedRecipeForm from './Forms/SelectedRecipe/DeleteSelectedRecipeForm';
 
+// SELECTED RECIPES
+const selectedRecipeColumns = [
+    { field: 'cartid', headerName: 'cartID', width: 150 },
+    { field: 'recipeid', headerName: 'recipeID', width: 150 },
+    { field: 'fullname', headerName: 'Cart Owner', width: 200 },
+    { field: 'recipetitle', headerName: 'Recipe Title', width: 200 },
+    { field: 'quantity', headername: 'quantity', width: 200 }
+];
+
 function SelectedRecipes(props) {
     const { baseURL } = props;
     const [selectedRecipeRows, setSelectedRecipeRows] = useState([]);
-    const [keyword, setKeyword] = useState("");
     const [selectedRow, setSelectedRow] = useState([]);
-
-    // SELECTED RECIPES
-    const selectedRecipeColumns = [
-        { field: 'cartid', headerName: 'cartID', width: 150 },
-        { field: 'recipeid', headerName: 'recipeID', width: 150 },
-        { field: 'fname', headerName: 'Cart Owner', width: 200 },
-        { field: 'recipetitle', headerName: 'Recipe Title', width: 200 },
-        { field: 'quantity', headername: 'quantity', width: 200 }
-    ];
 
     // add mui placeholder ids
     const addIDs = (data) => {
@@ -32,8 +31,9 @@ function SelectedRecipes(props) {
             }
             object["muiID"] = i
             i++
-            object["fullname"] = `${object.fName} ${object.lName}`
+            object["fullname"] = `${object.fname} ${object.lname}`
         })
+        console.log(data);
     };
 
     const handleCellClick = (e) => {
