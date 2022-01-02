@@ -1,8 +1,19 @@
 import * as React from "react";
-import { TextField, Button} from "@mui/material";
+import { TextField, Button } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
+
+const validationSchema = yup.object({
+    ingredientname: yup
+        .string('Enter an ingredient name')
+        .required('Name is required'),
+    ingredientprice: yup
+        .number('Enter an ingredient price')
+        .min(0, 'Price should be greater or equal to 0')
+        .required('Price is required'),
+});
 
 export default function AddIngredientForm(props) {
     const { baseURL } = props;
@@ -12,6 +23,7 @@ export default function AddIngredientForm(props) {
             ingredientname: "",
             ingredientprice: ""
         },
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "POST",
@@ -60,8 +72,11 @@ export default function AddIngredientForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.ingredientname && Boolean(formik.errors.ingredientname)}
+                            helperText={formik.touched.ingredientname && formik.errors.ingredientname}
                         />
-                        
+
                         {/* price */}
                         <TextField
                             id="ingredientprice"
@@ -75,10 +90,13 @@ export default function AddIngredientForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.ingredientprice && Boolean(formik.errors.ingredientprice)}
+                            helperText={formik.touched.ingredientprice && formik.errors.ingredientprice}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>

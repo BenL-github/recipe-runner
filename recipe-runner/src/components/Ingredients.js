@@ -7,18 +7,18 @@ import AddIngredientForm from './Forms/Ingredients/AddIngredientForm';
 import DeleteIngredientForm from './Forms/Ingredients/DeleteIngredientForm';
 import UpdateIngredientForm from './Forms/Ingredients/UpdateIngredientForm';
 
+// INGREDIENTS
+const ingredientColumns = [
+    { field: 'ingredientid', headerName: 'ingredientID', width: 150 },
+    { field: 'ingredientname', headerName: 'ingredientName', width: 200 },
+    { field: 'price', headerName: 'price', type: 'number', width: 90 },
+];
+
 export default function Ingredients(props) {
     const { baseURL } = props;
-
-    // INGREDIENTS
-    const ingredientColumns = [
-        { field: 'ingredientid', headerName: 'ingredientID', width: 150 },
-        { field: 'ingredientname', headerName: 'ingredientName', width: 200 },
-        { field: 'price', headerName: 'price', type: 'number', width: 90 },
-    ];
-
     const [keyword, setKeyword] = useState("");
     const [ingredientRows, setIngredientRows] = useState([]);
+    const [selectedRow, setSelectedRow] = useState([]);
 
     // get request to database on page load
     useEffect(() => {
@@ -53,6 +53,10 @@ export default function Ingredients(props) {
             })
     }
 
+    const handleCellClick = (e) => {
+        setSelectedRow(e);
+    }
+
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
@@ -80,16 +84,16 @@ export default function Ingredients(props) {
                 <AddIngredientForm baseURL={baseURL} />
 
                 {/* Update Ingredient */}
-                <UpdateIngredientForm ingredients={ingredientRows} baseURL={baseURL} />
+                <UpdateIngredientForm selectedRow={selectedRow} ingredients={ingredientRows} baseURL={baseURL} />
 
                 {/* Delete Ingredient */}
 
-                <DeleteIngredientForm ingredients={ingredientRows} baseURL={baseURL} />
+                <DeleteIngredientForm selectedRow={selectedRow} ingredients={ingredientRows} baseURL={baseURL} />
 
             </Container>
 
 
-            <Tables columns={ingredientColumns} rows={ingredientRows} rowIDTitle={"ingredientid"} />
+            <Tables columns={ingredientColumns} rows={ingredientRows} onCellClick={handleCellClick} rowIDTitle={"ingredientid"} />
 
 
         </>
