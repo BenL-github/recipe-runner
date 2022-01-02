@@ -20,7 +20,7 @@ export default function AddSelectedRecipeForm(props) {
     const { baseURL } = props;
     const [open, setOpen] = React.useState(false);
 
-    // retrieves the recipe and ingredient ids for select input
+    // retrieves the recipe and cart ids for select input
     const [recipes, setRecipes] = useState([]);
     const [shoppingCarts, setShoppingCarts] = useState([]);
     async function getData() {

@@ -233,7 +233,8 @@ module.exports.deleteUser = (data, callback) => {
 // SHOPPING CARTS
 module.exports.getShoppingCartsTable = (callback) => {
     let query = `SELECT cartID, ShoppingCarts.customerID, fName, lName FROM ShoppingCarts
-                 JOIN Users ON Users.customerID = ShoppingCarts.customerID;`
+                 JOIN Users ON Users.customerID = ShoppingCarts.customerID
+                 ORDER BY ShoppingCarts.cartID ASC;`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -245,10 +246,24 @@ module.exports.getShoppingCartsTable = (callback) => {
     })
 }
 
-module.exports.addShoppingCart = (cart, callback) => {
+module.exports.addShoppingCart = (data, callback) => {
     let query = `INSERT INTO ShoppingCarts (customerID)
-                 VALUES (${cart.customerID});`
+                 VALUES (${data.customerid});`
 
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
+}
+
+module.exports.deleteShoppingCart = (data, callback) => {
+    let query = `DELETE FROM ShoppingCarts 
+                WHERE customerID=${data.customerid} AND cartID=${data.cartid};`
+                
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)

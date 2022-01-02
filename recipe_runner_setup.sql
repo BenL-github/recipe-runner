@@ -36,7 +36,7 @@ INSERT INTO  Users  VALUES
 
 CREATE TABLE IF NOT EXISTS ShoppingCarts (
      cartID  SERIAL UNIQUE NOT NULL ,
-     customerID  integer UNIQUE NOT NULL,
+     customerID  integer NOT NULL,
     PRIMARY KEY ( cartID, customerID ),
     CONSTRAINT  ShoppingCarts_fk_1  FOREIGN KEY ( customerID ) REFERENCES  Users  ( customerID ) ON DELETE CASCADE
 );

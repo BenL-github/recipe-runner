@@ -1,30 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Typography } from '@mui/material';
-import { Container } from '@mui/material';
+import { Typography, Container } from '@mui/material';
+import AddShoppingCartForm from './Forms/ShoppingCarts/AddShoppingCartForm'
+import DeleteShoppingCartForm from './Forms/ShoppingCarts/DeleteShoppingCartForm';
 import axios from 'axios';
-import SelectDialogShoppingCarts from './SelectDialogShoppingCarts';
 import Tables from './Tables'
+
+const cart_columns = [
+    { field: 'cartid', headerName: 'cartID', width: 150 },
+    { field: 'customerid', headerName: 'customerID', width: 150 },
+    { field: 'fname', headerName: 'Owner Name', width: 200 },
+];
 
 function ShoppingCarts(props) {
     const { baseURL } = props;
-    // SHOPPING CARTS
-    const cart_columns = [
-        { field: 'cartid', headerName: 'cartID', width: 150 },
-        { field: 'customerid', headerName: 'customerID', width: 150 },
-        { field: 'fname', headerName: 'Owner Name', width: 200 },
-    ];
-
     const [cartRows, setCartRows] = useState([]);
-    const [users, setUsers] = useState([])
-
-    const form = {
-        buttonLabel: "Add Cart",
-        title: "Add New Cart",
-        text: "Select a user without a cart to create one for them.",
-        inputs: [
-            { data: users },
-        ]
-    };
+    const [selectedRow, setSelectedRow] = useState([]);
 
     // add mui placeholder ids
     const addIDs = (data) => {
@@ -38,42 +28,21 @@ function ShoppingCarts(props) {
 
     // get request to populate primary table and get users for drop down table
     async function pageSetup() {
-        const [firstResponse, secondResponse] = await Promise.all([
-            axios.get(baseURL + "shoppingcarts"),
-            axios.get(baseURL + "users")
+        const [firstResponse] = await Promise.all([
+            axios.get(baseURL + "shoppingcarts")
         ])
 
         addIDs(firstResponse.data)
         setCartRows(firstResponse.data)
-        setUsers(filterUsers(secondResponse.data, firstResponse.data))
     }
     
     useEffect(() => {
         pageSetup()
     }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-    // filter out users who don't already have carts
-    const filterUsers = (userData, cartData) => {
-        userData = userData.filter(ar => !cartData.find(rm => (rm.customerid === ar.customerid)))
-        return userData
+    
+    const handleCellClick = (e) => {
+        setSelectedRow(e);
     }
-
-    // add 
-    const onAdd = (userID) => {
-        axios({
-            method: "POST",
-            url: baseURL + "shoppingcarts",
-            data: {
-                customerID: userID
-            }
-        })
-            .then((res) => {
-                window.location.reload();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    };
 
     return (
         <>
@@ -81,16 +50,10 @@ function ShoppingCarts(props) {
                 <Typography variant='h3'>ShoppingCarts Table</Typography>
             </Container>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
-                <SelectDialogShoppingCarts
-                    buttonLabel={form.buttonLabel}
-                    title={form.title}
-                    text={form.text}
-                    submitAction={onAdd}
-                    inputs={form.inputs}
-                    sx={{ m: '1em' }}
-                />
+                <AddShoppingCartForm baseURL={baseURL} />
+                <DeleteShoppingCartForm selectedRow={selectedRow} baseURL={baseURL} />
             </Container>
-            <Tables columns={cart_columns} rows={cartRows} rowIDTitle={"muiID"} />
+            <Tables columns={cart_columns} rows={cartRows} onCellClick={handleCellClick} rowIDTitle={"muiID"} />
         </>
     )
 }
