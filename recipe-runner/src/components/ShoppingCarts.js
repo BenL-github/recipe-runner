@@ -54,7 +54,7 @@ function ShoppingCarts(props) {
 
     // filter out users who don't already have carts
     const filterUsers = (userData, cartData) => {
-        userData = userData.filter(ar => !cartData.find(rm => (rm.customerID === ar.customerID)))
+        userData = userData.filter(ar => !cartData.find(rm => (rm.customerid === ar.customerid)))
         return userData
     }
 
@@ -81,14 +81,14 @@ function ShoppingCarts(props) {
                 <Typography variant='h3'>ShoppingCarts Table</Typography>
             </Container>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
-                {users && <SelectDialogShoppingCarts
+                <SelectDialogShoppingCarts
                     buttonLabel={form.buttonLabel}
                     title={form.title}
                     text={form.text}
                     submitAction={onAdd}
                     inputs={form.inputs}
                     sx={{ m: '1em' }}
-                />}
+                />
             </Container>
             <Tables columns={cart_columns} rows={cartRows} rowIDTitle={"muiID"} />
         </>

@@ -35,7 +35,7 @@ INSERT INTO  Users  VALUES
 --
 
 CREATE TABLE IF NOT EXISTS ShoppingCarts (
-     cartID  integer UNIQUE NOT NULL ,
+     cartID  SERIAL UNIQUE NOT NULL ,
      customerID  integer UNIQUE NOT NULL,
     PRIMARY KEY ( cartID, customerID ),
     CONSTRAINT  ShoppingCarts_fk_1  FOREIGN KEY ( customerID ) REFERENCES  Users  ( customerID ) ON DELETE CASCADE
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS RecipeIngredients (
      ingredientID  integer NOT NULL,
      uOm  varchar(255) NOT NULL,
      quantity  integer NOT NULL,
-     PRIMARY KEY ( recipeID, ingredientID )
+     PRIMARY KEY ( recipeID, ingredientID ),
     CONSTRAINT  RecipeIngredients_fk_1  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE CASCADE,
     CONSTRAINT  RecipeIngredients_fk_2  FOREIGN KEY ( ingredientID ) REFERENCES  Ingredients  ( ingredientID ) ON DELETE CASCADE
 );

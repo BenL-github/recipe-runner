@@ -10,7 +10,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 export default function SelectDialogShoppingCarts(props) {
   const { buttonLabel, title, text, submitAction, inputs } = props;
-  const [userID, setUserID] = React.useState();
+  const [userid, setUserID] = React.useState();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -18,7 +18,7 @@ export default function SelectDialogShoppingCarts(props) {
   };
   const handleSubmit = () => {
     setOpen(false);
-    submitAction(userID);
+    submitAction(userid);
   }
   const handleClose = () => {
     setOpen(false);
@@ -38,12 +38,12 @@ export default function SelectDialogShoppingCarts(props) {
             <FormControl fullWidth>
               <InputLabel id="userSelect"> Name </InputLabel>
               <Select
-                value={userID}
+                value={userid}
                 label="Name"
                 onChange={(e) => setUserID(e.target.value)}
               >
                 {inputs[0].data.map((user) => (
-                  <MenuItem value={user.customerID}> {user.customerID} - {user.fName} {user.lName}</MenuItem>
+                  <MenuItem value={user.customerid}> {user.customerid} - {user.fname} {user.lname}</MenuItem>
                 ))}
               </Select>
             </FormControl>
