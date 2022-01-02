@@ -65,7 +65,7 @@ export default function Ingredients(props) {
                 <TextField
                     id='outlined-basic'
                     size="small"
-                    label='Search Title'
+                    label='Search Name'
                     variant='outlined'
                     onChange={(e) => setKeyword(e.target.value)}
                     sx={{ marginLeft: '1em', my: 'auto' }}

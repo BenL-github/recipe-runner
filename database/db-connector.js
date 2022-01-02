@@ -177,7 +177,7 @@ module.exports.searchIngredient = (keyword, callback) => {
 
 // USERS
 module.exports.getUsersTable = (callback) => {
-    let query = "SELECT * FROM Users;"
+    let query = "SELECT * FROM Users ORDER BY customerID ASC;"
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -189,9 +189,9 @@ module.exports.getUsersTable = (callback) => {
     })
 }
 
-module.exports.addUser = (user, callback) => {
+module.exports.addUser = (data, callback) => {
     let query = `INSERT INTO Users (fName, lName, email, zipCode)
-                 VALUES ('${user.fname}', '${user.lname}', '${user.email}', ${user.zipCode});`
+                 VALUES ('${data.fname}', '${data.lname}', '${data.email}', ${data.zipcode});`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -203,10 +203,10 @@ module.exports.addUser = (user, callback) => {
     })
 }
 
-module.exports.updateUser = (user, callback) => {
+module.exports.updateUser = (data, callback) => {
     let query = `UPDATE Users
-                 SET fName=${user.fname}, lName=${user.lname}, email=${user.email}, zipCode=${user.zipCode}
-                 WHERE customerID=${user.id};`
+                 SET fName='${data.fname}', lName='${data.lname}', email='${data.email}', zipCode=${data.zipcode}
+                 WHERE customerID=${data.customerid};`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -218,8 +218,8 @@ module.exports.updateUser = (user, callback) => {
     })
 }
 
-module.exports.deleteUser = (user, callback) => {
-    let query = `DELETE FROM User WHERE customerID=${user.id};`
+module.exports.deleteUser = (data, callback) => {
+    let query = `DELETE FROM Users WHERE customerID=${data.customerid};`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -265,7 +265,7 @@ module.exports.getSelectedRecipesTable = (callback) => {
                  JOIN Recipes ON Recipes.recipeID = SelectedRecipes.recipeID
                  JOIN ShoppingCarts ON ShoppingCarts.cartID = SelectedRecipes.cartID
                  JOIN Users ON Users.customerID = ShoppingCarts.customerID
-                 ORDER by Recipes.recipeID ASC;`
+                 ORDER by ShoppingCarts.customerID ASC;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
@@ -290,9 +290,10 @@ module.exports.addSelectedRecipe = (data, callback) => {
     })
 }
 
-module.exports.deleteSelectedRecipe = (data, callback) => {
-    let query = `DELETE FROM SelectedRecipe 
-                WHERE recipeID=${data.recipeID} AND cartID=${data.cartID};`
+module.exports.updateSelectedRecipe = (data, callback) => {
+    let query = `UPDATE SelectedRecipes 
+                 SET quantity=${data.quantity}
+                 WHERE cartid=${data.cartid} AND recipeid=${data.recipeid};`
 
     pool.query(query, (err, result) => {
         if (err) {
@@ -305,8 +306,17 @@ module.exports.deleteSelectedRecipe = (data, callback) => {
 }
 
 module.exports.deleteSelectedRecipe = (data, callback) => {
-    let query = `DELETE FROM SelectedRecipe
-                WHERE recipeID = ${data.recipeID} AND cartID= ${data.cartID};`
+    let query = `DELETE FROM SelectedRecipes
+                WHERE recipeID=${data.recipeid} AND cartID=${data.cartid};`
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.log(err)
+            callback(true)
+        } else {
+            callback(false, result)
+        }
+    })
 }
 
 // RECIPE INGREDIENTS
