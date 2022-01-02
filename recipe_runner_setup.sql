@@ -37,8 +37,8 @@ INSERT INTO  Users  VALUES
 CREATE TABLE IF NOT EXISTS ShoppingCarts (
      cartID  integer UNIQUE NOT NULL ,
      customerID  integer UNIQUE NOT NULL,
-    PRIMARY KEY ( cartID ),
-    CONSTRAINT  ShoppingCarts_fk_1  FOREIGN KEY ( customerID ) REFERENCES  Users  ( customerID )
+    PRIMARY KEY ( cartID, customerID ),
+    CONSTRAINT  ShoppingCarts_fk_1  FOREIGN KEY ( customerID ) REFERENCES  Users  ( customerID ) ON DELETE CASCADE
 );
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS Recipes (
 INSERT INTO  Recipes  VALUES
     (1, 'Chicken Tikka Masala', 'Chicken breast simmered in fragrant red Indian curry', 4),
     (2, 'Beet Salad', 'Cubed boiled beets in balsamic dressing', 2),
-    (3, 'Grandma Apple Pie', 'A classic American dessert - tastes like the holidays', 8),
+    (3, 'Grandma''s Apple Pie', 'A classic American dessert - tastes like the holidays', 8),
     (4, 'Spicy Omelette', 'Southwestern style omelette with jalapenos and tomatoes', 2),
     (5, 'BLT Sandwich', 'The perfect sandwich when you need to get rid of old stuff in your fridge', 1);
 
@@ -91,8 +91,9 @@ CREATE TABLE IF NOT EXISTS SelectedRecipes (
      cartID  integer NOT NULL,
      recipeID  integer,
      quantity  integer NOT NULL,
-    CONSTRAINT  SelectedRecipes_fk_1  FOREIGN KEY ( cartID ) REFERENCES  ShoppingCarts  ( cartID ),
-    CONSTRAINT  SelectedRecipes_fk_2  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE SET NULL
+     PRIMARY KEY ( cartID, recipeID ),
+    CONSTRAINT  SelectedRecipes_fk_1  FOREIGN KEY ( cartID ) REFERENCES  ShoppingCarts  ( cartID ) ON DELETE CASCADE,
+    CONSTRAINT  SelectedRecipes_fk_2  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE CASCADE
 );
 
 -- 
@@ -151,8 +152,9 @@ CREATE TABLE IF NOT EXISTS RecipeIngredients (
      ingredientID  integer NOT NULL,
      uOm  varchar(255) NOT NULL,
      quantity  integer NOT NULL,
-    CONSTRAINT  RecipeIngredients_fk_1  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE SET NULL,
-    CONSTRAINT  RecipeIngredients_fk_2  FOREIGN KEY ( ingredientID ) REFERENCES  Ingredients  ( ingredientID )
+     PRIMARY KEY ( recipeID, ingredientID )
+    CONSTRAINT  RecipeIngredients_fk_1  FOREIGN KEY ( recipeID ) REFERENCES  Recipes  ( recipeID ) ON DELETE CASCADE,
+    CONSTRAINT  RecipeIngredients_fk_2  FOREIGN KEY ( ingredientID ) REFERENCES  Ingredients  ( ingredientID ) ON DELETE CASCADE
 );
 
 -- 
@@ -161,7 +163,7 @@ CREATE TABLE IF NOT EXISTS RecipeIngredients (
 
 INSERT INTO  RecipeIngredients  VALUES
     -- Chicken Tikka Masala (1)
-    (1, 1, '1lb breast', 2), 
+    (1, 1, 'lb', 2), 
     (1, 2, 'jar', 1), 
     (1, 3, 'tsp', 1), 
     (1, 4, 'tsp', 1), 
@@ -179,10 +181,10 @@ INSERT INTO  RecipeIngredients  VALUES
     (4, 3, 'tsp', 1), 
     (4, 4, 'tsp', 1), 
     (4, 11, 'egg', 3), 
-    (4, 12, 'japapeno', 4),
+    (4, 12, 'jalapeno', 4),
     (4, 13, 'tomato', 1), 
     -- BLT Sandwich (5)
     (5, 13, 'tomato', 1), 
-    (5, 14, 'strip of bacon', 3), 
+    (5, 14, 'strip', 3), 
     (5, 15, 'slice', 2), 
     (5, 16, 'tbsp', 1); 

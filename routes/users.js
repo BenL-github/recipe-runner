@@ -23,7 +23,17 @@ router.post('/api/users', (req,res) => {
 })
 
 router.put('/api/users', (req, res) => {
-    db.updateUser((err, results) => {
+    db.updateUser(req.body, (err, results) => {
+        if (err) {
+            res.send(500, "Server Error")
+        } else {
+            res.send(200)
+        }
+    })
+})
+
+router.delete('/api/users', (req, res) => {
+    db.deleteUser(req.body, (err, results) => {
         if (err) {
             res.send(500, "Server Error")
         } else {

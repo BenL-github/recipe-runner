@@ -81,9 +81,30 @@ export default function AddSelectedRecipeForm(props) {
                             Additionally, please enter a quantity for the selectedrecipe.
                         </DialogContentText>
 
+                        {/* Select cart */}
+                        <FormControl fullWidth sx={{ my: 2 }}>
+
+                            <InputLabel id="add-cart-label">cartID</InputLabel>
+                            <Select
+                                labelId="add-cart-label"
+                                id="cartid"
+                                name="cartid"
+                                label="cartid"
+                                onChange={formik.handleChange}
+                                value={formik.values.cartid}
+                                MenuProps={MenuProps}
+                            >
+                                {shoppingCarts.map((cart) => (
+                                    <MenuItem key={cart.cartid} value={cart.cartid}>
+                                        {cart.cartid}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
                         {/* Select recipe */}
                         <FormControl fullWidth sx={{ my: 2 }}>
-                            <InputLabel id="add-recipe-label">Recipe</InputLabel>
+                            <InputLabel id="add-recipe-label">recipeID</InputLabel>
                             <Select
                                 labelId="add-recipe-label"
                                 id="recipeid"
@@ -101,27 +122,6 @@ export default function AddSelectedRecipeForm(props) {
                             </Select>
                         </FormControl>
 
-                        {/* Select cart */}
-                        <FormControl fullWidth sx={{ my: 2 }}>
-
-                            <InputLabel id="add-cart-label">Ingredient</InputLabel>
-                            <Select
-                                labelId="add-cart-label"
-                                id="cartid"
-                                name="cartid"
-                                label="cartid"
-                                onChange={formik.handleChange}
-                                value={formik.values.cartid}
-                                MenuProps={MenuProps}
-                            >
-                                {shoppingCarts.map((cart) => (
-                                    <MenuItem key={cart.cartid} value={cart.cartid}>
-                                        {cart.cartid}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        
                         {/* quantity entry */}
                         <TextField
                             type="text"
