@@ -267,9 +267,11 @@ module.exports.getShoppingCartsTable = (callback) => {
 
 module.exports.addShoppingCart = (data, callback) => {
     let query = `INSERT INTO ShoppingCarts (customerID)
-                 VALUES (${data.customerid});`
+                 VALUES ($1);`
+    
+    let values = [data.customerid]
 
-    pool.query(query, (err, result) => {
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -281,9 +283,11 @@ module.exports.addShoppingCart = (data, callback) => {
 
 module.exports.deleteShoppingCart = (data, callback) => {
     let query = `DELETE FROM ShoppingCarts 
-                WHERE customerID=${data.customerid} AND cartID=${data.cartid};`
+                WHERE customerID=$1 AND cartID=$2;`
+    
+    let values = [data.customerid, data.cartid]
                 
-    pool.query(query, (err, result) => {
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -312,9 +316,11 @@ module.exports.getSelectedRecipesTable = (callback) => {
 
 module.exports.addSelectedRecipe = (data, callback) => {
     let query = `INSERT INTO SelectedRecipes (cartID, recipeID, quantity)
-                 VALUES (${data.cartid}, ${data.recipeid}, ${data.quantity});`
+                 VALUES ($1, $2, $3);`
 
-    pool.query(query, (err, result) => {
+    let values = [data.cartid, data.recipeid, data.quantity]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -326,10 +332,10 @@ module.exports.addSelectedRecipe = (data, callback) => {
 
 module.exports.updateSelectedRecipe = (data, callback) => {
     let query = `UPDATE SelectedRecipes 
-                 SET quantity=${data.quantity}
-                 WHERE cartid=${data.cartid} AND recipeid=${data.recipeid};`
-
-    pool.query(query, (err, result) => {
+                 SET quantity=$1
+                 WHERE cartid=$2 AND recipeid=$3;`
+    let values = [data.quantity, data.cartid, data.recipeid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -341,9 +347,9 @@ module.exports.updateSelectedRecipe = (data, callback) => {
 
 module.exports.deleteSelectedRecipe = (data, callback) => {
     let query = `DELETE FROM SelectedRecipes
-                WHERE recipeID=${data.recipeid} AND cartID=${data.cartid};`
-
-    pool.query(query, (err, result) => {
+                WHERE recipeID=$1 AND cartID=$2;`
+    let values = [data.recipeid, data.cartid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
