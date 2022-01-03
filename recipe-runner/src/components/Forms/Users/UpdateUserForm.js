@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, FormControl, InputLabel, Select, MenuItem, TextField } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
 
 const ITEM_HEIGHT = 48;
@@ -14,6 +15,23 @@ const MenuProps = {
         },
     },
 };
+
+const validationSchema = yup.object({
+    fname: yup
+        .string('Enter a first name')
+        .required('first name is required'),
+    lname: yup
+        .string('Enter a last name')
+        .required('last name is required'),
+    email: yup
+        .string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+    zipcode: yup
+        .number("Enter user's zipcode")
+        .min(1, 'Please enter a valid zipcode')
+        .required('Zipcode is required'),
+});
 
 export default function UpdateUserForm(props) {
     const { users, selected, baseURL } = props;
@@ -28,6 +46,7 @@ export default function UpdateUserForm(props) {
             zipcode: selected.zipcode,
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "PUT",
@@ -99,6 +118,9 @@ export default function UpdateUserForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.fname && Boolean(formik.errors.fname)}
+                            helperText={formik.touched.fname && formik.errors.fname}
                         />
 
                         {/* lname */}
@@ -114,6 +136,9 @@ export default function UpdateUserForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.lname && Boolean(formik.errors.lname)}
+                            helperText={formik.touched.lname && formik.errors.lname}
                         />
                         
                         {/* email */}
@@ -130,6 +155,9 @@ export default function UpdateUserForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.email && Boolean(formik.errors.email)}
+                            helperText={formik.touched.email && formik.errors.email}
                         />
 
                         {/* zipcode */}
@@ -146,10 +174,13 @@ export default function UpdateUserForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.zipcode && Boolean(formik.errors.zipcode)}
+                            helperText={formik.touched.zipcode && formik.errors.zipcode}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>

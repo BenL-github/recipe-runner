@@ -11,6 +11,7 @@ function Users(props) {
     const [userRows, setUserRows] = useState([]);
     const [selectedRow, setSelectedRow] = useState([]);
 
+    
     // USERS
     const userColumns = [
         { field: 'customerid', headerName: 'customerID', width: 150 },
@@ -44,7 +45,7 @@ function Users(props) {
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
                 <AddUserForm baseURL={baseURL} />
                 <UpdateUserForm selected={selectedRow} users={userRows} baseURL={baseURL} />
-                <DeleteUserForm users={userRows} baseURL={baseURL} />
+                <DeleteUserForm selected={selectedRow} users={userRows} baseURL={baseURL} />
             </Container>
             <Tables columns={userColumns} rows={userRows} onCellClick={handleCellClick} rowIDTitle={"customerid"} />
         </>

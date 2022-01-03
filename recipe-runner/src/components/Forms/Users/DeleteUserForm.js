@@ -16,12 +16,13 @@ const MenuProps = {
 };
 
 export default function AddUserForm(props) {
-    const { users , baseURL } = props;
+    const { selected, users , baseURL } = props;
     const [open, setOpen] = React.useState(false);
     const formik = useFormik({
         initialValues: {
-            customerid: ""
+            customerid: selected.customerid
         },
+        enableReinitialize: true,
         onSubmit: (values) => {
             axios({
                 method: "DELETE",

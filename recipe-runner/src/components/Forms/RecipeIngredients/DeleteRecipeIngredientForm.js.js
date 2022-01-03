@@ -2,7 +2,19 @@ import * as React from 'react';
 import { TextField, Button, } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
+
+const validationSchema = yup.object({
+    recipeid: yup
+        .number('Enter a recipid')
+        .min(1, 'recipeID should be greater than 0')
+        .required('recipeID is required'),
+    ingredientid: yup
+        .number('Enter an ingredient id')
+        .min(1, 'Ingredientid should be greater than 0')
+        .required('ingredientid is required'),
+});
 
 export default function DeleteRecipeIngredientForm(props) {
     const { selectedRow, baseURL } = props;
@@ -14,6 +26,7 @@ export default function DeleteRecipeIngredientForm(props) {
             ingredientid: selectedRow.ingredientid
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "DELETE",
@@ -59,6 +72,9 @@ export default function DeleteRecipeIngredientForm(props) {
                     value={formik.values.recipeid}
                     onChange={formik.handleChange}
                     sx={{ marginRight: 2, mb: 2 }}
+
+                    error={formik.touched.recipeid && Boolean(formik.errors.recipeid)}
+                            helperText={formik.touched.recipeid && formik.errors.recipeid}
                 />
                 <TextField
                     type="text"
@@ -68,10 +84,13 @@ export default function DeleteRecipeIngredientForm(props) {
                     label="ingredientID"
                     value={formik.values.ingredientid}
                     onChange={formik.handleChange}
+
+                    error={formik.touched.ingredientid && Boolean(formik.errors.ingredientid)}
+                            helperText={formik.touched.ingredientid && formik.errors.ingredientid}
                 />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>
