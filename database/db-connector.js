@@ -205,9 +205,11 @@ module.exports.getUsersTable = (callback) => {
 
 module.exports.addUser = (data, callback) => {
     let query = `INSERT INTO Users (fName, lName, email, zipCode)
-                 VALUES ('${data.fname}', '${data.lname}', '${data.email}', ${data.zipcode});`
+                 VALUES ($1, $2, $3, $4);`
 
-    pool.query(query, (err, result) => {
+    let values = [data.fname, data.lname, data.email, data.zipcode]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -219,10 +221,12 @@ module.exports.addUser = (data, callback) => {
 
 module.exports.updateUser = (data, callback) => {
     let query = `UPDATE Users
-                 SET fName='${data.fname}', lName='${data.lname}', email='${data.email}', zipCode=${data.zipcode}
-                 WHERE customerID=${data.customerid};`
+                 SET fName=$1, lName=$2, email=$3, zipCode=$4
+                 WHERE customerID=$5;`
 
-    pool.query(query, (err, result) => {
+    let values = [data.fname, data.lname, data.email, data.zipcode, data.customerid]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -233,8 +237,9 @@ module.exports.updateUser = (data, callback) => {
 }
 
 module.exports.deleteUser = (data, callback) => {
-    let query = `DELETE FROM Users WHERE customerID=${data.customerid};`
-    pool.query(query, (err, result) => {
+    let query = `DELETE FROM Users WHERE customerID=$1;`
+    let values = [data.customerid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
