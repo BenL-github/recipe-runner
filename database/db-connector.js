@@ -125,9 +125,11 @@ module.exports.getIngredientsTable = (callback) => {
 
 module.exports.addIngredient = (data, callback) => {
     let query = `INSERT INTO Ingredients (ingredientName, price)
-                 VALUES ('${data.ingredientname}', ${data.ingredientprice});`
+                 VALUES ($1, $2);`
 
-    pool.query(query, (err, result) => {
+    let values = [data.ingredientname, data.ingredientprice]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             // query resulted in error
             console.log(err);
@@ -141,10 +143,11 @@ module.exports.addIngredient = (data, callback) => {
 
 module.exports.updateIngredient = (data, callback) => {
     let query = `UPDATE Ingredients
-                 SET ingredientName='${data.ingredientname}', price=${data.price}
-                 WHERE ingredientID=${data.ingredientid};`
+                 SET ingredientName=$1, price=$2
+                 WHERE ingredientID=$3;`
 
-    pool.query(query, (err, result) => {
+    let values = [data.ingredientname, data.ingredientprice, data.ingredientid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             // query resulted in error
             console.log(err);
@@ -157,9 +160,9 @@ module.exports.updateIngredient = (data, callback) => {
 }
 
 module.exports.deleteIngredient = (data, callback) => {
-    let query = `DELETE FROM Ingredients WHERE ingredientID=${data.ingredientid};`;
-
-    pool.query(query, (err, result) => {
+    let query = `DELETE FROM Ingredients WHERE ingredientID=$1;`;
+    let values = [data.ingredientid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             // query resulted in error
             console.log(err);
@@ -172,8 +175,9 @@ module.exports.deleteIngredient = (data, callback) => {
 }
 
 module.exports.searchIngredient = (keyword, callback) => {
-    let query = `SELECT * FROM Ingredients WHERE ingredientname ILIKE '%${keyword}%';`;
-    pool.query(query, (err, result) => {
+    let query = `SELECT * FROM Ingredients WHERE ingredientname ILIKE $1;`;
+    let values = ["%" + keyword + "%"]
+    pool.query(query, values, (err, result) => {
         if (err) {
             // query resulted in error
             console.log(err);
