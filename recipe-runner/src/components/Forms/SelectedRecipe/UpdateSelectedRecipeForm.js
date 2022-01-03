@@ -2,7 +2,15 @@ import * as React from 'react';
 import { TextField, Button, } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
+
+const validationSchema = yup.object({
+    quantity: yup
+        .number('Enter a quantity')
+        .min(1, 'Quantity should be greater than 0')
+        .required('Quantity is required'),
+});
 
 export default function UpdateSelectedRecipeForm(props) {
     const { selectedRow, baseURL } = props;
@@ -15,6 +23,7 @@ export default function UpdateSelectedRecipeForm(props) {
             quantity: selectedRow.quantity
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "PUT",
@@ -75,17 +84,20 @@ export default function UpdateSelectedRecipeForm(props) {
                         />
                         
                         <TextField
-                            type="text"
+                            type="number"
                             margin="dense"
                             id="quantity"
                             name="quantity"
                             label="quantity"
                             value={formik.values.quantity}
                             onChange={formik.handleChange}
+
+                            error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                            helperText={formik.touched.quantity && formik.errors.quantity}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>

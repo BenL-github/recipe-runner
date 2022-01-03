@@ -16,13 +16,14 @@ const MenuProps = {
 };
 
 export default function DeleteRecipeForm(props) {
-    const { recipes, baseURL } = props;
+    const { selectedRow, recipes, baseURL } = props;
     const [open, setOpen] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
-            recipeid: ""
+            recipeid: selectedRow.recipeid
         },
+        enableReinitialize: true,
         onSubmit: (values) => {
             axios({
                 method: "DELETE",
