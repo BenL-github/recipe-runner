@@ -12,8 +12,8 @@ const recipeIngredientsColumns = [
     { field: 'ingredientid', headername: "ingredientID", width: 150 },
     { field: 'quantity', headername: 'quantity', width: 200 },
     { field: 'uom', headerName: "unit of measurement", width: 200 },
-    { field: 'recipetitle', headerName: 'recipeTitle', width: 200 },
     { field: 'ingredientname', headername: 'ingredientName', width: 200 },
+    { field: 'recipetitle', headerName: 'recipeTitle', width: 200 },
 ]
 
 function RecipeIngredients(props) {
