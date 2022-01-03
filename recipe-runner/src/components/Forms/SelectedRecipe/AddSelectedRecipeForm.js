@@ -47,8 +47,8 @@ export default function AddSelectedRecipeForm(props) {
 
     const formik = useFormik({
         initialValues: {
-            recipeid: '',
-            cartid: '',
+            recipeid: 1,
+            cartid: 1,
             quantity: ''
         },
         enableReinitialize: true,

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
 
 const ITEM_HEIGHT = 48;
@@ -15,6 +16,16 @@ const MenuProps = {
         },
     },
 };
+
+const validationSchema = yup.object({
+    uom: yup
+        .string('Enter a unit of measurement')
+        .required('uom is required'),
+    quantity: yup
+        .number('Enter a quantity')
+        .min(1, 'Quantity should be greater than 0')
+        .required('quantity is required'),
+});
 
 export default function AddRecipeIngredientForm(props) {
     const { baseURL } = props;
@@ -39,12 +50,13 @@ export default function AddRecipeIngredientForm(props) {
 
     const formik = useFormik({
         initialValues: {
-            recipeid: '',
-            ingredientid: '',
+            recipeid: 1,
+            ingredientid: 1,
             uom: '',
             quantity: ''
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "POST",
@@ -134,20 +146,26 @@ export default function AddRecipeIngredientForm(props) {
                             value={formik.values.uom}
                             onChange={formik.handleChange}
                             sx={{ marginRight: 2, mb: 2 }}
+
+                            error={formik.touched.uom && Boolean(formik.errors.uom)}
+                            helperText={formik.touched.uom && formik.errors.uom}
                         />
                         {/* quantity entry */}
                         <TextField
-                            type="text"
+                            type="number"
                             margin="dense"
                             id="quantity"
                             name="quantity"
                             label="quantity"
                             value={formik.values.quantity}
                             onChange={formik.handleChange}
+
+                            error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                            helperText={formik.touched.quantity && formik.errors.quantity}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>

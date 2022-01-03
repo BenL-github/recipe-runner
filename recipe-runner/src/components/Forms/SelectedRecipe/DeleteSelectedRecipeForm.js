@@ -8,12 +8,12 @@ import axios from "axios";
 const validationSchema = yup.object({
     recipeid: yup
         .number('Enter a recipid')
-        .min(1, 'Quantity should be greater than 0')
-        .required('Quantity is required'),
+        .min(1, 'recipeID should be greater than 0')
+        .required('recipeID is required'),
     cartid: yup
         .number('Enter a cartid')
         .min(1, 'CartID should be greater than 0')
-        .required('Quantity is required'),
+        .required('cartID is required'),
 });
 
 export default function DeleteSelectedRecipeForm(props) {

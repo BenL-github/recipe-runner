@@ -2,7 +2,21 @@ import * as React from 'react';
 import { Button, FormControl, InputLabel, Select, MenuItem, TextField } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
+
+const validationSchema = yup.object({
+    recipetitle: yup
+        .string('Enter an recipe title')
+        .required('Title is required'),
+    recipeserving: yup
+        .number('Enter a serving sice')
+        .min(1, 'Serving should be greater than 0')
+        .required('Serving size is required'),
+    recipedescription: yup
+        .string('Enter a recipe description')
+        .required('Description is required'),
+});
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,6 +40,7 @@ export default function UpdateRecipeForm(props) {
             recipeserving: "",
             recipedescription: ""
         },
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "PUT",
@@ -96,6 +111,9 @@ export default function UpdateRecipeForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.recipetitle && Boolean(formik.errors.recipetitle)}
+                            helperText={formik.touched.recipetitle && formik.errors.recipetitle}
                         />
 
                         {/* serving */}
@@ -111,6 +129,9 @@ export default function UpdateRecipeForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.recipeserving && Boolean(formik.errors.recipeserving)}
+                            helperText={formik.touched.recipeserving && formik.errors.recipeserving}
                         />
                         
                         {/* description */}
@@ -127,10 +148,13 @@ export default function UpdateRecipeForm(props) {
                             margin="dense"
                             sx={{ paddingRight: 2 }}
                             autoFocus
+
+                            error={formik.touched.recipedescription && Boolean(formik.errors.recipedescription)}
+                            helperText={formik.touched.recipedescription && formik.errors.recipedescription}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>
