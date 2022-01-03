@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
 
 const ITEM_HEIGHT = 48;
@@ -15,6 +16,13 @@ const MenuProps = {
         },
     },
 };
+
+const validationSchema = yup.object({
+    quantity: yup
+        .number('Enter a recipe quantity')
+        .min(1, 'Quantity should be greater than 0')
+        .required('Quantity is required')
+});
 
 export default function AddSelectedRecipeForm(props) {
     const { baseURL } = props;
@@ -44,6 +52,7 @@ export default function AddSelectedRecipeForm(props) {
             quantity: ''
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "POST",
@@ -124,17 +133,20 @@ export default function AddSelectedRecipeForm(props) {
 
                         {/* quantity entry */}
                         <TextField
-                            type="text"
+                            type="number"
                             margin="dense"
                             id="quantity"
                             name="quantity"
                             label="quantity"
                             value={formik.values.quantity}
                             onChange={formik.handleChange}
+
+                            error={formik.touched.quantity && Boolean(formik.errors.quantity)}
+                            helperText={formik.touched.quantity && formik.errors.quantity}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>

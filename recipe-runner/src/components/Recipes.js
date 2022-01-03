@@ -10,6 +10,7 @@ function Recipes(props) {
     const { baseURL } = props;
     const [keyword, setKeyword] = useState("")
     const [recipeRows, setRecipeRows] = useState([])
+    const [selectedRow, setSelectedRow] = useState([]);
 
     const recipeColumns = [
         { field: 'recipeid', headerName: 'recipeID', width: 150 },
@@ -51,6 +52,10 @@ function Recipes(props) {
             })
     }
 
+    const handleCellClick = (e) => {
+        setSelectedRow(e);
+    }
+
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
@@ -76,14 +81,14 @@ function Recipes(props) {
                 {/* Add Recipe */}
                 <AddRecipeForm baseURL={baseURL} />
                 {/*  Modify Recipe */}
-                <UpdateRecipeForm baseURL={baseURL} recipes={recipeRows} />
+                <UpdateRecipeForm selectedRow={selectedRow} baseURL={baseURL} recipes={recipeRows} />
                 {/* Delete Recipe */}
-                <DeleteRecipeForm baseURL={baseURL} recipes={recipeRows} />
+                <DeleteRecipeForm selectedRow={selectedRow} baseURL={baseURL} recipes={recipeRows} />
 
 
             </Container>
 
-            <Tables density="comfortable" columns={recipeColumns} rows={recipeRows} rowIDTitle={"recipeid"} />
+            <Tables density="comfortable" columns={recipeColumns} rows={recipeRows}  onCellClick={handleCellClick} rowIDTitle={"recipeid"} />
         </>
     )
 }

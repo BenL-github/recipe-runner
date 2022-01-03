@@ -2,7 +2,19 @@ import * as React from 'react';
 import { TextField, Button, } from "@mui/material";
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material"
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from "axios";
+
+const validationSchema = yup.object({
+    recipeid: yup
+        .number('Enter a recipid')
+        .min(1, 'Quantity should be greater than 0')
+        .required('Quantity is required'),
+    cartid: yup
+        .number('Enter a cartid')
+        .min(1, 'CartID should be greater than 0')
+        .required('Quantity is required'),
+});
 
 export default function DeleteSelectedRecipeForm(props) {
     const { selectedRow, baseURL } = props;
@@ -14,6 +26,7 @@ export default function DeleteSelectedRecipeForm(props) {
             cartid: selectedRow.cartid
         },
         enableReinitialize: true,
+        validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
                 method: "DELETE",
@@ -51,7 +64,7 @@ export default function DeleteSelectedRecipeForm(props) {
                         </DialogContentText>
 
                         <TextField
-                            type="text"
+                            type="number"
                             margin="dense"
                             id="recipeid"
                             name="recipeid"
@@ -59,19 +72,25 @@ export default function DeleteSelectedRecipeForm(props) {
                             value={formik.values.recipeid}
                             onChange={formik.handleChange}
                             sx={{ marginRight: 2, mb: 2 }}
+
+                            error={formik.touched.recipeid && Boolean(formik.errors.recipeid)}
+                            helperText={formik.touched.recipeid && formik.errors.recipeid}
                         />
                         <TextField
-                            type="text"
+                            type="number"
                             margin="dense"
                             id="cartid"
                             name="cartid"
                             label="cartid"
                             value={formik.values.cartid}
                             onChange={formik.handleChange}
+
+                            error={formik.touched.cartid && Boolean(formik.errors.cartid)}
+                            helperText={formik.touched.cartid && formik.errors.cartid}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} type="submit">Submit</Button>
+                        <Button type="submit">Submit</Button>
                         <Button onClick={handleClose}>Cancel</Button>
                     </DialogActions>
                 </form>
