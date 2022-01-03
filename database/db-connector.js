@@ -40,9 +40,11 @@ module.exports.getRecipesTable = (callback) => {
 
 module.exports.addRecipe = (data, callback) => {
     let query = `INSERT INTO Recipes (recipeTitle, recipeDescription, recipeServing)
-                 VALUES ('${data.recipetitle}', '${data.recipedescription}', ${data.recipeserving});`
+                 VALUES ($1, $2, $3);`
+    
+    let values = [data.recipetitle, data.recipedescription, data.recipeserving]
 
-    pool.query(query, (err, result) => {
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -53,9 +55,12 @@ module.exports.addRecipe = (data, callback) => {
 }
 
 module.exports.searchRecipe = (keyword, callback) => {
-    let query = `SELECT * FROM Recipes WHERE recipeTitle ILIKE '%${keyword}%';`
+    console.log(keyword);
+    let query = `SELECT * FROM Recipes WHERE recipeTitle ILIKE ($1);`
 
-    pool.query(query, (err, result) => {
+    let values = ["%" + keyword + "%"]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -66,9 +71,11 @@ module.exports.searchRecipe = (keyword, callback) => {
 }
 
 module.exports.deleteRecipe = (data, callback) => {
-    let query = `DELETE FROM Recipes WHERE recipeID = ${data.recipeid};`
+    let query = `DELETE FROM Recipes WHERE recipeID = $1;`
 
-    pool.query(query, (err, result) => {
+    let values = [data.recipeid]
+
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -79,13 +86,16 @@ module.exports.deleteRecipe = (data, callback) => {
 }
 
 module.exports.updateRecipe = (data, callback) => {
+    
     let query = `UPDATE Recipes 
-                SET recipeTitle='${data.recipetitle}', 
-                recipeDescription='${data.recipedescription}',
-                recipeServing='${data.recipeserving}'
-                WHERE recipeID=${data.recipeid};`;
-
-    pool.query(query, (err, result) => {
+                SET recipeTitle=$1, 
+                recipeDescription=$2,
+                recipeServing=$3
+                WHERE recipeID=$4;`;
+    
+    let values = [data.recipetitle, data.recipedescription, data.recipeserving, data.recipeid]
+    console.log(values)
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
