@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid} from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 
 const Tables = ({ columns, rows, onCellClick, rowIDTitle }) => {
 
@@ -14,6 +14,13 @@ const Tables = ({ columns, rows, onCellClick, rowIDTitle }) => {
                 autoHeight
                 disableColumnMenu
                 onCellClick={(e) => onCellClick(e.row)}
+                sx={{
+                    color: "white",
+                    backgroundColor: "rgb(0,0,0,0.5)",
+                    '& .MuiToolbar-root': {
+                        color: 'white',
+                      },
+                }}
             />
         </div>
     )

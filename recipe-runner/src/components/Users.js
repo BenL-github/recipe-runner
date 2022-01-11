@@ -42,7 +42,11 @@ function Users(props) {
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Users Table</Typography>
             </Container>
-            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em' }}>
+            <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em', '& .MuiButton-root': {
+                        color: 'white',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        border: '1px solid white'
+                    }, }}>
                 <AddUserForm baseURL={baseURL} />
                 <UpdateUserForm selected={selectedRow} users={userRows} baseURL={baseURL} />
                 <DeleteUserForm selected={selectedRow} users={userRows} baseURL={baseURL} />

@@ -63,7 +63,11 @@ export default function Ingredients(props) {
                 <Typography variant='h3'>Ingredients Table</Typography>
             </Container>
 
-            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em', '& .MuiButton-root': {
+                        color: 'white',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        border: '1px solid white'
+                    }, }}>
 
                 {/* Search Ingredient */}
                 <TextField

@@ -30,16 +30,17 @@ const MenuProps = {
 };
 
 export default function UpdateRecipeForm(props) {
-    const { recipes, baseURL } = props;
+    const { selectedRow, recipes, baseURL } = props;
     const [open, setOpen] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
-            recipeid: "",
-            recipetitle: "",
-            recipeserving: "",
-            recipedescription: ""
+            recipeid: selectedRow.recipeid,
+            recipetitle: selectedRow.recipetitle,
+            recipeserving: selectedRow.recipeserving,
+            recipedescription: selectedRow.recipedescription
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values) => {
             axios({
