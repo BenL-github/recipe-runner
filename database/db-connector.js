@@ -380,10 +380,11 @@ module.exports.searchRecipeIngredients = (keyword, callback) => {
     let query = `SELECT Recipes.recipeID, recipeTitle, Ingredients.ingredientID, ingredientName, quantity, uOm FROM RecipeIngredients
                  JOIN Ingredients ON Ingredients.ingredientID = RecipeIngredients.ingredientID
                  LEFT JOIN Recipes ON Recipes.recipeID = RecipeIngredients.recipeID
-                 WHERE Recipes.recipetitle ILIKE '%${keyword}%'
+                 WHERE Recipes.recipetitle ILIKE $1
                  ORDER BY Recipes.recipeID ASC;`
 
-    pool.query(query, (err, result) => {
+    let values = ["%" + keyword + "%"]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -394,11 +395,10 @@ module.exports.searchRecipeIngredients = (keyword, callback) => {
 }
 
 module.exports.addRecipeIngredient = (data, callback) => {
-    console.log(data);
     let query = `INSERT INTO RecipeIngredients (recipeid, ingredientid, uom, quantity)
-                 VALUES (${data.recipeid}, ${data.ingredientid}, '${data.uom}', ${data.quantity});`
-
-    pool.query(query, (err, result) => {
+                 VALUES ($1, $2, $3, $4);`
+    let values = [data.recipeid, data.ingredientid, data.uom, data.quantity]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -410,9 +410,10 @@ module.exports.addRecipeIngredient = (data, callback) => {
 
 module.exports.updateRecipeIngredient = (data, callback) => {
     let query = `UPDATE RecipeIngredients
-                 SET uom= '${data.uom}', quantity= ${data.quantity}
-                 WHERE recipeID= ${data.recipeid} AND ingredientID= ${data.ingredientid};`
-    pool.query(query, (err, result) => {
+                 SET uom= $1, quantity= $2
+                 WHERE recipeID= $3 AND ingredientID= $4;`
+    let values = [data.uom, data.quantity, data.recipeid, data.ingredientid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
@@ -424,9 +425,9 @@ module.exports.updateRecipeIngredient = (data, callback) => {
 
 module.exports.deleteRecipeIngredient = (data, callback) => {
     let query = `DELETE FROM RecipeIngredients
-                WHERE recipeID= ${data.recipeid} AND ingredientID= ${data.ingredientid};`
-
-    pool.query(query, (err, result) => {
+                WHERE recipeID= $1 AND ingredientID= $2;`
+    let values = [data.recipeid, data.ingredientid]
+    pool.query(query, values, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)

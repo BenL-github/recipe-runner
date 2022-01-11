@@ -29,12 +29,12 @@ const validationSchema = yup.object({
 export default function UpdateIngredientForm(props) {
     const { selectedRow, ingredients, baseURL } = props;
     const [open, setOpen] = React.useState(false);
-
+    console.log(selectedRow)
     const formik = useFormik({
         initialValues: {
             ingredientid: selectedRow.ingredientid,
             ingredientname: selectedRow.ingredientname,
-            ingredientprice: selectedRow.ingredientprice
+            ingredientprice: selectedRow.price
         },
         enableReinitialize: true,
         validationSchema: validationSchema,

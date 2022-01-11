@@ -69,7 +69,11 @@ function RecipeIngredients(props) {
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>RecipeIngredients Table</Typography>
             </Container>
-            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em', '& .MuiButton-root': {
+                        color: 'white',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        border: '1px solid white'
+                    }, }}>
                 <TextField
                     id='outlined-basic'
                     size="small"

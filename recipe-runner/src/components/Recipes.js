@@ -7,7 +7,7 @@ import DeleteRecipeForm from './Forms/Recipes/DeleteRecipeForm';
 import UpdateRecipeForm from './Forms/Recipes/UpdateRecipeForm';
 
 function Recipes(props) {
-    const { baseURL } = props;
+    const { classes, baseURL } = props;
     const [keyword, setKeyword] = useState("")
     const [recipeRows, setRecipeRows] = useState([])
     const [selectedRow, setSelectedRow] = useState([]);
@@ -61,7 +61,17 @@ function Recipes(props) {
             <Container sx={{ textAlign: 'center' }}>
                 <Typography variant='h3'>Recipes Table</Typography>
             </Container>
-            <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em' }}>
+            <Container
+                disableGutters
+                sx={{
+                    width: 'auto', display: 'flex', justifyContent: 'center',
+                    my: '1.5em',
+                    '& .MuiButton-root': {
+                        color: 'white',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        border: '1px solid white'
+                    }
+                }}>
 
                 {/* Search */}
                 <TextField
@@ -88,7 +98,8 @@ function Recipes(props) {
 
             </Container>
 
-            <Tables density="comfortable" columns={recipeColumns} rows={recipeRows}  onCellClick={handleCellClick} rowIDTitle={"recipeid"} />
+
+            <Tables density="comfortable" columns={recipeColumns} rows={recipeRows} onCellClick={handleCellClick} rowIDTitle={"recipeid"} />
         </>
     )
 }
