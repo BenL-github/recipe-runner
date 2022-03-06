@@ -56,7 +56,7 @@ function SelectedRecipes(props) {
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
-                <Typography variant='h3'>SelectedRecipes Table</Typography>
+                <Typography variant='h3' color="white">SelectedRecipes Table</Typography>
             </Container>
             <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em', '& .MuiButton-root': {
                         color: 'white',

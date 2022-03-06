@@ -59,7 +59,7 @@ function Recipes(props) {
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
-                <Typography variant='h3'>Recipes Table</Typography>
+                <Typography variant='h3' color="white">Recipes Table</Typography>
             </Container>
             <Container
                 disableGutters

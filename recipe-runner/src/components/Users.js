@@ -40,7 +40,7 @@ function Users(props) {
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
-                <Typography variant='h3'>Users Table</Typography>
+                <Typography variant='h3' color="white">Users Table</Typography>
             </Container>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em', '& .MuiButton-root': {
                         color: 'white',
