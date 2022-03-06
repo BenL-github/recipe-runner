@@ -60,7 +60,7 @@ export default function Ingredients(props) {
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
-                <Typography variant='h3'>Ingredients Table</Typography>
+                <Typography variant='h3' color="white">Ingredients Table</Typography>
             </Container>
 
             <Container disableGutters sx={{ width: 'auto', display: 'flex', justifyContent: 'center', my: '1.5em', '& .MuiButton-root': {

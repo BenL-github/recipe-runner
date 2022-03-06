@@ -440,22 +440,22 @@ module.exports.deleteRecipeIngredient = (data, callback) => {
 // DEMO 
 // retrieves grocery list of a specific user 
 module.exports.getUserGroceryList = (customerID, callback) => {
-    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.quantity * sr.quantity) AS quantity, ri.uOm
-                    FROM Users AS u 
-                    JOIN ShoppingCarts as sc ON sc.customerID = u.customerID 
-                    JOIN SelectedRecipes as sr ON sr.cartID = sc.cartID 
-                    JOIN Recipes as r ON sr.recipeID = r.recipeID 
-                    JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
-                    JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
-                    WHERE u.customerID = ${customerID}
-                    GROUP BY ri.ingredientID 
-                    ORDER BY i.ingredientID ASC;`
-
+    let query = `SELECT i.ingredientID, i.ingredientName, SUM(ri.quantity * sr.quantity) as quantity, ri.uOm
+                FROM Users AS u 
+                JOIN ShoppingCarts as sc ON sc.customerID = u.customerID 
+                JOIN SelectedRecipes as sr ON sr.cartID = sc.cartID 
+                JOIN Recipes as r ON sr.recipeID = r.recipeID 
+                JOIN RecipeIngredients as ri ON r.recipeID = ri.recipeID 
+                JOIN Ingredients as i ON ri.ingredientID = i.ingredientID 
+                WHERE u.customerID = ${customerID}
+                GROUP BY i.ingredientID, ri.uom
+                ORDER BY i.ingredientID ASC;`
     pool.query(query, (err, result) => {
         if (err) {
             console.log(err)
             callback(true)
         } else {
+            console.log(result)
             callback(false, result)
         }
     })

@@ -44,11 +44,17 @@ export default function Hero(props) {
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
               {post.title}
             </Typography>
-            <Typography variant="h6">
-              {post.author}
+            <Typography>
+              Made by:&nbsp;
+              <Link variant="h6" href="https://github.com/BenL-github" color="inherit">
+                {post.author}
+              </Link>
             </Typography>
-            <Typography variant="subtitle1">
-              {post.author2}
+            <Typography >
+              with help from:&nbsp;
+              <Link variant="subtitle1" href="https://github.com/teejayjan" color="inherit">
+                {post.author2}
+              </Link>
             </Typography>
           </Box>
         </Grid>

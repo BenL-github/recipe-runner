@@ -47,7 +47,7 @@ function ShoppingCarts(props) {
     return (
         <>
             <Container sx={{ textAlign: 'center' }}>
-                <Typography variant='h3'>ShoppingCarts Table</Typography>
+                <Typography variant='h3' color="white">ShoppingCarts Table</Typography>
             </Container>
             <Container maxWidth='false' sx={{ display: 'flex', justifyContent: 'center', width: '95%', my: '1.5em', '& .MuiButton-root': {
                         color: 'white',
