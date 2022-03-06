@@ -10,9 +10,6 @@ import ShoppingCarts from './components/ShoppingCarts'
 import SelectedRecipes from './components/SelectedRecipes'
 import RecipeIngredients from './components/RecipeIngredients';
 import Demo from './components/Demo';
-import { Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-
 const theme = createTheme({
     typography: {
         fontFamily: 'Montserrat',
@@ -24,7 +21,7 @@ const theme = createTheme({
 
 })
 
-const baseURL = "http://localhost:34880/api/"
+const baseURL = "/api/"
 function App() {
     return (
         <Router>
