@@ -25,7 +25,7 @@ chosen recipes.
 
 Here is the entity relationship diagram:
 
-![Entity Relationship Diagram](/recipe-runner/public/ERD.png?raw=true "Entity Relationship Diagram")
+![Entity Relationship Diagram](/recipe-runner/public/ERD.png?raw=true | height = 600)
 
 Here is the schema: 
 
