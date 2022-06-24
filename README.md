@@ -1,28 +1,32 @@
-# Recipe Runner Application
+# Recipe Runner
 
-## About Recipe Runner
+See the website here: https://recipe-runner.herokuapp.com
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+Recipe Runner is a database management website for a (hypothetical)
+application that stores thousands of recipes into a database. Clients
+can select recipes that they would like to cook for the week, and 
+the app makes grocery shopping easier by creating a grocery list out of 
+their collection of recipes. 
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## The Website
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The Recipe Runner website is intended to be the administrative aspect 
+of the application. On the website, you can manage client information,
+the recipes they select, available recipes, and available ingredients. 
 
-## Database Connection
+The website also contains a demo page to demonstrate Recipe Runner's
+main function: constructing a grocery list out of a clients' list of 
+chosen recipes. 
 
-In the server/database folder, create an `.env` file containing the login credentials.
-For example, the `.env` file should have the following environment variables: 
+## Database Design
 
-MYSQL_HOST = 'classmysql.engr.oregonstate.edu'
+Here is the entity relationship diagram:
 
-MYSQL_USER = 'cs340_[OSU_username]'
+![Entity Relationship Diagram](/recipe-runner/public/ERD.png?raw=true "Entity Relationship Diagram")
 
-MYSQL_PASS = '[last 4 digits of ONID]'
+Here is the schema: 
 
-MYSQL_DB = 'cs340_[OSU_username]'
+![Schema](/recipe-runner/public/recipe-runner-schema.png?raw=true "Schema")
